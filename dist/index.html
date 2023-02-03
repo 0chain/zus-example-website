@@ -57,8 +57,61 @@
     /><br />
 
     <button id="btnSetWallet">Set Wallet</button>
-    <button id="btnSendMeTokens">Send Me Tokens</button>
+    <button id="btnSendMeTokens">Faucet</button>
     <button id="btnGetBalance">Get Balance</button>
+  </fieldset>
+
+  <br />
+  <fieldset>
+    <legend>Send Token</legend>
+    <br />
+    <div>
+      <label htmlFor="sendTo">Send To</label>
+      <input id="sendTo" name="sendTo" value="" size="{90}" />
+      <br />
+      <label htmlFor="sendAmount">Send Amount</label>
+      <input id="sendAmount" name="sendAmount" value="" size="{90}" />
+      <br />
+    </div>
+    <div>
+      <button id="btnSendToken" onClick="sendTokenClick">Send Token</button>
+    </div>
+    <br />
+  </fieldset>
+
+  <br />
+  <fieldset>
+    <legend>Allocations</legend>
+    <div>
+      <button id="btnCreateAllocation" onClick="createAllocationClick">
+        Create
+      </button>
+    </div>
+    <br />
+    <div>
+      <button id="btnListAllocations" onClick="listAllocationsClick">
+        List
+      </button>
+      <br />
+      <br />
+    </div>
+    <br />
+    <div id="listAllocations"></div>
+  </fieldset>
+
+  <br />
+  <fieldset>
+    <legend>File Ops</legend>
+    <div>
+      <input
+        type="file"
+        multiple="{true}"
+        name="uploadFile"
+        onChange="handleUploadFiles"
+      />
+      <button id="btnUpload" onClick="uploadClick">Upload</button>
+    </div>
+    <br />
   </fieldset>
 
   <fieldset>
