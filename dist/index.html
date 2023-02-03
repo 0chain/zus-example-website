@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+
+<head>
+  <!-- for zcn.wasm-->
+  <script src="https://cdn.jsdelivr.net/gh/herumi/bls-wasm@v1.0.0/browser/bls.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/golang/go@go1.18.5/misc/wasm/wasm_exec.js"></script>
+</head>
+
+<body>
+  <script src="main.js"></script>
+  <h2>SDK Test</h2>
+  <h2>
+    Please download zcn.wasm from
+    https://github.com/0chain/gosdk/releases/latest first
+  </h2>
+
+  <fieldset>
+    <legend>Logging</legend>
+    <span>
+      <button id="btnShowLogs">Show</button>
+      <button id="btnHideLogs">Hide</button>
+    </span>
+    <br />
+    <textarea id="logs" rows="10" cols="100"> </textarea>
+  </fieldset>
+
+  <fieldset>
+    <legend>Init</legend>
+    <span>
+      <button id="btnInit">Init</button>
+    </span>
+    <br />
+  </fieldset>
+
+  <fieldset>
+    <legend>Wallet</legend>
+    <label for="clientId">ClientID</label>
+    <input
+      id="clientId"
+      name="clientId"
+      style="width: 600px"
+      value="7d35a6c3ba5066e62989d34cee7dd434d0833d5ea9ff00928aa89994d80e4700"
+    /><br />
+    <label for="privateKey">PrivateKey</label>
+    <input
+      id="privateKey"
+      name="privateKey"
+      style="width: 600px"
+      value="5ababb1e99fe08e44b9843a0a365a832928f9e1aa2d6bba24e01058f1bf0e813"
+    /><br />
+    <label for="publicKey"> PublicKey</label>
+    <input
+      id="publicKey"
+      name="publicKey"
+      style="width: 600px"
+      value="5b7ce801f11b5ce02c2ff980469b00e7ed34a9690977661b0cc80bc5eb33ee13baaf6b099f38a2586c5ff63c576870829c117e392fc40868e4bd6418dbaf389c"
+    /><br />
+
+    <button id="btnSetWallet">Set Wallet</button>
+    <button id="btnSendMeTokens">Send Me Tokens</button>
+    <button id="btnGetBalance">Get Balance</button>
+  </fieldset>
+
+  <fieldset>
+    <legend>Output</legend>
+    <pre id="txtOutput" style="font-size: 20px; font-weight: bold"></pre>
+  </fieldset>
+</body>
