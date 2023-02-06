@@ -25,6 +25,15 @@
   </fieldset>
 
   <fieldset>
+    <legend>Greet</legend>
+    <span>
+      <button id="btnGreet">Greet</button>
+    </span>
+    <div id="message"></div>
+    <br />
+  </fieldset>
+
+  <fieldset>
     <legend>Init</legend>
     <span>
       <button id="btnInit">Init</button>
@@ -74,7 +83,7 @@
       <br />
     </div>
     <div>
-      <button id="btnSendToken" onClick="sendTokenClick">Send Token</button>
+      <button id="btnSendToken">Send Token</button>
     </div>
     <br />
   </fieldset>
@@ -83,15 +92,11 @@
   <fieldset>
     <legend>Allocations</legend>
     <div>
-      <button id="btnCreateAllocation" onClick="createAllocationClick">
-        Create
-      </button>
+      <button id="btnCreateAllocation">Create</button>
     </div>
     <br />
     <div>
-      <button id="btnListAllocations" onClick="listAllocationsClick">
-        List
-      </button>
+      <button id="btnListAllocations">List</button>
       <br />
       <br />
     </div>
@@ -109,7 +114,7 @@
         name="uploadFile"
         onChange="handleUploadFiles"
       />
-      <button id="btnUpload" onClick="uploadClick">Upload</button>
+      <button id="btnUpload">Upload</button>
     </div>
     <br />
   </fieldset>

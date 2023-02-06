@@ -11,7 +11,7 @@ import {
   sendToken,
 } from "zus-sdk";
 
-import { get, onClick } from "./dom";
+import { get, onClick, setHtml } from "./dom";
 
 const getWallet = () => {
   const clientID = get("clientId").value;
@@ -44,62 +44,17 @@ const config = [
   configJson.zboxHost,
   configJson.zboxAppType,
 ];
-//const bls = window.bls;
-// let goWasm;
-// createWasm().then(async (wasm) => {
-//   await wasm.sdk.init(...config);
-//   await bls.init(bls.BN254);
-//   const { clientID, privateKey, publicKey } = getWallet();
-//   console.log({ clientID, privateKey, publicKey });
-//   await wasm.setWallet(bls, clientID, privateKey, publicKey);
-
-//   goWasm = wasm;
-// });
-
-/*
-  const loadData = async () => {
-    const wasm = await createWasm();
-
-    console.log("wasm", wasm);
-
-    await wasm.sdk.showLogs();
-
-    //console.log(...config);
-    // await wasm.sdk.init(...config);
-    await wasm.sdk.init(
-      config.chainId,
-      config.blockWorker,
-      config.signatureScheme,
-      config.minConfirmation,
-      config.minSubmit,
-      config.confirmationChainLength,
-      config.zboxHost,
-      config.zboxAppType
-    );
-
-    console.log("bls", bls);
-    await bls.init(bls.BN254);
-
-    // const testWallet = {
-    //   clientId:
-    //     "7d35a6c3ba5066e62989d34cee7dd434d0833d5ea9ff00928aa89994d80e4700",
-    //   privateKey:
-    //     "5ababb1e99fe08e44b9843a0a365a832928f9e1aa2d6bba24e01058f1bf0e813",
-    //   publicKey:
-    //     "5b7ce801f11b5ce02c2ff980469b00e7ed34a9690977661b0cc80bc5eb33ee13baaf6b099f38a2586c5ff63c576870829c117e392fc40868e4bd6418dbaf389c",
-    // };
-    // await wasm.setWallet(
-    //   bls,
-    //   testWallet.clientId,
-    //   testWallet.privateKey,
-    //   testWallet.publicKey
-    // );
-
-    goWasm = wasm;
-  };*/
 
 const bindEvents = () => {
   console.log("bindEvents");
+
+  onClick("btnGreet", async () => {
+    console.log("calling Greet");
+    //Call Greeter method
+    const greetMessage = Greeter("john doe");
+    console.log("greetMessage", greetMessage);
+    setHtml("message", greetMessage);
+  });
 
   onClick("btnInit", async () => {
     console.log("calling init");
@@ -120,6 +75,33 @@ const bindEvents = () => {
     const { clientID } = getWallet();
     const wallet = await getBalanceWasm(clientID);
     txtOutput.innerHTML = JSON.stringify(wallet, null, 2);
+  });
+
+  onClick("btnListAllocations", async () => {
+    //Call listAllocations method
+    const allocations = await listAllocations();
+    console.log("allocations", allocations);
+    let allocationListHtml = "";
+    allocations.map((allocation, index) => {
+      allocationListHtml += `
+    <div key={index}>
+    <input
+      type="radio"
+      name="selectedAllocation"
+      value=${allocation.id}
+      onClick="selectAllocation('${allocation.id}')"
+    />
+    <label htmlFor=${allocation.id}>
+      Allocation: ${allocation.id}
+    </label>
+    <br></br>
+  </div>`;
+    });
+    setHtml("listAllocations", allocationListHtml);
+
+    const selectAllocation = (allocationId) => {
+      console.log("selected allocation", allocationId);
+    };
   });
 
   const log = console.log;
