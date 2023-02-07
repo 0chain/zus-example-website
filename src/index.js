@@ -9,9 +9,10 @@ import {
   bulkUpload,
   getFaucetToken,
   sendToken,
+  listObjects,
 } from "zus-sdk";
 
-import { get, onClick, setHtml } from "./dom";
+import { get, onClick, onClickGroup, setHtml, onChange } from "./dom";
 
 const getWallet = () => {
   const clientID = get("clientId").value;
@@ -45,6 +46,91 @@ const config = [
   configJson.zboxAppType,
 ];
 
+const listAllocationsClick = async () => {
+  //Call listAllocations method
+  const allocations = await listAllocations();
+  console.log("allocations", allocations);
+  let allocationListHtml = "";
+  allocations.map((allocation, index) => {
+    allocationListHtml += `
+  <div key=${index}>
+  <input
+    type="radio"
+    name="selectedAllocation"
+    id="selectedAllocation"
+    value=${allocation.id}
+  />
+  <label htmlFor=${allocation.id}>
+    Allocation: ${allocation.id}
+  </label>
+  <br></br>
+</div>`;
+  });
+  setHtml("listAllocations", allocationListHtml);
+  if (allocations && allocations.length > 0) {
+    onClickGroup("selectedAllocation", selectAllocation);
+  }
+};
+
+const listFilesClick = async () => {
+  //Call listFiles method
+  const selectedAllocation = getSelectedAllocation();
+  console.log("listFilesClick selectedAllocation", selectedAllocation);
+  const list = (await listObjects(selectedAllocation, "/")) || [];
+  console.log("file list", list);
+  let fileListHtml = "";
+  list.map((file, index) => {
+    fileListHtml += `
+  <div key=${index}>
+  <input
+    type="radio"
+    name="selectedFile"
+    id="selectedFile"
+    value=${file.name}
+  />
+  <label htmlFor=${file.name}>
+    ${file.name}
+  </label>
+  <br></br>
+</div>`;
+  });
+  setHtml("listFiles", fileListHtml);
+  if (list && list.length > 0) {
+    onClickGroup("selectedFile", selectFile);
+  }
+};
+
+const getSelectedAllocation = () => {
+  const selectedAllocationElement = document.querySelector(
+    'input[name="selectedAllocation"]:checked'
+  );
+  const selectedAllocation = selectedAllocationElement?.value;
+  console.log("selected allocation", selectedAllocation);
+  return selectedAllocation;
+};
+
+const selectAllocation = () => {
+  getSelectedAllocation();
+};
+
+const handleUploadFiles = async (event) => {
+  console.log("handleUploadFiles", event.currentTarget.files);
+  //setFilesForUpload(event.currentTarget.files);
+};
+
+const getSelectedFile = () => {
+  const selectedFileElement = document.querySelector(
+    'input[name="selectedFile"]:checked'
+  );
+  const selectedFile = selectedFileElement?.value;
+  console.log("selected file", selectedFile);
+  return selectedFile;
+};
+
+const selectFile = () => {
+  getSelectedFile();
+};
+
 const bindEvents = () => {
   console.log("bindEvents");
 
@@ -77,32 +163,81 @@ const bindEvents = () => {
     txtOutput.innerHTML = JSON.stringify(wallet, null, 2);
   });
 
-  onClick("btnListAllocations", async () => {
-    //Call listAllocations method
-    const allocations = await listAllocations();
-    console.log("allocations", allocations);
-    let allocationListHtml = "";
-    allocations.map((allocation, index) => {
-      allocationListHtml += `
-    <div key={index}>
-    <input
-      type="radio"
-      name="selectedAllocation"
-      value=${allocation.id}
-      onClick="selectAllocation('${allocation.id}')"
-    />
-    <label htmlFor=${allocation.id}>
-      Allocation: ${allocation.id}
-    </label>
-    <br></br>
-  </div>`;
-    });
-    setHtml("listAllocations", allocationListHtml);
+  onClick("btnListAllocations", listAllocationsClick);
 
-    const selectAllocation = (allocationId) => {
-      console.log("selected allocation", allocationId);
+  onClick("btnCreateAllocation", async () => {
+    console.log("calling createAllocation");
+    const expiry = new Date();
+    expiry.setDate(expiry.getDate() + 30);
+
+    //name string, datashards, parityshards int, size, expiry int64,minReadPrice, maxReadPrice, minWritePrice, maxWritePrice int64, lock int64,preferredBlobberIds []string
+    const config = {
+      name: "newalloc",
+      datashards: 2,
+      parityshards: 2,
+      size: 2 * 1073741824,
+      expiry: Math.floor(expiry.getTime() / 1000),
+      minReadPrice: 0,
+      maxReadPrice: 184467440737095516,
+      minWritePrice: 0,
+      maxWritePrice: 184467440737095516,
+      lock: 5000000000,
     };
+
+    //Call createAllocation method
+    await createAllocation(config);
+    listAllocationsClick();
   });
+
+  onChange("uploadFile", handleUploadFiles);
+
+  onClick("btnUpload", async () => {
+    const selectedAllocation = getSelectedAllocation();
+    if (!selectedAllocation) {
+      alert("Please select allocation for upload");
+      return;
+    }
+    const filesForUpload = get("uploadFile").files;
+    console.log("filesForUpload", filesForUpload);
+    if (!(filesForUpload && filesForUpload.length > 0)) {
+      alert("Please select the files for upload");
+      return;
+    }
+    console.log("uploading to allocation", selectedAllocation, filesForUpload);
+    if (filesForUpload && filesForUpload.length > 0) {
+      const objects = [];
+      const allocationId = selectedAllocation;
+      for (const file of filesForUpload) {
+        objects.push({
+          allocationId: allocationId,
+          remotePath: `/${file.name}`,
+          file: file,
+          thumbnailBytes: null,
+          encrypt: false,
+          isUpdate: false,
+          isRepair: false,
+          numBlocks: 100,
+          callback: function (totalBytes, completedBytes, error) {
+            console.log(
+              file.name +
+                " " +
+                completedBytes +
+                "/" +
+                totalBytes +
+                " err:" +
+                error
+            );
+          },
+        });
+      }
+
+      const results = await bulkUpload(objects);
+
+      console.log("upload results", JSON.stringify(results));
+    }
+  });
+
+  onClick("btnListFiles", listFilesClick);
 
   const log = console.log;
   const logs = get("logs");

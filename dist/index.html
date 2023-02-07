@@ -108,13 +108,15 @@
   <fieldset>
     <legend>File Ops</legend>
     <div>
-      <input
-        type="file"
-        multiple="{true}"
-        name="uploadFile"
-        onChange="handleUploadFiles"
-      />
+      <input type="file" multiple="{true}" id="uploadFile" />
       <button id="btnUpload">Upload</button>
+    </div>
+    <br />
+    <div>
+      <button id="btnListFiles">List</button>
+      <br />
+      <br />
+      <div id="listFiles"></div>
     </div>
     <br />
   </fieldset>
