@@ -4,9 +4,11 @@ import {
   Greeter,
   listAllocations,
   createAllocation,
+  getAllocation,
   getBalance,
   getBalanceWasm,
   bulkUpload,
+  download,
   getFaucetToken,
   sendToken,
   listObjects,
@@ -86,10 +88,10 @@ const listFilesClick = async () => {
     type="radio"
     name="selectedFile"
     id="selectedFile"
-    value=${file.name}
+    value=${file.path}
   />
-  <label htmlFor=${file.name}>
-    ${file.name}
+  <label htmlFor=${file.path}>
+    ${file.path}
   </label>
   <br></br>
 </div>`;
@@ -189,6 +191,23 @@ const bindEvents = () => {
     listAllocationsClick();
   });
 
+  onClick("btnGetAllocation", async () => {
+    const selectedAllocation = getSelectedAllocation();
+    if (!selectedAllocation) {
+      alert("Please select allocation for get details");
+      return;
+    }
+    const allocation = await getAllocation(selectedAllocation);
+    console.log("allocation", allocation);
+    let allocationDetailHtml = `
+    <div>
+      Allocation: ${allocation.id}, Name: ${allocation.name}, Size: ${allocation.size}, Start Time: ${allocation.start_time}, Expiration Date: ${allocation.expiration_date}
+    </div>
+    <br></br>
+  </div>`;
+    setHtml("allocationDetails", allocationDetailHtml);
+  });
+
   onChange("uploadFile", handleUploadFiles);
 
   onClick("btnUpload", async () => {
@@ -234,6 +253,33 @@ const bindEvents = () => {
       const results = await bulkUpload(objects);
 
       console.log("upload results", JSON.stringify(results));
+    }
+  });
+
+  onClick("btnDownload", async () => {
+    const selectedAllocation = getSelectedAllocation();
+    if (!selectedAllocation) {
+      alert("Please select allocation for upload");
+      return;
+    }
+    const path = getSelectedFile();
+    if (path) {
+      const allocationId = selectedAllocation;
+      console.log("downloading ", path, " from ", allocationId);
+
+      //allocationID, remotePath, authTicket, lookupHash string, downloadThumbnailOnly bool, numBlocks int
+      const file = await download(allocationId, path, "", "", false, 10);
+      console.log("downloaded file", file);
+
+      const a = document.createElement("a");
+      document.body.appendChild(a);
+      a.style = "display: none";
+
+      a.href = file.url;
+      a.download = file.fileName;
+      a.click();
+      window.URL.revokeObjectURL(file.url);
+      document.body.removeChild(a);
     }
   });
 
