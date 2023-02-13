@@ -10,7 +10,7 @@ import {
   bulkUpload,
   download,
   getFaucetToken,
-  sendToken,
+  sendTransaction,
   listObjects,
 } from "zus-sdk";
 
@@ -157,6 +157,19 @@ const bindEvents = () => {
 
   onClick("btnSendMeTokens", async () => {
     await getFaucetToken();
+  });
+
+  onClick("btnSendTransaction", async () => {
+    console.log("calling sendTransaction");
+    const { clientID, privateKey, publicKey } = getWallet();
+    const fromWallet = {
+      id: clientID,
+      public_key: publicKey,
+      secretKey: privateKey,
+    };
+    const sendTo = get("sendTo").value;
+    const sendAmount = get("sendAmount").value;
+    await sendTransaction(fromWallet, sendTo, parseInt(sendAmount), "");
   });
 
   onClick("btnGetBalance", async () => {
