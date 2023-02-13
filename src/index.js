@@ -33,8 +33,8 @@ const configJson = {
   minConfirmation: 50,
   minSubmit: 50,
   confirmationChainLength: 3,
-  blockWorker: "https://dev.0chain.net/dns",
-  zboxHost: "https://0box.dev.0chain.net",
+  blockWorker: "https://dev.zus.network/dns",
+  zboxHost: "https://0box.dev.zus.network",
   zboxAppType: "vult",
 };
 const config = [
@@ -173,6 +173,12 @@ const bindEvents = () => {
   });
 
   onClick("btnGetBalance", async () => {
+    const { clientID } = getWallet();
+    const wallet = await getBalance(clientID);
+    txtOutput.innerHTML = JSON.stringify(wallet, null, 2);
+  });
+
+  onClick("btnGetBalanceWasm", async () => {
     const { clientID } = getWallet();
     const wallet = await getBalanceWasm(clientID);
     txtOutput.innerHTML = JSON.stringify(wallet, null, 2);
