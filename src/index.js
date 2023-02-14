@@ -302,6 +302,23 @@ const bindEvents = () => {
     }
   });
 
+  onClick("btnShare", async () => {
+    const selectedAllocation = getSelectedAllocation();
+    if (!selectedAllocation) {
+      alert("Please select allocation for share");
+      return;
+    }
+    const path = getSelectedFile();
+    if (path) {
+      const allocationId = selectedAllocation;
+      console.log("sharing ", path, " from ", allocationId);
+
+      //allocationId, filePath, clientId, encryptionPublicKey string, expireAt int, revoke bool,availableAfter string
+      const authTicket = await share(allocationId, path, "", "", 0, false, 0);
+      console.log("authTicket", authTicket);
+    }
+  });
+
   onClick("btnListFiles", listFilesClick);
 
   const log = console.log;
