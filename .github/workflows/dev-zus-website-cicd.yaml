@@ -11,16 +11,16 @@ on:
 jobs:
   build-and-push-bolt-docker-image:
     # if: ${{ github.event.inputs.zusapp == 'true' }}
-    runs-on: dev-zus-webapp
+    runs-on: dev-zus-website
 
     outputs:
       output1: ${{ steps.docker_build.outputs.COMMIT_TAG }}
 
     steps:
-      - name: docker stop and remove already running zus-webapp container.
+      - name: docker stop and remove already running zus-website container.
         run: |
-          docker stop zus-webapp || true
-          docker rm zus-webapp || true
+          docker stop zus_example_website || true
+          docker rm zus_example_website || true
 
       - uses: actions/checkout@v3
       
@@ -41,7 +41,7 @@ jobs:
       #     username: ${{ secrets.DOCKERHUB_USERNAME }}
       #     password: ${{ secrets.DOCKERHUB_PASSWORD }}
 
-      - name: Build & deploy dev-zus-webapp.zus.network.
+      - name: Build & deploy dev-zus-website.zus.network.
         run: |
           cd docker.local
           docker-compose -f docker-compose-dev.yaml up -d --build
