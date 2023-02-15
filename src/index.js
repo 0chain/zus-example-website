@@ -12,9 +12,10 @@ import {
   getFaucetToken,
   sendTransaction,
   listObjects,
+  share,
 } from "zus-sdk";
 
-import { get, onClick, onClickGroup, setHtml, onChange } from "./dom";
+import { get, onClick, onClickGroup, setHtml, onChange, setValue } from "./dom";
 
 const getWallet = () => {
   const clientID = get("clientId").value;
@@ -278,7 +279,7 @@ const bindEvents = () => {
   onClick("btnDownload", async () => {
     const selectedAllocation = getSelectedAllocation();
     if (!selectedAllocation) {
-      alert("Please select allocation for upload");
+      alert("Please select allocation for download");
       return;
     }
     const path = getSelectedFile();
@@ -288,6 +289,45 @@ const bindEvents = () => {
 
       //allocationID, remotePath, authTicket, lookupHash string, downloadThumbnailOnly bool, numBlocks int
       const file = await download(allocationId, path, "", "", false, 10);
+      console.log("downloaded file", file);
+
+      const a = document.createElement("a");
+      document.body.appendChild(a);
+      a.style = "display: none";
+
+      a.href = file.url;
+      a.download = file.fileName;
+      a.click();
+      window.URL.revokeObjectURL(file.url);
+      document.body.removeChild(a);
+    }
+  });
+
+  onClick("btnShare", async () => {
+    const selectedAllocation = getSelectedAllocation();
+    if (!selectedAllocation) {
+      alert("Please select allocation for share");
+      return;
+    }
+    const path = getSelectedFile();
+    if (path) {
+      const allocationId = selectedAllocation;
+      console.log("sharing ", path, " from ", allocationId);
+
+      //allocationId, filePath, clientId, encryptionPublicKey string, expireAt int, revoke bool,availableAfter string
+      const authTicket = await share(allocationId, path, "", "", 0, false, 0);
+      console.log("authTicket", authTicket);
+      setValue("authTicket", authTicket);
+    }
+  });
+
+  onClick("btnDownloadShared", async () => {
+    const authTicket = get("authTicket").value;
+    if (authTicket) {
+      console.log("downloading using authTicket", authTicket);
+
+      //allocationID, remotePath, authTicket, lookupHash string, downloadThumbnailOnly bool, numBlocks int
+      const file = await download("", "", authTicket, "", false, 10);
       console.log("downloaded file", file);
 
       const a = document.createElement("a");

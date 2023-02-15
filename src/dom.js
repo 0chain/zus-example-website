@@ -1,5 +1,8 @@
 export const get = (id) => document.getElementById(id);
 
+export const setValue = (id, value) =>
+  (document.getElementById(id).value = value);
+
 export const getByName = (name) => document.getElementsByName(name);
 
 export const onClick = (id, callback) => {
