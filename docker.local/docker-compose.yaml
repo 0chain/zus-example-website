@@ -4,7 +4,7 @@ services:
     container_name: zus_example_website
     image: website
     ports:
-     - "8080:80"
+     - "3008:80"
     # deploy:
     #   replicas: 1
     #   resources:
