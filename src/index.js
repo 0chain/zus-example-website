@@ -13,6 +13,8 @@ import {
   sendTransaction,
   listObjects,
   share,
+  showLogs,
+  hideLogs,
 } from "zus-sdk";
 
 import { get, onClick, onClickGroup, setHtml, onChange, setValue } from "./dom";
@@ -347,7 +349,7 @@ const bindEvents = () => {
   const log = console.log;
   const logs = get("logs");
   onClick("btnShowLogs", async () => {
-    await goWasm.sdk.showLogs();
+    await showLogs();
     console.log = (s) => {
       log(s);
       logs.value += s;
@@ -357,7 +359,7 @@ const bindEvents = () => {
   });
 
   onClick("btnHideLogs", async () => {
-    await goWasm.sdk.hideLogs();
+    await hideLogs();
     console.log = log;
   });
 };
