@@ -15,6 +15,10 @@ import {
   share,
   showLogs,
   hideLogs,
+  copyObject,
+  moveObject,
+  deleteObject,
+  renameObject,
 } from "zus-sdk";
 
 import { get, onClick, onClickGroup, setHtml, onChange, setValue } from "./dom";
@@ -51,6 +55,17 @@ const config = [
   configJson.zboxAppType,
 ];
 
+const getAppendedFileName = (filename, postfix) => {
+  const isExtnExist = filename.lastIndexOf(".") > 0;
+  const newFileName = isExtnExist
+    ? filename.substring(0, filename.lastIndexOf(".")) +
+      postfix +
+      filename.substring(filename.lastIndexOf("."), filename.length)
+    : filename + postfix;
+  console.log("getAppendedFileName", newFileName);
+  return newFileName;
+};
+
 const listAllocationsClick = async () => {
   //Call listAllocations method
   const allocations = await listAllocations();
@@ -81,12 +96,21 @@ const listFilesClick = async () => {
   //Call listFiles method
   const selectedAllocation = getSelectedAllocation();
   console.log("listFilesClick selectedAllocation", selectedAllocation);
-  const list = (await listObjects(selectedAllocation, "/")) || [];
-  console.log("file list", list);
   let fileListHtml = "";
-  list.map((file, index) => {
-    fileListHtml += `
-  <div key=${index}>
+  try {
+    const list = (await listObjects(selectedAllocation, "/")) || [];
+    console.log("file list", list);
+    if (list && list.length > 0) {
+      fileListHtml += `
+    <div>
+      <b>File List: /</b>
+    </div>
+    `;
+    }
+
+    list.map((file) => {
+      fileListHtml += `
+  <div>
   <input
     type="radio"
     name="selectedFile"
@@ -98,9 +122,43 @@ const listFilesClick = async () => {
   </label>
   <br></br>
 </div>`;
-  });
+    });
+  } catch (error) {
+    console.log("error:", error);
+  }
+
+  try {
+    const destList = (await listObjects(selectedAllocation, "/test")) || [];
+    console.log("file destList", destList);
+    if (destList && destList.length > 0) {
+      fileListHtml += `
+    <div>
+      <b>File List: /test</b>
+    </div>
+    `;
+    }
+
+    destList.map((file) => {
+      fileListHtml += `
+  <div>
+  <input
+    type="radio"
+    name="selectedFile"
+    id="selectedFile"
+    value=${file.path}
+  />
+  <label htmlFor=${file.path}>
+    ${file.path}
+  </label>
+  <br></br>
+</div>`;
+    });
+  } catch (error) {
+    console.log("error:", error);
+  }
+
   setHtml("listFiles", fileListHtml);
-  if (list && list.length > 0) {
+  if (fileListHtml && fileListHtml.length > 0) {
     onClickGroup("selectedFile", selectFile);
   }
 };
@@ -345,6 +403,78 @@ const bindEvents = () => {
   });
 
   onClick("btnListFiles", listFilesClick);
+
+  onClick("btnCopy", async () => {
+    const selectedAllocation = getSelectedAllocation();
+    if (!selectedAllocation) {
+      alert("Please select allocation");
+      return;
+    }
+    const path = getSelectedFile();
+    if (!path) {
+      alert("Please select the file for copy");
+      return;
+    }
+    console.log("copy file", selectedAllocation, path);
+    //allocationId, path, destination
+    await copyObject(selectedAllocation, path, "/test");
+    console.log("copy completed");
+  });
+
+  onClick("btnMove", async () => {
+    const selectedAllocation = getSelectedAllocation();
+    if (!selectedAllocation) {
+      alert("Please select allocation");
+      return;
+    }
+    const path = getSelectedFile();
+    if (!path) {
+      alert("Please select the file for move");
+      return;
+    }
+    console.log("move file", selectedAllocation, path);
+    //allocationId, path, destination
+    await moveObject(selectedAllocation, path, "/test");
+    console.log("move completed");
+  });
+
+  onClick("btnDelete", async () => {
+    const selectedAllocation = getSelectedAllocation();
+    if (!selectedAllocation) {
+      alert("Please select allocation");
+      return;
+    }
+    const path = getSelectedFile();
+    if (!path) {
+      alert("Please select the file for delete");
+      return;
+    }
+    console.log("delete file", selectedAllocation, path);
+    //allocationId, path
+    await deleteObject(selectedAllocation, path);
+    console.log("delete completed");
+  });
+
+  onClick("btnRename", async () => {
+    const selectedAllocation = getSelectedAllocation();
+    if (!selectedAllocation) {
+      alert("Please select allocation");
+      return;
+    }
+    const path = getSelectedFile();
+    if (!path) {
+      alert("Please select the file for rename");
+      return;
+    }
+    console.log("rename file", selectedAllocation, path);
+    //allocationId, path, newName
+    await renameObject(
+      selectedAllocation,
+      path,
+      getAppendedFileName(path, "_new")
+    );
+    console.log("rename completed");
+  });
 
   const log = console.log;
   const logs = get("logs");
