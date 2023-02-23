@@ -353,23 +353,23 @@ const bindEvents = () => {
       alert("Please select allocation for update");
       return;
     }
-    console.log("updating allocation", selectedAllocation.id);
+    console.log("updating allocation", selectedAllocation);
 
     const newAllocationName = get("newAllocationName").value;
 
     //allocationId string, name string,size, expiry int64,lock int64, isImmutable, updateTerms bool,addBlobberId, removeBlobberId string
     const name = newAllocationName,
-      size = null,
+      size = undefined,
       expiry = null,
-      lock = null,
-      isImmutable = false,
+      lock = 100,
+      isImmutable = undefined,
       updateTerms = true,
       addBlobberId = "",
       removeBlobberId = "";
 
     //Call updateAllocation method
     await updateAllocation(
-      selectedAllocation.id,
+      selectedAllocation,
       name,
       size,
       expiry,
