@@ -19,6 +19,11 @@ import {
   moveObject,
   deleteObject,
   renameObject,
+  reloadAllocation,
+  transferAllocation,
+  freezeAllocation,
+  cancelAllocation,
+  updateAllocation,
 } from "zus-sdk";
 
 import { get, onClick, onClickGroup, setHtml, onChange, setValue } from "./dom";
@@ -286,6 +291,94 @@ const bindEvents = () => {
     <br></br>
   </div>`;
     setHtml("allocationDetails", allocationDetailHtml);
+  });
+
+  onClick("btnReloadAllocation", async () => {
+    const selectedAllocation = getSelectedAllocation();
+    if (!selectedAllocation) {
+      alert("Please select allocation for reload");
+      return;
+    }
+    const allocation = await reloadAllocation(selectedAllocation);
+    console.log("allocation", allocation);
+    let allocationDetailHtml = `
+    <div>
+      Allocation: ${allocation.id}, Name: ${allocation.name}, Size: ${allocation.size}, Start Time: ${allocation.start_time}, Expiration Date: ${allocation.expiration_date}
+    </div>
+    <br></br>
+  </div>`;
+    setHtml("allocationDetails", allocationDetailHtml);
+  });
+
+  onClick("btnFreezeAllocation", async () => {
+    const selectedAllocation = getSelectedAllocation();
+    if (!selectedAllocation) {
+      alert("Please select allocation for freeze");
+      return;
+    }
+    await freezeAllocation(selectedAllocation);
+  });
+
+  onClick("btnCancelAllocation", async () => {
+    const selectedAllocation = getSelectedAllocation();
+    if (!selectedAllocation) {
+      alert("Please select allocation for cancel");
+      return;
+    }
+    await cancelAllocation(selectedAllocation);
+  });
+
+  onClick("btnTransferAllocation", async () => {
+    const selectedAllocation = getSelectedAllocation();
+    if (!selectedAllocation) {
+      alert("Please select allocation for transfer");
+      return;
+    }
+    const newOwnerId = get("newOwnerId").value;
+    const newOwnerPublicKey = get("newOwnerPublicKey").value;
+
+    console.log(
+      "transferring allocation",
+      selectedAllocation,
+      newOwnerId,
+      newOwnerPublicKey
+    );
+    //Call transferAllocation method
+    await transferAllocation(selectedAllocation, newOwnerId, newOwnerPublicKey);
+  });
+
+  onClick("btnUpdateAllocation", async () => {
+    const selectedAllocation = getSelectedAllocation();
+    if (!selectedAllocation) {
+      alert("Please select allocation for update");
+      return;
+    }
+    console.log("updating allocation", selectedAllocation.id);
+
+    const newAllocationName = get("newAllocationName").value;
+
+    //allocationId string, name string,size, expiry int64,lock int64, isImmutable, updateTerms bool,addBlobberId, removeBlobberId string
+    const name = newAllocationName,
+      size = null,
+      expiry = null,
+      lock = null,
+      isImmutable = false,
+      updateTerms = true,
+      addBlobberId = "",
+      removeBlobberId = "";
+
+    //Call updateAllocation method
+    await updateAllocation(
+      selectedAllocation.id,
+      name,
+      size,
+      expiry,
+      lock,
+      isImmutable,
+      updateTerms,
+      addBlobberId,
+      removeBlobberId
+    );
   });
 
   onChange("uploadFile", handleUploadFiles);
