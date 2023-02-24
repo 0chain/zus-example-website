@@ -9,10 +9,6 @@
 <body>
   <script src="main.js"></script>
   <h2>SDK Test</h2>
-  <h2>
-    Please download zcn.wasm from
-    https://github.com/0chain/gosdk/releases/latest first
-  </h2>
 
   <fieldset>
     <legend>Logging</legend>
@@ -197,6 +193,17 @@
     <br />
     <br />
     <button id="btnDownloadShared">Download Shared File</button>
+  </fieldset>
+
+  <fieldset>
+    <legend>Media WebPlayer</legend>
+    <video id="player" preload="metadata" controls></video>
+    <div className="controls">
+      <button id="btnPlay">Play</button>
+      <button id="btnPlayShared">Play with auth ticket</button>
+      <button id="btnPause">Pause</button>
+      <button id="btnStop">Stop</button>
+    </div>
   </fieldset>
 
   <fieldset>
