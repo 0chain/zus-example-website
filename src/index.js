@@ -27,6 +27,7 @@ import {
 } from "zus-sdk";
 
 import { get, onClick, onClickGroup, setHtml, onChange, setValue } from "./dom";
+import { startPlay, stopPlay } from "./player";
 
 const getWallet = () => {
   const clientID = get("clientId").value;
@@ -59,6 +60,12 @@ const config = [
   configJson.zboxHost,
   configJson.zboxAppType,
 ];
+
+window.downloadCallback = function (totalBytes, completedBytes, error) {
+  console.log(
+    "download: " + completedBytes + "/" + totalBytes + " err:" + error
+  );
+};
 
 const getAppendedFileName = (filename, postfix) => {
   const isExtnExist = filename.lastIndexOf(".") > 0;
@@ -104,6 +111,7 @@ const listFilesClick = async () => {
   let fileListHtml = "";
   try {
     const list = (await listObjects(selectedAllocation, "/")) || [];
+    files = list;
     console.log("file list", list);
     if (list && list.length > 0) {
       fileListHtml += `
@@ -198,6 +206,8 @@ const getSelectedFile = () => {
 const selectFile = () => {
   getSelectedFile();
 };
+
+let files = [];
 
 const bindEvents = () => {
   console.log("bindEvents");
@@ -440,8 +450,16 @@ const bindEvents = () => {
       const allocationId = selectedAllocation;
       console.log("downloading ", path, " from ", allocationId);
 
-      //allocationID, remotePath, authTicket, lookupHash string, downloadThumbnailOnly bool, numBlocks int
-      const file = await download(allocationId, path, "", "", false, 10);
+      //allocationID, remotePath, authTicket, lookupHash string, downloadThumbnailOnly bool, numBlocks int, callback
+      const file = await download(
+        allocationId,
+        path,
+        "",
+        "",
+        false,
+        10,
+        "downloadCallback"
+      );
       console.log("downloaded file", file);
 
       const a = document.createElement("a");
@@ -567,6 +585,72 @@ const bindEvents = () => {
       getAppendedFileName(path, "_new")
     );
     console.log("rename completed");
+  });
+
+  const player = get("player");
+  let isPlayerReady = false;
+
+  onClick("btnPlay", async () => {
+    if (isPlayerReady) {
+      if (player.paused) {
+        player.play();
+      }
+    } else {
+      const file = files.find((it) => it.path == getSelectedFile());
+      console.log("playing file", file);
+      const isLive = file.type == "d";
+
+      if (file) {
+        const allocationId = getSelectedAllocation();
+        startPlay({
+          allocationId,
+          videoElement: player,
+          remotePath: file?.path,
+          authTicket: "",
+          lookupHash: file?.lookup_hash,
+          mimeType: file?.mimetype,
+          isLive: isLive,
+        });
+        isPlayerReady = true;
+      }
+    }
+  });
+
+  onClick("btnPlayShared", async () => {
+    if (isPlayerReady) {
+      if (player.paused) {
+        player.play();
+      }
+    } else {
+      const authTicket = get("authTicket").value;
+
+      const isLive = false;
+
+      if (authTicket) {
+        const allocationId = getSelectedAllocation();
+        startPlay({
+          allocationId,
+          videoElement: player,
+          remotePath: "",
+          authTicket: authTicket,
+          lookupHash: "",
+          mimeType: "",
+          isLive: isLive,
+        });
+        isPlayerReady = true;
+      }
+    }
+  });
+
+  onClick("btnPause", async () => {
+    player.pause();
+  });
+
+  onClick("btnStop", async () => {
+    if (isPlayerReady) {
+      stopPlay({ videoElement: player });
+      isPlayerReady = false;
+    }
   });
 
   const log = console.log;

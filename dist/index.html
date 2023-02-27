@@ -4,6 +4,8 @@
   <!-- for zcn.wasm-->
   <script src="https://cdn.jsdelivr.net/gh/herumi/bls-wasm@v1.0.0/browser/bls.js"></script>
   <script src="https://cdn.jsdelivr.net/gh/golang/go@go1.18.5/misc/wasm/wasm_exec.js"></script>
+  <!-- for player.js -->
+  <script src="https://github.com/videojs/mux.js/releases/latest/download/mux.js"></script>
 </head>
 
 <body>
@@ -197,7 +199,13 @@
 
   <fieldset>
     <legend>Media WebPlayer</legend>
-    <video id="player" preload="metadata" controls></video>
+    <video
+      id="player"
+      preload="metadata"
+      controls
+      width="320"
+      height="240"
+    ></video>
     <div className="controls">
       <button id="btnPlay">Play</button>
       <button id="btnPlayShared">Play with auth ticket</button>

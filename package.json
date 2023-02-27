@@ -15,6 +15,6 @@
     "webpack-cli": "^5.0.1"
   },
   "dependencies": {
-    "zus-sdk": "^0.0.15"
+    "zus-sdk": "^0.0.17"
   }
 }
