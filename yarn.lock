@@ -866,10 +866,10 @@ wildcard@^2.0.0:
   resolved "https://registry.npmjs.org/wildcard/-/wildcard-2.0.0.tgz"
   integrity sha512-JcKqAHLPxcdb9KM49dufGXn2x3ssnfjbcaQdLlfZsL9rH9wgDQjUtDxbo8NE0F6SFvydeu1VhZe7hZuHsB2/pw==
 
-zus-sdk@^0.0.17:
-  version "0.0.17"
-  resolved "https://registry.yarnpkg.com/zus-sdk/-/zus-sdk-0.0.17.tgz#c7f3b9fced32e7c6651de95ed4efcf744a756bdb"
-  integrity sha512-jW5lgZuWsRM+hiHrqon/l1WTM7udVR1rMVhkfFDorxxOVZ3knRmJoVe1zaHaO622vwn/8P8rENQ1TGeF8uMnRQ==
+zus-sdk@^0.0.18:
+  version "0.0.18"
+  resolved "https://registry.yarnpkg.com/zus-sdk/-/zus-sdk-0.0.18.tgz#36b81ef03fff6c62a5f7625e1cc8850d2d31b88a"
+  integrity sha512-51naW92BaSTKelk6orxCxAaahPV8uR/6ZdqUGHO3QEsjXRre+H34GcT5fJtoTwYCD9WaN2y5OYUb6hIilrka+Q==
   dependencies:
     axios "^1.2.0"
     bluebird "^3.7.2"

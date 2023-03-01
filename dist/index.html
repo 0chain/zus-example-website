@@ -179,8 +179,24 @@
       <button id="btnMove">Move</button>
       <button id="btnDelete">Delete</button>
       <button id="btnRename">Rename</button>
+      <button id="btnGetFileStats">Get File Stats</button>
+      <button id="btnDownloadBlocks">Download Blocks</button>
     </div>
     <br />
+  </fieldset>
+
+  <br />
+  <fieldset className="{styles.fieldset}">
+    <legend>Extended File Ops</legend>
+    <div>
+      <br />
+      <div>
+        <label htmlFor="dirName">Directory Name</label>
+        <input id="dirName" name="dirName" value="/test" size="{30}" />
+        <br />
+      </div>
+      <button id="btnCreateDir">Create Dir</button>
+    </div>
   </fieldset>
 
   <fieldset>
