@@ -24,6 +24,9 @@ import {
   freezeAllocation,
   cancelAllocation,
   updateAllocation,
+  createDir,
+  getFileStats,
+  downloadBlocks,
 } from "zus-sdk";
 
 import { get, onClick, onClickGroup, setHtml, onChange, setValue } from "./dom";
@@ -651,6 +654,60 @@ const bindEvents = () => {
       stopPlay({ videoElement: player });
       isPlayerReady = false;
     }
+  });
+
+  onClick("btnCreateDir", async () => {
+    const selectedAllocation = getSelectedAllocation();
+    if (!selectedAllocation) {
+      alert("Please select allocation");
+      return;
+    }
+    const dirName = get("dirName").value;
+    console.log("Create Dir", selectedAllocation, dirName);
+    //allocationId, path
+    await createDir(selectedAllocation, "/" + dirName);
+    console.log("create Dir completed");
+  });
+
+  onClick("btnGetFileStats", async () => {
+    const selectedAllocation = getSelectedAllocation();
+    if (!selectedAllocation) {
+      alert("Please select allocation");
+      return;
+    }
+    const path = getSelectedFile();
+    if (!path) {
+      alert("Please select the file for stats");
+      return;
+    }
+    console.log("getting file stats", selectedAllocation, path);
+    const fileStats = await getFileStats(selectedAllocation, path);
+    console.log("file stats completed", fileStats);
+  });
+
+  onClick("btnDownloadBlocks", async () => {
+    const selectedAllocation = getSelectedAllocation();
+    if (!selectedAllocation) {
+      alert("Please select allocation");
+      return;
+    }
+    const path = getSelectedFile();
+    if (!path) {
+      alert("Please select the file for download blocks");
+      return;
+    }
+    console.log("download blocks", selectedAllocation, path);
+    //allocationID, remotePath, authTicket, lookupHash string, numBlocks int, startBlockNumber, endBlockNumber int64, callbackFuncName string
+    const output = await downloadBlocks(
+      selectedAllocation,
+      path,
+      "",
+      "",
+      10,
+      0,
+      10
+    );
+    console.log("downloaded blocks", output);
   });
 
   const log = console.log;
