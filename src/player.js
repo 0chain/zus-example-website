@@ -1,4 +1,4 @@
-import { play, stop, download, getNextSegment } from "zus-sdk";
+import { play, stop, download, getNextSegment } from "@zerochain/zus-sdk";
 
 export const stopPlay = async ({ videoElement }) => {
   if (!videoElement) {

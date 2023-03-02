@@ -27,7 +27,7 @@ import {
   createDir,
   getFileStats,
   downloadBlocks,
-} from "zus-sdk";
+} from "@zerochain/zus-sdk";
 
 import { get, onClick, onClickGroup, setHtml, onChange, setValue } from "./dom";
 import { startPlay, stopPlay } from "./player";
