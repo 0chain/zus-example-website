@@ -27,6 +27,10 @@ import {
   createDir,
   getFileStats,
   downloadBlocks,
+  getUSDRate,
+  isWalletID,
+  getPublicEncryptionKey,
+  getLookupHash,
 } from "@zerochain/zus-sdk";
 
 import { get, onClick, onClickGroup, setHtml, onChange, setValue } from "./dom";
@@ -208,6 +212,11 @@ const getSelectedFile = () => {
 
 const selectFile = () => {
   getSelectedFile();
+};
+
+const handleUpdateMnemonic = async (event) => {
+  console.log("handleUpdateMnemonic", event.currentTarget.value);
+  setValue("mnemonic", event.currentTarget.value);
 };
 
 let files = [];
@@ -708,6 +717,57 @@ const bindEvents = () => {
       10
     );
     console.log("downloaded blocks", output);
+  });
+
+  onClick("btnGetLookupHash", async () => {
+    const selectedAllocation = getSelectedAllocation();
+    if (!selectedAllocation) {
+      alert("Please select allocation");
+      return;
+    }
+    const path = getSelectedFile();
+    if (!path) {
+      alert("Please select the file for getLookupHash");
+      return;
+    }
+    console.log("getLookupHash file", selectedAllocation, path);
+    //allocationId, path
+    const hash = await getLookupHash(selectedAllocation, path);
+    console.log("getLookupHash completed", hash);
+  });
+
+  onClick("btnGetPublicEncryptKey", async () => {
+    const mnemonic = get("mnemonic").value;
+    console.log("getPublicEncryptionKey", mnemonic);
+    const key = await getPublicEncryptionKey(mnemonic);
+    console.log("getPublicEncryptionKey completed", key);
+    setHtml("encryptKey", key);
+  });
+
+  onChange("mnemonic", handleUpdateMnemonic);
+
+  onClick("btnGetPublicEncryptKey", async () => {
+    const mnemonic = get("mnemonic").value;
+    console.log("getPublicEncryptionKey", mnemonic);
+    const key = await getPublicEncryptionKey(mnemonic);
+    console.log("getPublicEncryptionKey completed", key);
+    setHtml("encryptKey", key);
+  });
+
+  onClick("btnGetUSDRate", async () => {
+    console.log("getUSDRate");
+    const rate = await getUSDRate("zcn");
+    console.log("getUSDRate completed", rate);
+    setHtml("utilsOutput", rate);
+  });
+
+  onClick("btnIsWalletID", async () => {
+    const clientId = get("clientId").value;
+    console.log("isWalletID", clientId);
+    const output = await isWalletID(clientId);
+    // const output = await isWalletID("test");
+    console.log("isWalletID completed", output);
+    setHtml("utilsOutput", output);
   });
 
   const log = console.log;

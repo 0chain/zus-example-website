@@ -181,6 +181,7 @@
       <button id="btnRename">Rename</button>
       <button id="btnGetFileStats">Get File Stats</button>
       <button id="btnDownloadBlocks">Download Blocks</button>
+      <button id="btnGetLookupHash">Lookup Hash</button>
     </div>
     <br />
   </fieldset>
@@ -227,6 +228,37 @@
       <button id="btnPlayShared">Play with auth ticket</button>
       <button id="btnPause">Pause</button>
       <button id="btnStop">Stop</button>
+    </div>
+  </fieldset>
+
+  <br />
+  <fieldset>
+    <legend>Utils</legend>
+    <div>
+      <button id="btnGetUSDRate">USD Rate</button>
+      <button id="btnIsWalletID">isWalletID</button>
+      <br />
+      <br />
+      <div id="utilsOutput" name="utilsOutput"></div>
+    </div>
+  </fieldset>
+
+  <br />
+  <fieldset>
+    <legend>Encryption Key</legend>
+    <div>
+      <br />
+      <div>
+        <label htmlFor="mnemonic">Mnemonic</label>
+        <textarea id="mnemonic" name="mnemonic" rows="4" cols="80">
+crumble innocent find when document spray dutch buzz list giraffe away green drastic hello below siren pact festival hammer swim sweet veteran across like</textarea
+        >
+        <br />
+      </div>
+      <button id="btnGetPublicEncryptKey">Get Public Encrypt Key</button>
+      <br />
+      <br />
+      <div id="encryptKey" name="encryptKey"></div>
     </div>
   </fieldset>
 
