@@ -15,6 +15,6 @@
     "webpack-cli": "^5.0.1"
   },
   "dependencies": {
-    "@zerochain/zus-sdk": "^0.0.21"
+    "@zerochain/zus-sdk": "^0.0.23"
   }
 }

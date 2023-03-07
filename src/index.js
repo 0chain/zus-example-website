@@ -31,6 +31,10 @@ import {
   isWalletID,
   getPublicEncryptionKey,
   getLookupHash,
+  createAllocationWithBlobbers,
+  getAllocationBlobbers,
+  getBlobberIds,
+  createReadPool,
 } from "@zerochain/zus-sdk";
 
 import { get, onClick, onClickGroup, setHtml, onChange, setValue } from "./dom";
@@ -217,6 +221,39 @@ const selectFile = () => {
 const handleUpdateMnemonic = async (event) => {
   console.log("handleUpdateMnemonic", event.currentTarget.value);
   setValue("mnemonic", event.currentTarget.value);
+};
+
+const getBlobberListForAllocation = async () => {
+  const expiryDate = new Date();
+  expiryDate.setDate(expiryDate.getDate() + 30);
+
+  const referredBlobberURLs = [
+      "https://dev2.zus.network/blobber02",
+      "https://dev1.zus.network/blobber02",
+    ],
+    dataShards = 2,
+    parityShards = 2,
+    size = 2 * 1073741824,
+    expiry = Math.floor(expiryDate.getTime() / 1000),
+    minReadPrice = 0,
+    maxReadPrice = 184467440737095516,
+    minWritePrice = 0,
+    maxWritePrice = 184467440737095516;
+
+  //Call getAllocationBlobbers method
+  const blobberList = await getAllocationBlobbers(
+    referredBlobberURLs,
+    dataShards,
+    parityShards,
+    size,
+    expiry,
+    minReadPrice,
+    maxReadPrice,
+    minWritePrice,
+    maxWritePrice
+  );
+  console.log("blobberList", blobberList);
+  return blobberList;
 };
 
 let files = [];
@@ -768,6 +805,56 @@ const bindEvents = () => {
     // const output = await isWalletID("test");
     console.log("isWalletID completed", output);
     setHtml("utilsOutput", output);
+  });
+
+  onClick("btnCreateAllocationWithBlobbers", async () => {
+    console.log("CreateAllocationWithBlobbers");
+    const preferredBlobbers = getBlobberListForAllocation();
+    const expiry = new Date();
+    expiry.setDate(expiry.getDate() + 30);
+
+    //datashards, parityshards int, size, expiry int64,minReadPrice, maxReadPrice, minWritePrice, maxWritePrice int64, lock int64,preferredBlobberIds []string
+    const config = {
+      datashards: 2,
+      parityshards: 2,
+      size: 2 * 1073741824,
+      expiry: Math.floor(expiry.getTime() / 1000),
+      minReadPrice: 0,
+      maxReadPrice: 184467440737095516,
+      minWritePrice: 0,
+      maxWritePrice: 184467440737095516,
+      lock: 5000000000,
+      blobbers: preferredBlobbers,
+    };
+
+    //Call createAllocationWithBlobbers method
+    await createAllocationWithBlobbers(config);
+    listAllocationsClick();
+  });
+
+  onClick("btnGetAllocationBlobbers", async () => {
+    console.log("GetAllocationBlobbers");
+    await getBlobberListForAllocation();
+  });
+
+  onClick("btnGetBlobberIds", async () => {
+    console.log("GetBlobberIds");
+    //https://dev1.zus.network/sharder01/v1/screst/6dba10422e368813802877a85039d3985d96760ed844092319743fb3a76712d7/getblobbers
+    //const blobberUrls = [];
+    const blobberUrls = [
+      "https://dev2.zus.network/blobber02",
+      "https://dev1.zus.network/blobber02",
+    ];
+    //Call getBlobberIds method
+    const blobberIds = await getBlobberIds(blobberUrls);
+    console.log("blobberIds", blobberIds);
+  });
+
+  onClick("btnCreateReadPool", async () => {
+    console.log("CreateReadPool");
+    //Call createReadPool method
+    const result = await createReadPool();
+    console.log("result", result);
   });
 
   const log = console.log;

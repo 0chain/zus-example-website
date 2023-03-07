@@ -229,10 +229,10 @@
   resolved "https://registry.npmjs.org/@xtuc/long/-/long-4.2.2.tgz"
   integrity sha512-NuHqBY1PB/D8xU6s/thBgOAiAP7HOYDQ32+BFZILJ8ivkUkAHQnWfn6WhL79Owj1qmUnoN/YPhktdIoucipkAQ==
 
-"@zerochain/zus-sdk@^0.0.21":
-  version "0.0.21"
-  resolved "https://registry.yarnpkg.com/@zerochain/zus-sdk/-/zus-sdk-0.0.21.tgz#f2f5a3c2e6584ced1a26ab7fa495d0c73f4a0144"
-  integrity sha512-b6knUw2oVT8/jnu9lpjqvNGB0yJfOOK0eep6Xju301tJ+Lf6rah3p1/ennp4Z3oBY8RlOUPWYbVZ0iL5nuHEpg==
+"@zerochain/zus-sdk@^0.0.23":
+  version "0.0.23"
+  resolved "https://registry.yarnpkg.com/@zerochain/zus-sdk/-/zus-sdk-0.0.23.tgz#2a15cd8739cde9857c33836376875a2ebd69e1d3"
+  integrity sha512-uQOAnYCuN9cj9y0OrXm+qtOVAE8rZTsFm+f9s1J2I1ZCMSoVqKeVnCJQ58TeMPmWhc6LvFxBANQuJhe4ZbyKVw==
   dependencies:
     axios "^1.2.0"
     bluebird "^3.7.2"
