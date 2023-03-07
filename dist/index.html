@@ -100,6 +100,10 @@
     </div>
     <br />
     <div>
+      <button id="btnCreateAllocationWithBlobbers">Create With Blobbers</button>
+    </div>
+    <br />
+    <div>
       <button id="btnListAllocations">List</button>
       <br />
       <br />
@@ -159,6 +163,19 @@
 
   <br />
   <fieldset>
+    <legend>Extended Allocation Ops</legend>
+    <div>
+      <br />
+      <button id="btnGetAllocationBlobbers">Get Allocation Blobbers</button>
+      <br />
+      <button id="btnGetBlobberIds">Get Blobber Ids</button>
+      <br />
+      <button id="btnCreateReadPool">Create ReadPool</button>
+    </div>
+  </fieldset>
+
+  <br />
+  <fieldset>
     <legend>File Ops</legend>
     <div>
       <input type="file" multiple="{true}" id="uploadFile" />
@@ -187,7 +204,7 @@
   </fieldset>
 
   <br />
-  <fieldset className="{styles.fieldset}">
+  <fieldset>
     <legend>Extended File Ops</legend>
     <div>
       <br />
