@@ -35,6 +35,8 @@ import {
   getAllocationBlobbers,
   getBlobberIds,
   createReadPool,
+  createWallet,
+  recoverWallet,
 } from "@zerochain/zus-sdk";
 
 import { get, onClick, onClickGroup, setHtml, onChange, setValue } from "./dom";
@@ -306,6 +308,21 @@ const bindEvents = () => {
   onClick("btnGetBalanceWasm", async () => {
     const { clientID } = getWallet();
     const wallet = await getBalanceWasm(clientID);
+    txtOutput.innerHTML = JSON.stringify(wallet, null, 2);
+  });
+
+  onClick("btnCreateWallet", async () => {
+    console.log("calling createWallet");
+    const wallet = await createWallet();
+    console.log("Wallet", wallet);
+    txtOutput.innerHTML = JSON.stringify(wallet, null, 2);
+  });
+
+  onClick("btnRecoverWallet", async () => {
+    console.log("calling recoverWallet");
+    const mnemonic = get("mnemonic").value;
+    const wallet = await recoverWallet(mnemonic);
+    console.log("Wallet", wallet);
     txtOutput.innerHTML = JSON.stringify(wallet, null, 2);
   });
 
