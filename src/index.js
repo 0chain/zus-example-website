@@ -316,6 +316,9 @@ const bindEvents = () => {
     const wallet = await createWallet();
     console.log("Wallet", wallet);
     txtOutput.innerHTML = JSON.stringify(wallet, null, 2);
+    setValue("clientId", wallet.keys.walletId);
+    setValue("publicKey", wallet.keys.publicKey);
+    setValue("privateKey", wallet.keys.privateKey);
   });
 
   onClick("btnRecoverWallet", async () => {
@@ -324,6 +327,9 @@ const bindEvents = () => {
     const wallet = await recoverWallet(mnemonic);
     console.log("Wallet", wallet);
     txtOutput.innerHTML = JSON.stringify(wallet, null, 2);
+    setValue("clientId", wallet.keys.walletId);
+    setValue("publicKey", wallet.keys.publicKey);
+    setValue("privateKey", wallet.keys.privateKey);
   });
 
   onClick("btnListAllocations", listAllocationsClick);
