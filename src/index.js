@@ -37,6 +37,11 @@ import {
   createReadPool,
   createWallet,
   recoverWallet,
+  getAllocationFromAuthTicket,
+  getReadPoolInfo,
+  writePoolLock,
+  getBlobbers,
+  decodeAuthTicket,
 } from "@zerochain/zus-sdk";
 
 import { get, onClick, onClickGroup, setHtml, onChange, setValue } from "./dom";
@@ -877,6 +882,37 @@ const bindEvents = () => {
     console.log("CreateReadPool");
     //Call createReadPool method
     const result = await createReadPool();
+    console.log("result", result);
+  });
+
+  onClick("btnGetAllocFromAuthTicket", async () => {
+    const authTicket = get("authTicket").value;
+    console.log("GetAllocFromAuthTicket", authTicket);
+    const allocation = await getAllocationFromAuthTicket(authTicket);
+    console.log("allocation", allocation);
+  });
+
+  onClick("btnGetReadPoolInfo", async () => {
+    console.log("GetReadPoolInfo");
+    const result = await getReadPoolInfo();
+    console.log("result", result);
+  });
+
+  onClick("btnLockWritePool", async () => {
+    console.log("LockWritePool");
+    const result = await lockWritePool();
+    console.log("result", result);
+  });
+
+  onClick("btnGetBlobbers", async () => {
+    console.log("GetBlobbers");
+    const result = await getBlobbers();
+    console.log("result", result);
+  });
+
+  onClick("btnDecodeAuthTicket", async () => {
+    console.log("DecodeAuthTicket");
+    const result = await decodeAuthTicket();
     console.log("result", result);
   });
 
