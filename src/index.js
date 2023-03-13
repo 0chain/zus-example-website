@@ -39,7 +39,7 @@ import {
   recoverWallet,
   getAllocationFromAuthTicket,
   getReadPoolInfo,
-  writePoolLock,
+  lockWritePool,
   getBlobbers,
   decodeAuthTicket,
 } from "@zerochain/zus-sdk";
@@ -491,7 +491,8 @@ const bindEvents = () => {
           allocationId: allocationId,
           remotePath: `/${file.name}`,
           file: file,
-          thumbnailBytes: null,
+          // thumbnailBytes: await readBytes(file), //only for demo, don't upload original file as thumbnail in production
+          thumbnailBytes: "",
           encrypt: false,
           isUpdate: false,
           isRepair: false,
@@ -893,14 +894,17 @@ const bindEvents = () => {
   });
 
   onClick("btnGetReadPoolInfo", async () => {
-    console.log("GetReadPoolInfo");
-    const result = await getReadPoolInfo();
+    const clientId = get("clientId").value;
+    console.log("GetReadPoolInfo", clientId);
+    const result = await getReadPoolInfo(clientId);
     console.log("result", result);
   });
 
   onClick("btnLockWritePool", async () => {
-    console.log("LockWritePool");
-    const result = await lockWritePool();
+    const allocationId = getSelectedAllocation();
+    console.log("LockWritePool", allocationId);
+    //allocationId string, tokens string, fee string
+    const result = await lockWritePool(allocationId, 1000, 10);
     console.log("result", result);
   });
 
@@ -911,8 +915,9 @@ const bindEvents = () => {
   });
 
   onClick("btnDecodeAuthTicket", async () => {
-    console.log("DecodeAuthTicket");
-    const result = await decodeAuthTicket();
+    const authTicket = get("authTicket").value;
+    console.log("DecodeAuthTicket", authTicket);
+    const result = await decodeAuthTicket(authTicket);
     console.log("result", result);
   });
 
