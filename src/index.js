@@ -37,6 +37,11 @@ import {
   createReadPool,
   createWallet,
   recoverWallet,
+  getAllocationFromAuthTicket,
+  getReadPoolInfo,
+  lockWritePool,
+  getBlobbers,
+  decodeAuthTicket,
 } from "@zerochain/zus-sdk";
 
 import { get, onClick, onClickGroup, setHtml, onChange, setValue } from "./dom";
@@ -486,7 +491,8 @@ const bindEvents = () => {
           allocationId: allocationId,
           remotePath: `/${file.name}`,
           file: file,
-          thumbnailBytes: null,
+          // thumbnailBytes: await readBytes(file), //only for demo, don't upload original file as thumbnail in production
+          thumbnailBytes: "",
           encrypt: false,
           isUpdate: false,
           isRepair: false,
@@ -877,6 +883,41 @@ const bindEvents = () => {
     console.log("CreateReadPool");
     //Call createReadPool method
     const result = await createReadPool();
+    console.log("result", result);
+  });
+
+  onClick("btnGetAllocFromAuthTicket", async () => {
+    const authTicket = get("authTicket").value;
+    console.log("GetAllocFromAuthTicket", authTicket);
+    const allocation = await getAllocationFromAuthTicket(authTicket);
+    console.log("allocation", allocation);
+  });
+
+  onClick("btnGetReadPoolInfo", async () => {
+    const clientId = get("clientId").value;
+    console.log("GetReadPoolInfo", clientId);
+    const result = await getReadPoolInfo(clientId);
+    console.log("result", result);
+  });
+
+  onClick("btnLockWritePool", async () => {
+    const allocationId = getSelectedAllocation();
+    console.log("LockWritePool", allocationId);
+    //allocationId string, tokens string, fee string
+    const result = await lockWritePool(allocationId, 1000, 10);
+    console.log("result", result);
+  });
+
+  onClick("btnGetBlobbers", async () => {
+    console.log("GetBlobbers");
+    const result = await getBlobbers();
+    console.log("result", result);
+  });
+
+  onClick("btnDecodeAuthTicket", async () => {
+    const authTicket = get("authTicket").value;
+    console.log("DecodeAuthTicket", authTicket);
+    const result = await decodeAuthTicket(authTicket);
     console.log("result", result);
   });
 
