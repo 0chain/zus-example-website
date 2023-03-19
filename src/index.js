@@ -55,10 +55,13 @@ const getWallet = () => {
   const clientID = get("clientId").value;
   const publicKey = get("publicKey").value;
   const privateKey = get("privateKey").value;
+  const mnemonic = get("mnemonic").value;
+
   return {
     clientID,
     privateKey,
     publicKey,
+    mnemonic,
   };
 };
 
@@ -287,8 +290,8 @@ const bindEvents = () => {
   });
 
   onClick("btnSetWallet", async () => {
-    const { clientID, privateKey, publicKey } = getWallet();
-    await setWallet(clientID, privateKey, publicKey);
+    const { clientID, privateKey, publicKey, mnemonic } = getWallet();
+    await setWallet(clientID, privateKey, publicKey, mnemonic);
   });
 
   onClick("btnSendMeTokens", async () => {
