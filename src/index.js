@@ -42,6 +42,10 @@ import {
   lockWritePool,
   getBlobbers,
   decodeAuthTicket,
+  initBridge,
+  burnZCN,
+  mintZCN,
+  getMintWZCNPayload,
 } from "@zerochain/zus-sdk";
 
 import { get, onClick, onClickGroup, setHtml, onChange, setValue } from "./dom";
@@ -919,6 +923,63 @@ const bindEvents = () => {
     console.log("DecodeAuthTicket", authTicket);
     const result = await decodeAuthTicket(authTicket);
     console.log("result", result);
+  });
+
+  onClick("btnInitBridge", async () => {
+    const ethereumAddress = "0x5B9eb7E72247c45F6c4B8424FB2002151c57c54d",
+      bridgeAddress = "0x2405e40161ea6da91AE0e95061e7A8462b4D5eEa",
+      authorizersAddress = "0xB132C20A02AD7C38d88805F0e3fFDdfb54224C58",
+      wzcnAddress = "0x10140fbca3a468A1c35F132D75659eF0EB5d95DB",
+      ethereumNodeURL =
+        "https://goerli.infura.io/v3/6141be73a15d47748af0dc14f53d57d7",
+      gasLimit = 300000,
+      value = 0,
+      consensusThreshold = 75.0;
+    console.log(
+      "initBridgeClick",
+      ethereumAddress,
+      bridgeAddress,
+      authorizersAddress,
+      wzcnAddress,
+      ethereumNodeURL,
+      gasLimit,
+      value,
+      consensusThreshold
+    );
+    //Call initBridge method
+    await initBridge(
+      ethereumAddress,
+      bridgeAddress,
+      authorizersAddress,
+      wzcnAddress,
+      ethereumNodeURL,
+      gasLimit,
+      value,
+      consensusThreshold
+    );
+  });
+
+  onClick("btnBurnZCN", async () => {
+    const amount = 1000;
+    console.log("burnZCNClick", amount);
+    const hash = await burnZCN(amount);
+    setValue("txHash", hash);
+    return hash;
+  });
+
+  onClick("btnGetMintWZCNPayload", async () => {
+    const burnTrxHash = get("txHash").value;
+    console.log("getMintWZCNPayloadClick", burnTrxHash);
+    const result = await getMintWZCNPayload(burnTrxHash);
+    return result;
+  });
+
+  onClick("btnMintZCN", async () => {
+    const burnTrxHash = get("txHash").value;
+    const timeout = 100;
+    console.log("mintZCNClick", burnTrxHash, timeout);
+    const hash = await mintZCN(burnTrxHash, timeout);
+    return hash;
   });
 
   const log = console.log;
