@@ -234,10 +234,10 @@
   resolved "https://registry.npmjs.org/@xtuc/long/-/long-4.2.2.tgz"
   integrity sha512-NuHqBY1PB/D8xU6s/thBgOAiAP7HOYDQ32+BFZILJ8ivkUkAHQnWfn6WhL79Owj1qmUnoN/YPhktdIoucipkAQ==
 
-"@zerochain/zus-sdk@^0.0.28":
-  version "0.0.28"
-  resolved "https://registry.yarnpkg.com/@zerochain/zus-sdk/-/zus-sdk-0.0.28.tgz#418cd8e947159234cdeb2ecee39d887ca9b73596"
-  integrity sha512-K5Y0i/TqPqCRg/JyTBUg0E6q4B7UeG8vLiwC7ri3ZVbos+vgBojwhF+emFOp/s687x/LOi3gbQtyuvO3tS5rAg==
+"@zerochain/zus-sdk@^0.0.29":
+  version "0.0.29"
+  resolved "https://registry.yarnpkg.com/@zerochain/zus-sdk/-/zus-sdk-0.0.29.tgz#7f3f5d3f041f221124e6ea62bc06da1b07ce892e"
+  integrity sha512-JWc0OqNwWPyJhELJz8rFdHYhlMUWq/4O22fEK6svfv8VlPXHpd5gcbk1N/MmzBEeEbqK94OcYA1eHSe6x2Ngdg==
   dependencies:
     axios "^1.2.0"
     bip39 "^3.1.0"
