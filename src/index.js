@@ -20,7 +20,6 @@ import {
   deleteObject,
   renameObject,
   reloadAllocation,
-  transferAllocation,
   freezeAllocation,
   cancelAllocation,
   updateAllocation,
@@ -420,25 +419,6 @@ const bindEvents = () => {
       return;
     }
     await cancelAllocation(selectedAllocation);
-  });
-
-  onClick("btnTransferAllocation", async () => {
-    const selectedAllocation = getSelectedAllocation();
-    if (!selectedAllocation) {
-      alert("Please select allocation for transfer");
-      return;
-    }
-    const newOwnerId = get("newOwnerId").value;
-    const newOwnerPublicKey = get("newOwnerPublicKey").value;
-
-    console.log(
-      "transferring allocation",
-      selectedAllocation,
-      newOwnerId,
-      newOwnerPublicKey
-    );
-    //Call transferAllocation method
-    await transferAllocation(selectedAllocation, newOwnerId, newOwnerPublicKey);
   });
 
   onClick("btnUpdateAllocation", async () => {
