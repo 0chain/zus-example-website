@@ -429,14 +429,10 @@ const bindEvents = () => {
     }
     console.log("updating allocation", selectedAllocation);
 
-    const newAllocationName = get("newAllocationName").value;
-
-    //allocationId string, name string,size, expiry int64,lock int64, isImmutable, updateTerms bool,addBlobberId, removeBlobberId string
-    const name = newAllocationName,
-      size = undefined,
-      expiry = null,
+    //allocationId string, size, expiry int64,lock int64, updateTerms bool,addBlobberId, removeBlobberId string
+    const size = undefined,
+      expiry = 2628000,
       lock = 100,
-      isImmutable = undefined,
       updateTerms = true,
       addBlobberId = "",
       removeBlobberId = "";
@@ -444,11 +440,9 @@ const bindEvents = () => {
     //Call updateAllocation method
     await updateAllocation(
       selectedAllocation,
-      name,
       size,
       expiry,
       lock,
-      isImmutable,
       updateTerms,
       addBlobberId,
       removeBlobberId
