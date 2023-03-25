@@ -48,9 +48,9 @@
     "@jridgewell/sourcemap-codec" "1.4.14"
 
 "@noble/hashes@^1.2.0":
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/@noble/hashes/-/hashes-1.2.0.tgz#a3150eeb09cc7ab207ebf6d7b9ad311a9bdbed12"
-  integrity sha512-FZfhjEDbT5GRswV3C6uvLPHMiVD6lQBmpoX5+eSiPaMTXte/IKqI5dykDxzZB/WBeK/CDuQRBWarPdi3FNY2zQ==
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/@noble/hashes/-/hashes-1.3.0.tgz#085fd70f6d7d9d109671090ccae1d3bec62554a1"
+  integrity sha512-ilHEACi9DwqJB0pw7kv+Apvh50jiiSyR/cQ3y4W7lOR5mhvn/50FLUfsnfJz0BDZtl/RR16kXvptiv6q1msYZg==
 
 "@types/eslint-scope@^3.7.3":
   version "3.7.4"
@@ -234,10 +234,10 @@
   resolved "https://registry.npmjs.org/@xtuc/long/-/long-4.2.2.tgz"
   integrity sha512-NuHqBY1PB/D8xU6s/thBgOAiAP7HOYDQ32+BFZILJ8ivkUkAHQnWfn6WhL79Owj1qmUnoN/YPhktdIoucipkAQ==
 
-"@zerochain/zus-sdk@^0.0.30":
-  version "0.0.30"
-  resolved "https://registry.yarnpkg.com/@zerochain/zus-sdk/-/zus-sdk-0.0.30.tgz#d3d3c1b8c1f6fb93e3d78b92a24e90cb0006301b"
-  integrity sha512-CWFgdIOMnVKszqX2dReSK3DTML8ESm9h5te0haAJSFZCtMyaeP1+2O8M0BKSS36uTfd86EFSCcKCGNJ8ubK5Zw==
+"@zerochain/zus-sdk@^0.0.33":
+  version "0.0.33"
+  resolved "https://registry.yarnpkg.com/@zerochain/zus-sdk/-/zus-sdk-0.0.33.tgz#7b25b88bf76857c20e604924fffceffe17534927"
+  integrity sha512-GSSwpSj6JhQt8af2Z2Zw9uHxd9z6qOQ9eTUVecLy4WvxUENsAp1k51V/UKDPp7IKi3Z9g7QLHYqzVy0Avw8eQQ==
   dependencies:
     axios "^1.2.0"
     bip39 "^3.1.0"
