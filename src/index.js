@@ -350,9 +350,8 @@ const bindEvents = () => {
     const expiry = new Date();
     expiry.setDate(expiry.getDate() + 30);
 
-    //name string, datashards, parityshards int, size, expiry int64,minReadPrice, maxReadPrice, minWritePrice, maxWritePrice int64, lock int64,preferredBlobberIds []string
+    //datashards, parityshards int, size, expiry int64,minReadPrice, maxReadPrice, minWritePrice, maxWritePrice int64, lock int64,preferredBlobberIds []string
     const config = {
-      name: "newalloc",
       datashards: 2,
       parityshards: 2,
       size: 2 * 1073741824,
@@ -379,7 +378,7 @@ const bindEvents = () => {
     console.log("allocation", allocation);
     let allocationDetailHtml = `
     <div>
-      Allocation: ${allocation.id}, Name: ${allocation.name}, Size: ${allocation.size}, Start Time: ${allocation.start_time}, Expiration Date: ${allocation.expiration_date}
+      Allocation: ${allocation.id}, Size: ${allocation.size}, Start Time: ${allocation.start_time}, Expiration Date: ${allocation.expiration_date}
     </div>
     <br></br>
   </div>`;
@@ -429,10 +428,15 @@ const bindEvents = () => {
     }
     console.log("updating allocation", selectedAllocation);
 
-    //allocationId string, size, expiry int64,lock int64, updateTerms bool,addBlobberId, removeBlobberId string
-    const size = undefined,
-      expiry = 2628000,
-      lock = 100,
+    const allocationSize = get("allocationSize").value;
+
+    const expiry = new Date();
+    expiry.setDate(expiry.getDate() + 30);
+
+    //allocationId string,size, expiry int64,lock int64, isImmutable, updateTerms bool,addBlobberId, removeBlobberId string
+    const size = parseInt(allocationSize),
+      expiryVal = Math.floor(expiry.getTime() / 1000),
+      lock = 5000000000,
       updateTerms = true,
       addBlobberId = "",
       removeBlobberId = "";
@@ -441,7 +445,7 @@ const bindEvents = () => {
     await updateAllocation(
       selectedAllocation,
       size,
-      expiry,
+      expiryVal,
       lock,
       updateTerms,
       addBlobberId,
