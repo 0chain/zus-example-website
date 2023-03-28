@@ -1,0 +1,14 @@
+@font-face {
+  font-family: "Averta Std";
+  src: url("../fonts/AvertaStd-Regular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Averta Std Bold";
+  src: url("../fonts/AvertaStd-Bold.otf") format("truetype");
+}
+
+@font-face {
+  font-family: "Averta Std Light";
+  src: url("../fonts/AvertaStd-Light.otf") format("truetype");
+}

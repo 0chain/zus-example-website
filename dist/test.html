@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+
+<head>
+  <!-- for zcn.wasm-->
+  <script src="https://cdn.jsdelivr.net/gh/herumi/bls-wasm@v1.0.0/browser/bls.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/golang/go@go1.18.5/misc/wasm/wasm_exec.js"></script>
+  <!-- for player.js -->
+  <script src="https://github.com/videojs/mux.js/releases/latest/download/mux.js"></script>
+</head>
+
+<body>
+  <script src="main.js"></script>
+  <h2>SDK Test</h2>
+
+  <fieldset>
+    <legend>Logging</legend>
+    <span>
+      <button id="btnShowLogs">Show</button>
+      <button id="btnHideLogs">Hide</button>
+    </span>
+    <br />
+    <textarea id="logs" rows="10" cols="100"> </textarea>
+  </fieldset>
+
+  <fieldset>
+    <legend>Greet</legend>
+    <span>
+      <button id="btnGreet">Greet</button>
+    </span>
+    <div id="message"></div>
+    <br />
+  </fieldset>
+
+  <fieldset>
+    <legend>Init</legend>
+    <span>
+      <button id="btnInit">Init</button>
+    </span>
+    <br />
+  </fieldset>
+
+  <fieldset>
+    <legend>Wallet</legend>
+    <label for="clientId">ClientID</label>
+    <input
+      id="clientId"
+      name="clientId"
+      style="width: 600px"
+      value="7d35a6c3ba5066e62989d34cee7dd434d0833d5ea9ff00928aa89994d80e4700"
+    /><br />
+    <label for="privateKey">PrivateKey</label>
+    <input
+      id="privateKey"
+      name="privateKey"
+      style="width: 600px"
+      value="5ababb1e99fe08e44b9843a0a365a832928f9e1aa2d6bba24e01058f1bf0e813"
+    /><br />
+    <label for="publicKey">PublicKey</label>
+    <input
+      id="publicKey"
+      name="publicKey"
+      style="width: 600px"
+      value="5b7ce801f11b5ce02c2ff980469b00e7ed34a9690977661b0cc80bc5eb33ee13baaf6b099f38a2586c5ff63c576870829c117e392fc40868e4bd6418dbaf389c"
+    /><br />
+    <div>
+      <label htmlFor="mnemonic">Mnemonic</label>
+      <textarea id="mnemonic" name="mnemonic" rows="4" cols="80">
+plunge tray magic student meat basic wheel mountain elevator neglect ginger oyster gallery hen ensure roast lake stage color oval antenna plug orchard initial</textarea
+      >
+      <br />
+    </div>
+
+    <button id="btnSetWallet">Set Wallet</button>
+    <button id="btnSendMeTokens">Faucet</button>
+    <button id="btnGetBalance">Get Balance</button>
+    <button id="btnGetBalanceWasm">Get Balance Wasm</button>
+    <button id="btnCreateWallet">Create Wallet</button>
+    <button id="btnRecoverWallet">Recover Wallet</button>
+  </fieldset>
+
+  <br />
+  <fieldset>
+    <legend>Send Token</legend>
+    <br />
+    <div>
+      <label htmlFor="sendTo">Send To</label>
+      <input
+        id="sendTo"
+        name="sendTo"
+        value="0ab9c5ab5effbe47db31299aff6464e7b447e7fb372109758c0d9dcd596b5429"
+        size="90"
+      />
+      <br />
+      <label htmlFor="sendAmount">Send Amount</label>
+      <input id="sendAmount" name="sendAmount" value="10000000000" size="90" />
+      <br />
+    </div>
+    <div>
+      <button id="btnSendTransaction">Send Transaction</button>
+    </div>
+    <br />
+  </fieldset>
+
+  <br />
+  <fieldset>
+    <legend>Allocations</legend>
+    <div>
+      <button id="btnCreateAllocation">Create</button>
+    </div>
+    <br />
+    <div>
+      <button id="btnCreateAllocationWithBlobbers">Create With Blobbers</button>
+    </div>
+    <br />
+    <div>
+      <button id="btnListAllocations">List</button>
+      <br />
+      <br />
+    </div>
+    <br />
+    <div id="listAllocations"></div>
+    <div>
+      <button id="btnGetAllocation">Get Details</button>
+      <button id="btnReloadAllocation">Reload</button>
+      <button id="btnFreezeAllocation">Freeze</button>
+      <button id="btnCancelAllocation">Cancel</button>
+      <br />
+      <div id="allocationDetails"></div>
+      <br />
+    </div>
+    <fieldset style="padding: 10px; margin: 10px">
+      <legend>Update Allocation</legend>
+      <div>
+        <label htmlFor="allocationSize">Allocation Size</label>
+        <input
+          id="allocationSize"
+          name="allocationSize"
+          value="2147483648"
+          size="90"
+        />
+      </div>
+      <br />
+      <br />
+      <button id="btnUpdateAllocation">Update</button>
+    </fieldset>
+  </fieldset>
+
+  <br />
+  <fieldset>
+    <legend>Extended Allocation Ops</legend>
+    <div>
+      <br />
+      <button id="btnGetAllocationBlobbers">Get Allocation Blobbers</button>
+      <br />
+      <button id="btnGetBlobberIds">Get Blobber Ids</button>
+      <br />
+      <button id="btnCreateReadPool">Create ReadPool</button>
+      <br />
+      <button id="btnGetAllocFromAuthTicket">
+        Get Allocation From AuthTicket
+      </button>
+      <br />
+      <button id="btnGetReadPoolInfo">Get ReadPool Info</button>
+      <br />
+      <button id="btnLockWritePool">Lock WritePool</button>
+      <br />
+      <button id="btnGetBlobbers">Get Blobbers</button>
+      <br />
+      <button id="btnDecodeAuthTicket">Decode AuthTicket</button>
+    </div>
+  </fieldset>
+
+  <br />
+  <fieldset>
+    <legend>File Ops</legend>
+    <div>
+      <input type="file" multiple="{true}" id="uploadFile" />
+      <button id="btnUpload">Upload</button>
+    </div>
+    <br />
+    <div>
+      <button id="btnListFiles">List</button>
+      <br />
+      <br />
+      <div id="listFiles"></div>
+    </div>
+    <br />
+    <div>
+      <button id="btnDownload">Download</button>
+      <button id="btnShare">Share</button>
+      <button id="btnCopy">Copy</button>
+      <button id="btnMove">Move</button>
+      <button id="btnDelete">Delete</button>
+      <button id="btnRename">Rename</button>
+      <button id="btnGetFileStats">Get File Stats</button>
+      <button id="btnDownloadBlocks">Download Blocks</button>
+      <button id="btnGetLookupHash">Lookup Hash</button>
+    </div>
+    <br />
+  </fieldset>
+
+  <br />
+  <fieldset>
+    <legend>Extended File Ops</legend>
+    <div>
+      <br />
+      <div>
+        <label htmlFor="dirName">Directory Name</label>
+        <input id="dirName" name="dirName" value="/test" size="{30}" />
+        <br />
+      </div>
+      <button id="btnCreateDir">Create Dir</button>
+    </div>
+  </fieldset>
+
+  <fieldset>
+    <legend>Sharing</legend>
+    <label htmlFor="authTicket"> AuthTicket </label>
+    <input
+      id="authTicket"
+      name="authTicket"
+      value="eyJjbGllbnRfaWQiOiIiLCJvd25lcl9pZCI6IjdkMzVhNmMzYmE1MDY2ZTYyOTg5ZDM0Y2VlN2RkNDM0ZDA4MzNkNWVhOWZmMDA5MjhhYTg5OTk0ZDgwZTQ3MDAiLCJhbGxvY2F0aW9uX2lkIjoiMDZmNzRhYWE1OWVmM2E5M2I1NmNkM2E3NTMxODlkODkzNjMzMDllYzk4NWNmMTRiMmMyMTBkYzhkYTFkZmVhNyIsImZpbGVfcGF0aF9oYXNoIjoiODc1MTA4NDFhZDJkZjViZjUwMTA3Yzg1MWNmMDU0ZDVkYzc0YTU2ZTg0NjFjYzBmYmNhZTMzNGVhNzJmNWRlYSIsImFjdHVhbF9maWxlX2hhc2giOiI1ZWRiN2E5ZTIyM2ZkMzVlODczYzJhMzQzZjFhZWZjMGE5ZjE0MWY0YzdkZDZmNzYxOTA4N2YxNGI1OGUyYjU2IiwiZmlsZV9uYW1lIjoiMS5wbmciLCJyZWZlcmVuY2VfdHlwZSI6ImYiLCJleHBpcmF0aW9uIjowLCJ0aW1lc3RhbXAiOjE2NzY0NDQ4OTgsImVuY3J5cHRlZCI6ZmFsc2UsInNpZ25hdHVyZSI6IjcxNzhiODBjYjQ1M2Q3NWUyYzg1YThiNTM4YjAxYjQ1ZTBhY2UwYjdmOGZiZmNjN2RlYzE3NTQ5OTNiZmUwOTMifQ=="
+      size="90"
+    />
+    <br />
+    <br />
+    <button id="btnDownloadShared">Download Shared File</button>
+  </fieldset>
+
+  <fieldset>
+    <legend>Media WebPlayer</legend>
+    <video
+      id="player"
+      preload="metadata"
+      controls
+      width="320"
+      height="240"
+    ></video>
+    <div className="controls">
+      <button id="btnPlay">Play</button>
+      <button id="btnPlayShared">Play with auth ticket</button>
+      <button id="btnPause">Pause</button>
+      <button id="btnStop">Stop</button>
+    </div>
+  </fieldset>
+
+  <br />
+  <fieldset>
+    <legend>Utils</legend>
+    <div>
+      <button id="btnGetUSDRate">USD Rate</button>
+      <button id="btnIsWalletID">isWalletID</button>
+      <br />
+      <br />
+      <div id="utilsOutput" name="utilsOutput"></div>
+    </div>
+  </fieldset>
+
+  <br />
+  <fieldset>
+    <legend>Encryption Key</legend>
+    <div>
+      <button id="btnGetPublicEncryptKey">Get Public Encrypt Key</button>
+      <br />
+      <br />
+      <div id="encryptKey" name="encryptKey"></div>
+    </div>
+  </fieldset>
+
+  <br />
+  <fieldset>
+    <legend>Bridge Methods</legend>
+    <button id="btnInitBridge">Init Bridge</button>
+    <br />
+    <button id="btnBurnZCN">Burn ZCN</button>
+    <br />
+    <div>
+      <label htmlFor="txHash">Tx Hash</label>
+      <input id="txHash" name="txHash" value="" size="90" />
+    </div>
+    <br />
+    <button id="btnGetMintWZCNPayload">Get Mint WZCN Payload</button>
+    <br />
+    <button id="btnMintZCN">Mint ZCN</button>
+  </fieldset>
+
+  <fieldset>
+    <legend>Output</legend>
+    <pre id="txtOutput" style="font-size: 20px; font-weight: bold"></pre>
+  </fieldset>
+</body>
