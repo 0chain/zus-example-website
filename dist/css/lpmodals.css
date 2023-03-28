@@ -1,0 +1,221 @@
+/********* Modal CSS *********/
+
+.modale:before {
+  content: "";
+  display: none;
+  background: rgba(0, 0, 0, 0.6);
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+}
+
+.opened:before {
+  display: block;
+}
+
+.opened .modal-dialog {
+  -webkit-transform: translate(0, 0);
+  -ms-transform: translate(0, 0);
+  transform: translate(0, 0);
+  top: 20%;
+}
+
+.modal-dialog {
+  background: #fefefe;
+  border-radius: 8px;
+  text-align: center;
+  position: fixed;
+  left: 50%;
+  top: -100%;
+  z-index: 11;
+  translate: -50% !important;
+  width: 80%;
+  padding: 20px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+  color: #0d0d0d;
+  -webkit-transform: translate(0, -500%);
+  -ms-transform: translate(0, -500%);
+  transform: translate(0, -500%);
+  -webkit-transition: -webkit-transform 0.3s ease-out;
+  -moz-transition: -moz-transform 0.3s ease-out;
+  -o-transition: -o-transform 0.3s ease-out;
+  transition: transform 0.4s ease-in-out;
+}
+
+.modal-header {
+  margin-top: 1.5rem;
+}
+
+.modal-header h2 {
+  font-size: 20px;
+}
+
+.modal-header h3 {
+  font-size: 16px;
+  margin-top: 0.5rem;
+}
+
+.modal-body {
+  margin-top: 1.5rem;
+}
+
+.modal-body p {
+  font-weight: 12px;
+  font-weight: 500;
+}
+
+.modal-email {
+  font-weight: 600;
+}
+
+.modal-body input {
+  width: 80%;
+  padding: 8px;
+  border: 1px solid #ddd;
+  color: #888;
+  border-radius: 5px;
+  outline: 0;
+  font-size: 12px;
+  margin-top: 0.5rem;
+}
+
+.rank-info {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  padding: 20px 0;
+}
+
+.rank-info h5 {
+  font-size: 24px;
+  margin: auto;
+}
+
+.rank-info p {
+  font-size: 10px;
+  margin-top: 0.5rem;
+}
+
+.rank,
+.people {
+  padding: 20px;
+  border: 1px solid rgb(205, 205, 205);
+  border-radius: 8px;
+}
+
+.modal-footer {
+  padding: 10px 20px;
+}
+
+.closemodale {
+  position: fixed;
+  right: 5%;
+  font-size: 25px;
+  top: 1%;
+  cursor: pointer;
+}
+
+.social li {
+  display: inline-block;
+  margin: 0 6px;
+  cursor: pointer;
+}
+
+.social li a {
+  color: #0d0d0d;
+  height: 40px;
+  width: 40px;
+  font-size: 30px;
+}
+
+.loader {
+  border: 5px solid #f3f3f3;
+  border-top: 5px solid #0d0d0d;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  animation: spin 2s linear infinite;
+  margin: auto;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@media screen and (min-width: 800px) {
+  .modal-dialog {
+    width: 650px;
+  }
+
+  .modal-header h2 {
+    font-size: 24px;
+  }
+
+  .modal-header h3 {
+    font-size: 18px;
+  }
+
+  .modal-body input {
+    width: 75%;
+    font-size: 14px;
+  }
+
+  .rank-info {
+    width: 80%;
+    margin: auto;
+  }
+
+  .rank-info h5 {
+    font-size: 32px;
+    margin: 0 auto;
+  }
+
+  .rank-info p {
+    font-size: 16px;
+  }
+
+  .rank,
+  .people {
+    padding: 20px;
+    border: 1px solid rgb(205, 205, 205);
+    border-radius: 8px;
+  }
+
+  .closemodale {
+    right: 2%;
+    font-size: 30px;
+    top: 1%;
+  }
+
+  .social {
+    margin-top: 2rem;
+  }
+
+  .social li a {
+    height: 50px;
+    width: 50px;
+    font-size: 35px;
+  }
+}
+
+.custom-captcha {
+  display: none;
+  margin: 10px auto 0;
+  width: fit-content;
+}
+
+.loader {
+  border: 5px solid #f3f3f3;
+  border-top: 5px solid #0d0d0d;
+  border-radius: 50%;
+  width: 25px;
+  height: 25px;
+  animation: spin 2s linear infinite;
+  margin: auto;
+}

@@ -1,291 +1,436 @@
 <!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-<head>
-  <!-- for zcn.wasm-->
-  <script src="https://cdn.jsdelivr.net/gh/herumi/bls-wasm@v1.0.0/browser/bls.js"></script>
-  <script src="https://cdn.jsdelivr.net/gh/golang/go@go1.18.5/misc/wasm/wasm_exec.js"></script>
-  <!-- for player.js -->
-  <script src="https://github.com/videojs/mux.js/releases/latest/download/mux.js"></script>
-</head>
-
-<body>
-  <script src="main.js"></script>
-  <h2>SDK Test</h2>
-
-  <fieldset>
-    <legend>Logging</legend>
-    <span>
-      <button id="btnShowLogs">Show</button>
-      <button id="btnHideLogs">Hide</button>
-    </span>
-    <br />
-    <textarea id="logs" rows="10" cols="100"> </textarea>
-  </fieldset>
-
-  <fieldset>
-    <legend>Greet</legend>
-    <span>
-      <button id="btnGreet">Greet</button>
-    </span>
-    <div id="message"></div>
-    <br />
-  </fieldset>
-
-  <fieldset>
-    <legend>Init</legend>
-    <span>
-      <button id="btnInit">Init</button>
-    </span>
-    <br />
-  </fieldset>
-
-  <fieldset>
-    <legend>Wallet</legend>
-    <label for="clientId">ClientID</label>
-    <input
-      id="clientId"
-      name="clientId"
-      style="width: 600px"
-      value="7d35a6c3ba5066e62989d34cee7dd434d0833d5ea9ff00928aa89994d80e4700"
-    /><br />
-    <label for="privateKey">PrivateKey</label>
-    <input
-      id="privateKey"
-      name="privateKey"
-      style="width: 600px"
-      value="5ababb1e99fe08e44b9843a0a365a832928f9e1aa2d6bba24e01058f1bf0e813"
-    /><br />
-    <label for="publicKey">PublicKey</label>
-    <input
-      id="publicKey"
-      name="publicKey"
-      style="width: 600px"
-      value="5b7ce801f11b5ce02c2ff980469b00e7ed34a9690977661b0cc80bc5eb33ee13baaf6b099f38a2586c5ff63c576870829c117e392fc40868e4bd6418dbaf389c"
-    /><br />
-    <div>
-      <label htmlFor="mnemonic">Mnemonic</label>
-      <textarea id="mnemonic" name="mnemonic" rows="4" cols="80">
-plunge tray magic student meat basic wheel mountain elevator neglect ginger oyster gallery hen ensure roast lake stage color oval antenna plug orchard initial</textarea
-      >
-      <br />
-    </div>
-
-    <button id="btnSetWallet">Set Wallet</button>
-    <button id="btnSendMeTokens">Faucet</button>
-    <button id="btnGetBalance">Get Balance</button>
-    <button id="btnGetBalanceWasm">Get Balance Wasm</button>
-    <button id="btnCreateWallet">Create Wallet</button>
-    <button id="btnRecoverWallet">Recover Wallet</button>
-  </fieldset>
-
-  <br />
-  <fieldset>
-    <legend>Send Token</legend>
-    <br />
-    <div>
-      <label htmlFor="sendTo">Send To</label>
-      <input
-        id="sendTo"
-        name="sendTo"
-        value="0ab9c5ab5effbe47db31299aff6464e7b447e7fb372109758c0d9dcd596b5429"
-        size="90"
-      />
-      <br />
-      <label htmlFor="sendAmount">Send Amount</label>
-      <input id="sendAmount" name="sendAmount" value="10000000000" size="90" />
-      <br />
-    </div>
-    <div>
-      <button id="btnSendTransaction">Send Transaction</button>
-    </div>
-    <br />
-  </fieldset>
-
-  <br />
-  <fieldset>
-    <legend>Allocations</legend>
-    <div>
-      <button id="btnCreateAllocation">Create</button>
-    </div>
-    <br />
-    <div>
-      <button id="btnCreateAllocationWithBlobbers">Create With Blobbers</button>
-    </div>
-    <br />
-    <div>
-      <button id="btnListAllocations">List</button>
-      <br />
-      <br />
-    </div>
-    <br />
-    <div id="listAllocations"></div>
-    <div>
-      <button id="btnGetAllocation">Get Details</button>
-      <button id="btnReloadAllocation">Reload</button>
-      <button id="btnFreezeAllocation">Freeze</button>
-      <button id="btnCancelAllocation">Cancel</button>
-      <br />
-      <div id="allocationDetails"></div>
-      <br />
-    </div>
-    <fieldset style="padding: 10px; margin: 10px">
-      <legend>Update Allocation</legend>
-      <div>
-        <label htmlFor="allocationSize">Allocation Size</label>
-        <input
-          id="allocationSize"
-          name="allocationSize"
-          value="2147483648"
-          size="90"
-        />
-      </div>
-      <br />
-      <br />
-      <button id="btnUpdateAllocation">Update</button>
-    </fieldset>
-  </fieldset>
-
-  <br />
-  <fieldset>
-    <legend>Extended Allocation Ops</legend>
-    <div>
-      <br />
-      <button id="btnGetAllocationBlobbers">Get Allocation Blobbers</button>
-      <br />
-      <button id="btnGetBlobberIds">Get Blobber Ids</button>
-      <br />
-      <button id="btnCreateReadPool">Create ReadPool</button>
-      <br />
-      <button id="btnGetAllocFromAuthTicket">
-        Get Allocation From AuthTicket
-      </button>
-      <br />
-      <button id="btnGetReadPoolInfo">Get ReadPool Info</button>
-      <br />
-      <button id="btnLockWritePool">Lock WritePool</button>
-      <br />
-      <button id="btnGetBlobbers">Get Blobbers</button>
-      <br />
-      <button id="btnDecodeAuthTicket">Decode AuthTicket</button>
-    </div>
-  </fieldset>
-
-  <br />
-  <fieldset>
-    <legend>File Ops</legend>
-    <div>
-      <input type="file" multiple="{true}" id="uploadFile" />
-      <button id="btnUpload">Upload</button>
-    </div>
-    <br />
-    <div>
-      <button id="btnListFiles">List</button>
-      <br />
-      <br />
-      <div id="listFiles"></div>
-    </div>
-    <br />
-    <div>
-      <button id="btnDownload">Download</button>
-      <button id="btnShare">Share</button>
-      <button id="btnCopy">Copy</button>
-      <button id="btnMove">Move</button>
-      <button id="btnDelete">Delete</button>
-      <button id="btnRename">Rename</button>
-      <button id="btnGetFileStats">Get File Stats</button>
-      <button id="btnDownloadBlocks">Download Blocks</button>
-      <button id="btnGetLookupHash">Lookup Hash</button>
-    </div>
-    <br />
-  </fieldset>
-
-  <br />
-  <fieldset>
-    <legend>Extended File Ops</legend>
-    <div>
-      <br />
-      <div>
-        <label htmlFor="dirName">Directory Name</label>
-        <input id="dirName" name="dirName" value="/test" size="{30}" />
-        <br />
-      </div>
-      <button id="btnCreateDir">Create Dir</button>
-    </div>
-  </fieldset>
-
-  <fieldset>
-    <legend>Sharing</legend>
-    <label htmlFor="authTicket"> AuthTicket </label>
-    <input
-      id="authTicket"
-      name="authTicket"
-      value="eyJjbGllbnRfaWQiOiIiLCJvd25lcl9pZCI6IjdkMzVhNmMzYmE1MDY2ZTYyOTg5ZDM0Y2VlN2RkNDM0ZDA4MzNkNWVhOWZmMDA5MjhhYTg5OTk0ZDgwZTQ3MDAiLCJhbGxvY2F0aW9uX2lkIjoiMDZmNzRhYWE1OWVmM2E5M2I1NmNkM2E3NTMxODlkODkzNjMzMDllYzk4NWNmMTRiMmMyMTBkYzhkYTFkZmVhNyIsImZpbGVfcGF0aF9oYXNoIjoiODc1MTA4NDFhZDJkZjViZjUwMTA3Yzg1MWNmMDU0ZDVkYzc0YTU2ZTg0NjFjYzBmYmNhZTMzNGVhNzJmNWRlYSIsImFjdHVhbF9maWxlX2hhc2giOiI1ZWRiN2E5ZTIyM2ZkMzVlODczYzJhMzQzZjFhZWZjMGE5ZjE0MWY0YzdkZDZmNzYxOTA4N2YxNGI1OGUyYjU2IiwiZmlsZV9uYW1lIjoiMS5wbmciLCJyZWZlcmVuY2VfdHlwZSI6ImYiLCJleHBpcmF0aW9uIjowLCJ0aW1lc3RhbXAiOjE2NzY0NDQ4OTgsImVuY3J5cHRlZCI6ZmFsc2UsInNpZ25hdHVyZSI6IjcxNzhiODBjYjQ1M2Q3NWUyYzg1YThiNTM4YjAxYjQ1ZTBhY2UwYjdmOGZiZmNjN2RlYzE3NTQ5OTNiZmUwOTMifQ=="
-      size="90"
+    <meta
+      name="keywords"
+      content="blockchain, decentralize, web3, storage, 0Chain, dStorage, crypto "
     />
-    <br />
-    <br />
-    <button id="btnDownloadShared">Download Shared File</button>
-  </fieldset>
+    <meta
+      name="description"
+      content="Power your customer engagement, reach, and site uptime with decentralized storage.
+      Decentralize your entire project with our SDK. Start by adding a video hosted on 0Chain dStorage
+      Join the Limitless Future Now"
+    />
 
-  <fieldset>
-    <legend>Media WebPlayer</legend>
-    <video
-      id="player"
-      preload="metadata"
-      controls
-      width="320"
-      height="240"
-    ></video>
-    <div className="controls">
-      <button id="btnPlay">Play</button>
-      <button id="btnPlayShared">Play with auth ticket</button>
-      <button id="btnPause">Pause</button>
-      <button id="btnStop">Stop</button>
-    </div>
-  </fieldset>
+    <!-- /****** Open Graph / Facebook ******/ -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://lp.zus.network/sdk" />
+    <meta property="og:title" content="Züs SDK" />
+    <meta property="og:description" content="Power your customer engagement,
+    reach, and site uptime with decentralized storage. Decentralize your entire
+    project with our SDK. Start by adding a video hosted on 0Chain dStorage Join
+    the Limitless Future Now"" />
+    <meta property=" og:image" content="images/websitedata/showcaseArt.png" />
 
-  <br />
-  <fieldset>
-    <legend>Utils</legend>
-    <div>
-      <button id="btnGetUSDRate">USD Rate</button>
-      <button id="btnIsWalletID">isWalletID</button>
-      <br />
-      <br />
-      <div id="utilsOutput" name="utilsOutput"></div>
-    </div>
-  </fieldset>
+    <!-- /****** Twitter ******/ -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="images/websitedata/showcaseArt.png" />
+    <meta property="twitter:title" content="Züs SDK" />
+    <meta property="twitter:description" content="Power your customer
+    engagement, reach, and site uptime with decentralized storage. Decentralize
+    your entire project with our SDK. Start by adding a video hosted on 0Chain
+    dStorage Join the Limitless Future Now"" />
+    <meta property=" twitter:image" content="" />
+    <meta name="twitter:image:alt" content="OChain - dStorage " />
 
-  <br />
-  <fieldset>
-    <legend>Encryption Key</legend>
-    <div>
-      <button id="btnGetPublicEncryptKey">Get Public Encrypt Key</button>
-      <br />
-      <br />
-      <div id="encryptKey" name="encryptKey"></div>
-    </div>
-  </fieldset>
+    <!-- Fav Icon  -->
+    <link rel="shortcut icon" href="images/favicon.ico" />
+    <!-- Site Title  -->
+    <title>Züs SDK</title>
 
-  <br />
-  <fieldset>
-    <legend>Bridge Methods</legend>
-    <button id="btnInitBridge">Init Bridge</button>
-    <br />
-    <button id="btnBurnZCN">Burn ZCN</button>
-    <br />
-    <div>
-      <label htmlFor="txHash">Tx Hash</label>
-      <input id="txHash" name="txHash" value="" size="90" />
-    </div>
-    <br />
-    <button id="btnGetMintWZCNPayload">Get Mint WZCN Payload</button>
-    <br />
-    <button id="btnMintZCN">Mint ZCN</button>
-  </fieldset>
+    <!-- Shaka Player compiled library: -->
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/shaka-player/4.2.0/shaka-player.compiled.js"
+      integrity="sha512-IMJEFntnvRlPQ309TGE/4MEGA8t7w8+7WsThxt4CT4bXsl8AlhffJAJYYFd0i0hMw5Ylxct1hlaAmMmvB2wq7w=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
 
-  <fieldset>
-    <legend>Output</legend>
-    <pre id="txtOutput" style="font-size: 20px; font-weight: bold"></pre>
-  </fieldset>
-</body>
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/fonts.css" />
+    <link rel="stylesheet" href="css/websitedata.css" />
+    <link rel="stylesheet" href="css/lpmodals.css" />
+
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
+      integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+
+    <!-- Google tag (gtag.js) -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-74JNFGDP42"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+
+      gtag("config", "G-74JNFGDP42");
+    </script>
+  </head>
+
+  <body>
+    <main class="main" id="main">
+      <div class="overlay"></div>
+      <video
+        id="video"
+        poster="images/websitedata/poster.png"
+        playsinline
+        loop
+        muted
+        autoplay
+      ></video>
+
+      <h1 class="mainHeading" id="title">Accelerate customer engagement</h1>
+      <p class="paragraph" id="description">
+        Decentralize your entire project with our SDK. Start by adding a video
+        hosted on 0Chain dStorage.
+      </p>
+
+      <h4 class="secondaryHeading" id="joinText">
+        Get early access and win up to 1000 ZCN through referral
+      </h4>
+
+      <div class="emailContainer">
+        <input
+          type="email"
+          class="emailInput"
+          id="email"
+          placeholder="Enter your email"
+        />
+        <button id="signupButton" class="signupBtn signup-btn">
+          Sign up for the SDK
+        </button>
+      </div>
+
+      <p class="error"></p>
+
+      <div
+        class="custom-captcha g-recaptcha"
+        data-sitekey="6Lcb0AAjAAAAALD7VOwF1_AupagMN-EoluAKntwa"
+      ></div>
+
+      <div class="bottom-text">
+        <span>
+          Footage courtesy of: NASA / ESRS
+          <a href="https://eol.jsc.nasa.gov" target="_blank">
+            eol.jsc.nasa.gov
+          </a></span
+        >
+        <span>
+          Footage repair, image processing:
+          <a
+            href="https://www.youtube.com/watch?v=7KXGZAEWzn0&t=0s"
+            target="_blank"
+          >
+            ‘Orbit’
+          </a>
+          Seán Doran
+        </span>
+      </div>
+    </main>
+
+    <section class="featuresContainer">
+      <div class="featureListWrapper">
+        <div class="featureListHeading">
+          <h2 id="featureText">
+            Power your customer engagement, reach, and site uptime with
+            decentralized storage
+          </h2>
+        </div>
+
+        <div class="featureList">
+          <div class="feature">
+            <div class="iconContainer">
+              <img src="images/security.png" alt="Scalable" loading="lazy" />
+            </div>
+            <h2 class="featureHeading" id="feature1.title">
+              Limitless Availability
+            </h2>
+            <p class="paragraph featureParagraph" id="feature1.description">
+              Global reach with CDN-like scale and unparalleled uptime.
+            </p>
+          </div>
+          <div class="feature">
+            <div class="iconContainer">
+              <img src="images/privacy.png " alt="Secure" loading="'lazy" />
+            </div>
+            <h2 class="featureHeading" id="feature2.title">
+              Limitless Performance
+            </h2>
+            <p class="paragraph featureParagraph" id="feature2.description">
+              Maximize engagement by adding rich media files on your website
+            </p>
+          </div>
+
+          <div class="feature">
+            <div class="iconContainer">
+              <img
+                src="images/security.png"
+                alt="High Performance"
+                loading="'lazy"
+              />
+            </div>
+            <h2 class="featureHeading" id="feature3.title">
+              Limitless Resiliency
+            </h2>
+            <p class="paragraph featureParagraph" id="feature3.description">
+              Eliminate attack threats by fragmenting data. No single point of
+              attack.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="rootContainer">
+      <div class="performance-section">
+        <div class="ellipseContainer">
+          <div class="ellipseLeft"></div>
+          <div class="ellipseRight"></div>
+        </div>
+
+        <div class="showcaseArt">
+          <img src="images/showcaseArt.png" alt="showcase" loading="lazy" />
+          <video
+            src="https://ayush-gupta.s3.us-east-2.amazonaws.com/test/video2.mp4"
+            poster="images/websitedata/poster2.png"
+            playsinline
+            loop
+            muted
+            autoplay
+            loading="lazy"
+          ></video>
+        </div>
+
+        <h3 class="showcase-text" id="streamText">
+          Mesmerize your customer with live streamed data
+        </h3>
+      </div>
+    </section>
+
+    <section class="privacyContainerWrapper">
+      <div class="privacyContainer">
+        <div class="imgContainer">
+          <img src="images/img2.jpg" alt="Privacy" loading="'lazy" />
+        </div>
+        <div class="privacyTextContent">
+          <h4 id="extraFeature.title">Limitless Resiliency</h4>
+          <!-- <h2>As opposed to vulnerable data and network outages</h2> -->
+          <p class="paragraph" id="extraFeature.description">
+            Your data is broken up into fragments and stored with different
+            storage providers, meaning your data does not exist on one distinct
+            node, so there is no single point of failure or attack from hackers,
+            and no business threat from censorship.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Email Modal -->
+    <section class="modale email-modale" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-header">
+          <em style="font-size: 30px" class="fa fa-envelope"></em>
+
+          <div class="closemodale" onclick="closeDialog()">&times;</div>
+        </div>
+        <div class="modal-body">
+          <p>
+            Thank you for signing up for our email list! Please check your email
+            for verification.
+          </p>
+        </div>
+      </div>
+    </section>
+    <!-- Email Modal -->
+
+    <script>
+      fetchTranslations = async (languageKey) => {
+        const projectToken = "563004a1acf746cb9386e3f08d9b3bc8";
+        const url = `https://cdn.simplelocalize.io/${projectToken}/_latest/en/websitedata`;
+        return fetch(url, { cache: "reload" }).then((data) => data.json());
+      };
+
+      fetchTranslations().then((data) => {
+        const keys = Object.keys(data);
+        keys.forEach((key) => {
+          const element = document.getElementById(key);
+
+          if (key === "emailPlaceholder") {
+            document.getElementById("email").placeholder = data[key];
+          }
+
+          if (element) {
+            element.innerHTML = data[key];
+          }
+        });
+      });
+    </script>
+
+    <script>
+      const manifestUri =
+        "https://ayush-gupta.s3.us-east-2.amazonaws.com/test/newwebsite/h264_master.m3u8";
+
+      function initApp() {
+        // Install built-in polyfills to patch browser incompatibilities.
+        shaka.polyfill.installAll();
+
+        // Check to see if the browser supports the basic APIs Shaka needs.
+        if (shaka.Player.isBrowserSupported()) {
+          // Everything looks good!
+          initPlayer();
+        } else {
+          // This browser does not have the minimum set of APIs we need.
+          console.error("Browser not supported!");
+        }
+      }
+
+      async function initPlayer() {
+        // Create a Player instance.
+        const video = document.getElementById("video");
+        const player = new shaka.Player(video);
+
+        player.configure("manifest.dash.ignoreMinBufferTime", true);
+        player.configure("streaming.bufferingGoal", 2 /* second */);
+
+        // Attach player to the window to make it easy to access in the JS console.
+        window.player = player;
+
+        // Listen for error events.
+        player.addEventListener("error", onErrorEvent);
+
+        // Try to load a manifest.
+        // This is an asynchronous process.
+        try {
+          await player.load(manifestUri);
+          // This runs if the asynchronous load is successful.
+          console.log("The video has now been loaded!");
+        } catch (e) {
+          // onError is executed if the asynchronous load fails.
+          onError(e);
+        }
+      }
+
+      function onErrorEvent(event) {
+        // Extract the shaka.util.Error object from the event.
+        onError(event.detail);
+      }
+
+      function onError(error) {
+        // Log the error.
+        console.error("Error code", error.code, "object", error);
+      }
+
+      document.addEventListener("DOMContentLoaded", initApp);
+    </script>
+
+    <script>
+      // GTM for Page visit
+      window.dataLayer.push({ event: "sdk_visit" });
+
+      const appName = "sdk";
+
+      const emailInput = document.querySelector("#email");
+      const signupBtn = document.querySelector(".signup-btn");
+      const error = document.querySelector(".error");
+      const emailModale = document.querySelector(".email-modale");
+
+      const setSignupBtn = (val) => {
+        signupBtn.innerHTML = val;
+      };
+
+      const openEmailModal = () => {
+        emailModale.classList.add("opened");
+      };
+
+      const setError = (msg) => {
+        error.innerHTML = msg;
+      };
+
+      const resetForm = () => {
+        emailInput.value = "";
+        setSignupBtn("Sign up for the SDK");
+      };
+
+      emailInput.addEventListener("input", function () {
+        setError("");
+      });
+
+      //Function to register new user
+      signupBtn.addEventListener("click", async (event) => {
+        event.preventDefault();
+
+        setError("");
+
+        userEmail = emailInput.value;
+
+        setSignupBtn("Loading...");
+
+        //Simple Email Validation
+        const emailValidation = (email) => {
+          const pattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+          if (email.match(pattern)) {
+            setError("");
+            return true;
+          }
+          return false;
+        };
+
+        if (userEmail) {
+          if (!emailValidation(userEmail)) {
+            setError("Entered email is invalid. Try again.");
+            setSignupBtn("Sign up for the SDK");
+            return;
+          }
+        }
+
+        try {
+          const response = await fetch("/referral/send-email", {
+            method: "POST",
+            headers: { "Content-type": "application/json" },
+            body: JSON.stringify({ email: userEmail, appName }),
+          });
+          const { error, insert_error } = await response.json();
+
+          if (error) {
+            setError("Email send failed. Please Try again");
+          } else if (insert_error) {
+            setError(
+              "Email is already being used for Sign up. Please try with another email"
+            );
+          } else {
+            //Open Email popup + show Refer button, when user Submits the Email
+            openEmailModal();
+
+            // GTM for Email Signup
+            window.dataLayer.push({ event: "sdk_signup_click" });
+          }
+        } catch (error) {
+          console.log(error);
+          setError("Something went wrong. Please try again later.");
+        }
+
+        resetForm();
+      });
+    </script>
+
+    <script>
+      const closeDialog = () => {
+        document.querySelector(".email-modale").classList.remove("opened");
+      };
+    </script>
+  </body>
+</html>
