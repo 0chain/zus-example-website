@@ -1,0 +1,39 @@
+.container {
+  margin: auto;
+  /* width: $mobile-width; */
+  text-align: center;
+  padding-top: 4rem;
+  padding-bottom: 3rem;
+  overflow: hidden;
+}
+
+.secondaryHeading {
+  font-weight: 600;
+  margin-top: 3rem;
+  margin-bottom: 1.5rem;
+}
+
+@include media(">tablet") {
+  .container {
+    width: 100%;
+    padding-top: 4.5rem;
+    padding-bottom: 4.5rem;
+  }
+
+  .heroBackground {
+    @include background-image(
+      "/images/Hero/cloud.png",
+      top,
+      827.58px,
+      100%,
+      100%
+    );
+    @include inset;
+  }
+
+  .secondaryHeading {
+    font-size: 21px;
+    line-height: 125%;
+    margin-top: 4.2rem;
+  }
+}
