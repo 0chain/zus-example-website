@@ -1,0 +1,84 @@
+@mixin center-horizontal {
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+@mixin center-horizontal-absolute {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+@mixin center-absolute {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+@mixin primary-text-mobile {
+  font-weight: 400;
+  font-size: 1rem;
+  text-align: center;
+  color: #ffffff;
+  opacity: 0.8;
+  line-height: 28px;
+}
+
+@mixin background-image($url, $position, $size, $height, $width) {
+  position: absolute;
+  background: url($url) $position/$size no-repeat;
+  z-index: -9;
+  height: $height;
+  width: $width;
+}
+
+@mixin flex($justifyContent, $alignItems) {
+  display: flex;
+  justify-content: $justifyContent;
+  align-items: $alignItems;
+}
+
+@mixin flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin flex-center-column {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+@mixin flex-vertical-center($justifyContent) {
+  display: flex;
+  justify-content: $justifyContent;
+  align-items: center;
+}
+
+@mixin flex-horizontal-center($alignItems) {
+  display: flex;
+  justify-content: center;
+  align-items: $alignItems;
+}
+
+@mixin custom-gradient-center($c1, $c2) {
+  background: radial-gradient(50% 50% at 50% 50%, $c1, $c2);
+}
+
+@mixin light-purple-gradient-text {
+  background: linear-gradient(135deg, #d0d6fb 0%, #7e8acb 91.98%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-fill-color: transparent;
+}
+
+@mixin inset {
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}

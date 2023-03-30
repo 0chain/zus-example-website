@@ -580,6 +580,11 @@ import-local@^3.0.2:
     pkg-dir "^4.2.0"
     resolve-cwd "^3.0.0"
 
+include-media@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/include-media/-/include-media-2.0.0.tgz#21f80a4b40addd1da5d500cf8bf3b123cb1136a6"
+  integrity sha512-LSJcffPYIZ/Kln0rIi5UhqQbZxElDCMYA4dPC5MI1rkwwjptgEiOicHnzB0MMhMNJver0+4zULb4MKlgDyapZg==
+
 interpret@^3.1.1:
   version "3.1.1"
   resolved "https://registry.npmjs.org/interpret/-/interpret-3.1.1.tgz"

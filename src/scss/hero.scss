@@ -1,0 +1,217 @@
+@use "variables.scss" as *;
+@use "mixins.scss" as *;
+
+@import "include-media";
+
+.heroContainer {
+  margin: auto;
+  width: $mobile-width;
+  text-align: center;
+  padding-top: 4rem;
+  padding-bottom: 3rem;
+  overflow: hidden;
+
+  .secondaryHeading {
+    font-weight: 600;
+    margin-top: 3rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .heading {
+    font-weight: 700;
+    font-size: 42px;
+    line-height: 110%;
+
+    span {
+      color: $primary-blue;
+    }
+  }
+
+  .uppercase {
+    text-align: center;
+    text-transform: uppercase;
+  }
+
+  .withoutPeriod {
+    & > span {
+      display: none;
+    }
+  }
+
+  .h3 {
+    font-weight: 700;
+    font-size: 28px;
+    line-height: 115%;
+  }
+  .inputForm {
+    position: relative;
+    @include flex-center;
+    flex-direction: column;
+    gap: 1.5rem;
+    width: 100%;
+    margin-top: 1.5rem;
+    margin-bottom: 3rem;
+
+    button {
+      padding: 14px 28px;
+    }
+
+    .button {
+      cursor: pointer;
+      margin: auto;
+      padding: 0.8rem 1.5rem;
+      color: #fff;
+      display: block;
+      //width: 100%;
+      background: $zus-primary-gradient;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 1rem;
+      transition: all 0.3s ease-in;
+      border: none;
+      outline: none;
+      z-index: 99;
+      @include flex-center;
+
+      &:hover {
+        transform: scale(1.05);
+
+        & > span {
+          font-weight: 700;
+        }
+      }
+    }
+  }
+
+  .inputBox {
+    font-family: "Averta Std";
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    width: 100%;
+    padding: 14px 20px;
+    border-radius: 8px;
+    background-color: $color-background;
+  }
+
+  .showcasePage {
+    .inputBox {
+      background: rgba(0, 0, 0, 0.2);
+      border-radius: 12px;
+      padding: 16px 24px;
+      border: 1px solid #90939e;
+      backdrop-filter: blur(15px);
+    }
+
+    button {
+      position: absolute;
+      top: 4px;
+      right: 4px;
+      width: fit-content;
+      height: 48px;
+    }
+  }
+
+  .inputBox::placeholder {
+    color: #cfd2dc;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 24px;
+  }
+
+  .modalContent {
+    color: black;
+    padding: 2rem;
+  }
+
+  .socialIcons {
+    margin-top: 2.5rem;
+    @include flex-center;
+    z-index: 99;
+    list-style-type: none;
+
+    li {
+      cursor: pointer;
+      padding: 0 1.8rem;
+      border-right: 1px solid rgb(255, 255, 255, 0.1);
+    }
+
+    li:last-child {
+      border-right: none;
+    }
+  }
+}
+
+@include media(">tablet") {
+  .heroContainer {
+    width: 100%;
+    padding-top: 4.5rem;
+    padding-bottom: 4.5rem;
+
+    .heroBackground {
+      @include background-image(
+        "../images/hero/cloud.png",
+        top,
+        827.58px,
+        100%,
+        100%
+      );
+      @include inset;
+      top: 15.5%;
+    }
+
+    .secondaryHeading {
+      font-size: 21px;
+      line-height: 125%;
+      margin-top: 4.2rem;
+    }
+
+    .heading {
+      font-size: 68px;
+      line-height: 68px;
+    }
+
+    .h3 {
+      font-size: 68px;
+      line-height: 100%;
+    }
+
+    .inputForm {
+      align-items: stretch;
+      flex-direction: row;
+      width: 520px;
+      height: 56px;
+      margin: 2rem auto;
+
+      .inputBox {
+        border-radius: 12px;
+        padding: 14px 24px;
+      }
+
+      button {
+        position: absolute;
+        top: 4px;
+        right: 4px;
+        width: 148px;
+        height: 48px;
+
+        &:hover {
+          transform: none;
+
+          & > span {
+            font-weight: 600;
+          }
+        }
+      }
+
+      .button {
+        &:hover {
+          transform: scale(1.1);
+
+          & > span {
+            font-weight: 700;
+          }
+        }
+      }
+    }
+  }
+}

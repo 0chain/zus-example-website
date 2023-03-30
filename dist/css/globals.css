@@ -1,0 +1,59 @@
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-family: "Averta Std", -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+}
+
+body {
+  font-family: "Averta Std", -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  background-color: #030819;
+  color: #fff;
+  scroll-behavior: smooth;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+  color: inherit;
+  text-decoration: none;
+}
+
+ul {
+  list-style-type: none;
+}
+
+input,
+input:active,
+input:focus {
+  outline: none;
+  font-size: 16px;
+}
+
+input::placeholder,
+button {
+  font-weight: 600;
+  font-family: "Averta Std";
+}
+
+input::-ms-input-placeholder {
+  font-weight: 400;
+  font-family: "Averta Std";
+}
+
+.shaka-controls-container {
+  display: none;
+}
+
+.react-responsive-modal-overlay,
+.react-responsive-modal-container,
+.react-responsive-modal-modal {
+  animation-fill-mode: forwards !important;
+}
+
+/*# sourceMappingURL=globals.css.map */

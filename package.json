@@ -5,8 +5,8 @@
   "private": true,
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack",
-    "sass": "sass src/scss:public"
+    "build": "sass src/scss:dist/css && webpack",
+    "sass": "sass src/scss:dist/css"
   },
   "keywords": [],
   "author": "",
@@ -17,6 +17,7 @@
     "webpack-cli": "^5.0.1"
   },
   "dependencies": {
-    "@zerochain/zus-sdk": "^0.0.33"
+    "@zerochain/zus-sdk": "^0.0.33",
+    "include-media": "^2.0.0"
   }
 }

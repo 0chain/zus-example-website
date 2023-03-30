@@ -1,14 +1,40 @@
+/************** Fonts ***************/
+/************** Not used anywhere ***************/
+/************** Not used anywhere ***************/
 @font-face {
   font-family: "Averta Std";
-  src: url("../fonts/AvertaStd-Regular.ttf") format("truetype");
+  src: url("/fonts/AvertaStd-Thin.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 200;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Averta Std";
+  src: url("/fonts/AvertaStd-Light.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Averta Std";
+  src: url("/fonts/AvertaStd-Regular.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Averta Std";
+  src: url("/fonts/AvertaStd-Semibold.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Averta Std";
+  src: url("/fonts/AvertaStd-Bold.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
 }
 
-@font-face {
-  font-family: "Averta Std Bold";
-  src: url("../fonts/AvertaStd-Bold.otf") format("truetype");
-}
-
-@font-face {
-  font-family: "Averta Std Light";
-  src: url("../fonts/AvertaStd-Light.otf") format("truetype");
-}
+/*# sourceMappingURL=fonts.css.map */
