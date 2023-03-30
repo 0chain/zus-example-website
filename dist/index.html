@@ -57,7 +57,8 @@
     <link rel="stylesheet" href="css/fonts.css" />
     <link rel="stylesheet" href="css/websitedata.css" />
     <link rel="stylesheet" href="css/lpmodals.css" />
-    <link rel="stylesheet" href="css/hero.css" />
+    <!-- <link rel="stylesheet" href="css/hero.css" /> -->
+    <link rel="stylesheet" href="css/main.css" />
 
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 
@@ -147,7 +148,75 @@
     </main>
 
     <!-- Hero Section Start-->
-    <main class="container">
+    <main class="heroContainer">
+      <div class="heroBackground"></div>
+      <!-- <Fade cascade duration={800} damping={0.2} direction="up" triggerOnce> -->
+      <h1 class="heading">The most private cloud<span>.</span></h1>
+      <!-- <CountDownTimer targetDate={targetDate} /> -->
+      <h2 class="secondaryHeading">
+        Build your privacy solution. Store for total protection.
+      </h2>
+      <div class="inputForm">
+        <input
+          class="inputBox"
+          type="email"
+          name="email"
+          id="email"
+          placeholder="Enter your email for mainnet notification"
+          autocomplete="off"
+        />
+        <button class="button">
+          <span>Get Notified</span>
+        </button>
+      </div>
+      <ul class="socialIcons">
+        <li>
+          <a
+            href="https://discord.com/invite/h3BFjdtCp4"
+            rel="noreferrer"
+            target="_blank"
+          >
+            <img
+              src="images/socialicons/discord.svg"
+              alt="discord"
+              height="28"
+              width="28"
+              priority
+            />
+          </a>
+        </li>
+        <li>
+          <a
+            href="https://twitter.com/zus_network"
+            rel="noreferrer"
+            target="_blank"
+          >
+            <img
+              src="images/socialicons/twitter.svg"
+              alt="twitter"
+              height="28"
+              width="28"
+              priority
+            />
+          </a>
+        </li>
+        <li>
+          <a href="https://t.me/zus_network" rel="noreferrer" target="_blank">
+            <img
+              src="images/socialicons/telegram.svg"
+              alt="telegram"
+              height="28"
+              width="28"
+              priority
+            />
+          </a>
+        </li>
+      </ul>
+      <!-- <SocialIcons /> -->
+      <!-- </Fade> -->
+    </main>
+
+    <!-- <main class="heroContainer">
       <div class="heroBackground"></div>
       <div class="css_1">
         <h1 class="heading">The most private cloud<span>.</span></h1>
@@ -168,7 +237,7 @@
             placeholder="Enter your email for mainnet notification"
             autocomplete="off"
             value=""
-          /><button class="button">
+          /><button class="button_1">
             <span>Get Notified</span>
           </button>
         </div>
@@ -405,8 +474,27 @@
           </li>
         </ul>
       </div>
-    </main>
+    </main> -->
     <!-- Hero Section End-->
+
+    <!--Main Feature Start-->
+    <section class="mainFeatureContainer">
+      <div class="mainContent">
+        <div class="bgPatternLeft"></div>
+        <div class="bgPatternRight"></div>
+        <div class="css">
+          <h2 class="heading">Best Uptime. Total Protection.</h2>
+        </div>
+        <div class="css">
+          <p class="paragraph">
+            Züs is the first decentralized encrypted data sharing network. It is
+            the only network with a QoS (quality-of-service) protocol to ensure
+            total protection.
+          </p>
+        </div>
+      </div>
+    </section>
+    <!--Main feature End-->
 
     <section class="featuresContainer">
       <div class="featureListWrapper">
@@ -416,7 +504,6 @@
             decentralized storage
           </h2>
         </div>
-
         <div class="featureList">
           <div class="feature">
             <div class="iconContainer">

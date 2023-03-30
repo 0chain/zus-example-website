@@ -1,0 +1,65 @@
+// Colors
+$color-background: #030819;
+$color-background-dark: #161618;
+$header-blue-bg: #020c20;
+$primary-blue: #0b9dff;
+$primary-solid: #009eff;
+$light-blue: #82d0e9;
+$dark-blue: rgba(13, 144, 255, 0.3);
+$darker-blue: #061631;
+$border-blue: #00d3ff;
+$off-white: #f6f6f6;
+$grey-2: #f1f2f2;
+$grey-3: #cfd2dc;
+$grey-4: #90939e;
+$grey-5: #5c606b;
+$grey-6: #41434a;
+$grey-7: #202127;
+$text-2: #e6e7e8;
+$text-3: #81858e;
+
+// Gradient
+$zus-primary-gradient: linear-gradient(
+  121.99deg,
+  #00d3ff -26.48%,
+  #1a49ff 64.48%
+);
+$blue-gradient-center: radial-gradient(
+  50% 50% at 50% 50%,
+  #1477f8 0%,
+  rgba(5, 11, 25, 0) 100%
+);
+$blue-gradient-circle-center: radial-gradient(
+  circle at 50% 50%,
+  #1477f8 0%,
+  rgba(5, 11, 25, 0) 100%
+);
+$blue-gradient-top-right-to-bottom-left: radial-gradient(
+  ellipse at top left,
+  #1477f8 0%,
+  rgba(5, 11, 25, 0) 100%
+);
+$blue-gradient-50-percent-top-right: radial-gradient(
+  50% 50% at top left,
+  #1477f8 0%,
+  rgba(5, 11, 25, 0) 100%
+);
+$gradient-for-card-mobile: radial-gradient(
+  circle at bottom,
+  #030c21 0%,
+  rgba(5, 11, 25, 0) 100%
+);
+$gradient-for-card-desktop: radial-gradient(
+  circle at right,
+  #05193b 0%,
+  rgba(5, 11, 25, 0) 100%
+);
+$gradient-layer: linear-gradient(180deg, rgba(3, 8, 25, 0) 0%, #030819 100%);
+
+// Layout
+$mobile-width: 327px;
+$header-mobile: -71px;
+$header-desktop: calc(-81px - 49px);
+
+//Borders
+$border-gray: 1px solid rgba(139, 139, 139, 0.3);
