@@ -1,6 +1,5 @@
 .container {
   margin: auto;
-  /* width: $mobile-width; */
   text-align: center;
   padding-top: 4rem;
   padding-bottom: 3rem;
@@ -103,7 +102,6 @@
   width: 100%;
   padding: 14px 20px;
   border-radius: 8px;
-  /* background-color: $color-background; */
   background: rgba(0, 0, 0, 0.2);
   border-radius: 12px;
   padding: 16px 24px;
@@ -137,7 +135,7 @@
   }
 }
 
-button {
+.button_1 {
   position: absolute;
   top: 4px;
   right: 4px;
@@ -187,19 +185,17 @@ button {
     padding: 14px 24px;
   }
 
-  button {
+  .button_1 {
     position: absolute;
     top: 4px;
     right: 4px;
     width: 148px;
     height: 48px;
   }
-  button hover {
+
+  .button_1 hover {
     transform: none;
   }
-  /* & > span {
-    font-weight: 600;
-  } */
 }
 
 .socialIcons {
@@ -222,17 +218,3 @@ button {
 .socialIcons li:last-child {
   border-right: none;
 }
-
-/* ul {
-  list-style-type: none;
-}
-
-ul {
-  display: block;
-  list-style-type: disc;
-  margin-block-start: 1em;
-  margin-block-end: 1em;
-  margin-inline-start: 0px;
-  margin-inline-end: 0px;
-  padding-inline-start: 40px;
-} */
