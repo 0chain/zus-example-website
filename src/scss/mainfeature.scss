@@ -26,6 +26,17 @@
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
+  .paragraph {
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 160%;
+    color: $text-2;
+    text-align: center;
+  }
+
+  .left {
+    text-align: left;
+  }
 }
 
 @include media(">tablet") {

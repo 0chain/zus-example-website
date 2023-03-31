@@ -1,0 +1,90 @@
+@use "variables.scss" as *;
+@use "mixins.scss" as *;
+
+@import "include-media";
+
+.featureListWrapper {
+  margin: auto;
+  padding-bottom: 6.25rem;
+
+  .container {
+    position: relative;
+    width: $mobile-width;
+    margin: auto;
+    padding-top: 3.75rem;
+    @include flex(space-between, center);
+    flex-direction: column;
+    gap: 30px;
+
+    button {
+      width: 146px;
+      height: 52px;
+      font-weight: 700;
+      font-size: 16px;
+      line-height: 24px;
+      border: 1px solid rgba(139, 139, 139, 0.6);
+      padding: 0;
+      margin: 2rem auto 0;
+    }
+  }
+
+  .icon {
+    position: relative;
+    height: 180px;
+    width: 180px;
+  }
+
+  .textContainer {
+    text-align: center;
+    width: 100%;
+
+    p {
+      margin-top: 1.25rem;
+    }
+  }
+
+  .heading {
+    font-weight: 700;
+    font-size: 28px;
+    line-height: 115%;
+  }
+}
+
+@include media(">tablet") {
+  .featureListWrapper {
+    @include flex-horizontal-center(stretch);
+    gap: 2rem;
+    border-top: $border-gray;
+    padding: 5.5rem 0;
+    flex-wrap: wrap;
+
+    .container {
+      padding: 0;
+      justify-content: flex-start;
+      width: 350px;
+      margin: 0;
+
+      button {
+        position: absolute;
+        bottom: 0;
+        margin-left: auto;
+        margin-right: auto;
+        left: 0;
+        right: 0;
+        text-align: center;
+      }
+    }
+
+    .icon {
+      height: 250px;
+      width: 250px;
+    }
+
+    .textContainer {
+      height: calc(100% - 250px);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+  }
+}
