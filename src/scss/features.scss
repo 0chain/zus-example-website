@@ -48,6 +48,52 @@
     font-size: 28px;
     line-height: 115%;
   }
+  .paragraph {
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 160%;
+    color: $text-2;
+    text-align: center;
+  }
+
+  .left {
+    text-align: left;
+  }
+  .button {
+    cursor: pointer;
+    margin: auto;
+    padding: 0.8rem 1.5rem;
+    color: #fff;
+    display: block;
+    width: 100%;
+    background: $zus-primary-gradient;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: all 0.3s ease-in;
+    border: none;
+    outline: none;
+    z-index: 99;
+    @include flex-center;
+
+    &:hover {
+      transform: scale(1.05);
+
+      & > span {
+        font-weight: 700;
+      }
+    }
+  }
+
+  .black {
+    background: $color-background;
+    width: 100%;
+    border: 1px solid #fff;
+  }
+
+  .transparent {
+    background: transparent;
+  }
 }
 
 @include media(">tablet") {
@@ -85,6 +131,29 @@
       display: flex;
       flex-direction: column;
       justify-content: space-between;
+    }
+    .button {
+      &:hover {
+        transform: scale(1.1);
+
+        & > span {
+          font-weight: 700;
+        }
+      }
+    }
+
+    .black {
+      &:hover {
+        background: #ffffff;
+        box-shadow: 0px 0px 20px 1px rgba(255, 255, 255, 0.5);
+
+        & > span {
+          background: $zus-primary-gradient;
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+        }
+      }
     }
   }
 }
