@@ -20,6 +20,16 @@
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
+.mainFeatureContainer .paragraph {
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 160%;
+  color: #e6e7e8;
+  text-align: center;
+}
+.mainFeatureContainer .left {
+  text-align: left;
+}
 
 @media (min-width: 769px) {
   .mainFeatureContainer {

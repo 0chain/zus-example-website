@@ -1,0 +1,159 @@
+@use "variables.scss" as *;
+@use "mixins.scss" as *;
+
+@import "include-media";
+
+.featureListWrapper {
+  margin: auto;
+  padding-bottom: 6.25rem;
+
+  .container {
+    position: relative;
+    width: $mobile-width;
+    margin: auto;
+    padding-top: 3.75rem;
+    @include flex(space-between, center);
+    flex-direction: column;
+    gap: 30px;
+
+    button {
+      width: 146px;
+      height: 52px;
+      font-weight: 700;
+      font-size: 16px;
+      line-height: 24px;
+      border: 1px solid rgba(139, 139, 139, 0.6);
+      padding: 0;
+      margin: 2rem auto 0;
+    }
+  }
+
+  .icon {
+    position: relative;
+    height: 180px;
+    width: 180px;
+  }
+
+  .textContainer {
+    text-align: center;
+    width: 100%;
+
+    p {
+      margin-top: 1.25rem;
+    }
+  }
+
+  .heading {
+    font-weight: 700;
+    font-size: 28px;
+    line-height: 115%;
+  }
+  .paragraph {
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 160%;
+    color: $text-2;
+    text-align: center;
+  }
+
+  .left {
+    text-align: left;
+  }
+  .button {
+    cursor: pointer;
+    margin: auto;
+    padding: 0.8rem 1.5rem;
+    color: #fff;
+    display: block;
+    width: 100%;
+    background: $zus-primary-gradient;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: all 0.3s ease-in;
+    border: none;
+    outline: none;
+    z-index: 99;
+    @include flex-center;
+
+    &:hover {
+      transform: scale(1.05);
+
+      & > span {
+        font-weight: 700;
+      }
+    }
+  }
+
+  .black {
+    background: $color-background;
+    width: 100%;
+    border: 1px solid #fff;
+  }
+
+  .transparent {
+    background: transparent;
+  }
+}
+
+@include media(">tablet") {
+  .featureListWrapper {
+    @include flex-horizontal-center(stretch);
+    gap: 2rem;
+    border-top: $border-gray;
+    padding: 5.5rem 0;
+    flex-wrap: wrap;
+
+    .container {
+      padding: 0;
+      justify-content: flex-start;
+      width: 350px;
+      margin: 0;
+
+      button {
+        position: absolute;
+        bottom: 0;
+        margin-left: auto;
+        margin-right: auto;
+        left: 0;
+        right: 0;
+        text-align: center;
+      }
+    }
+
+    .icon {
+      height: 250px;
+      width: 250px;
+    }
+
+    .textContainer {
+      height: calc(100% - 250px);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .button {
+      &:hover {
+        transform: scale(1.1);
+
+        & > span {
+          font-weight: 700;
+        }
+      }
+    }
+
+    .black {
+      &:hover {
+        background: #ffffff;
+        box-shadow: 0px 0px 20px 1px rgba(255, 255, 255, 0.5);
+
+        & > span {
+          background: $zus-primary-gradient;
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+        }
+      }
+    }
+  }
+}

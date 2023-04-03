@@ -1,0 +1,291 @@
+@use "variables.scss" as *;
+@use "mixins.scss" as *;
+
+@import "include-media";
+
+$breakpoints: (
+  tablet: 768px,
+  smallDesktop: 1200px,
+);
+
+.rootWrapper {
+  position: relative;
+  border-top: $border-gray;
+  text-align: center;
+  padding-bottom: 6rem;
+  overflow: hidden;
+
+  .containerWithIcon {
+    button {
+      margin-top: 2rem;
+      padding: 1rem 2rem;
+    }
+  }
+
+  .vultContainer {
+    height: auto;
+  }
+
+  .logo {
+    display: block;
+    position: absolute;
+    top: 100px;
+    left: 55px;
+    z-index: 10;
+    width: 65px;
+    height: 30px;
+  }
+  .blimpArt {
+    position: relative;
+    width: 424px;
+    height: 268px;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-top: 150px;
+  }
+
+  .textContent {
+    margin-top: 2rem;
+    z-index: 5;
+
+    p {
+      margin-top: 2rem;
+      padding: 0 1.5rem;
+    }
+
+    button {
+      width: $mobile-width;
+    }
+  }
+
+  .ellipseTop {
+    position: absolute;
+    width: 858px;
+    height: 858px;
+    left: -307px;
+    top: -298px;
+
+    background: radial-gradient(
+      50% 50% at 50% 50%,
+      #1477f8 0%,
+      rgba(5, 11, 25, 0) 100%
+    );
+    opacity: 0.4;
+    z-index: -9;
+  }
+
+  .blimpArtDesktop {
+    display: none;
+  }
+  .heading {
+    font-weight: 700;
+    font-size: 42px;
+    line-height: 110%;
+
+    span {
+      color: $primary-blue;
+    }
+  }
+
+  .uppercase {
+    text-align: center;
+    text-transform: uppercase;
+  }
+
+  .withoutPeriod {
+    & > span {
+      display: none;
+    }
+  }
+
+  .h3 {
+    font-weight: 700;
+    font-size: 28px;
+    line-height: 115%;
+  }
+  .paragraph {
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 160%;
+    color: $text-2;
+    text-align: center;
+  }
+
+  .left {
+    text-align: left;
+  }
+  .button {
+    cursor: pointer;
+    margin: auto;
+    padding: 0.8rem 1.5rem;
+    color: #fff;
+    display: block;
+    width: 100%;
+    background: $zus-primary-gradient;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: all 0.3s ease-in;
+    border: none;
+    outline: none;
+    z-index: 99;
+    @include flex-center;
+
+    &:hover {
+      transform: scale(1.05);
+
+      & > span {
+        font-weight: 700;
+      }
+    }
+  }
+
+  .black {
+    background: $color-background;
+    width: 100%;
+    border: 1px solid #fff;
+  }
+
+  .transparent {
+    background: transparent;
+  }
+}
+
+@include media(">tablet") {
+  .rootWrapper {
+    padding: 7.8rem 0;
+  }
+
+  .containerWithIcon {
+    position: relative;
+    max-width: 1160px;
+    height: 625px;
+    width: 85%;
+    margin: auto;
+    border-radius: 40px;
+    @include flex-vertical-center(center);
+    flex-direction: row;
+
+    button {
+      margin: 0;
+      margin-top: 2rem;
+      max-width: 155px;
+    }
+    .vultContainer {
+      height: 680px;
+    }
+
+    .logo {
+      top: 50px;
+      left: 50px;
+    }
+
+    .blimpContainer {
+      height: 650px;
+      flex-direction: column;
+    }
+    .blimpArt {
+      width: 868px;
+      height: 550px;
+      margin-top: 0;
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      top: -100px;
+      z-index: 2;
+    }
+
+    .ellipseContainer {
+      background: #06122a;
+      display: block;
+      position: absolute;
+      inset: 0;
+      height: 100%;
+      width: 100%;
+      overflow: hidden;
+      border-radius: inherit;
+    }
+
+    .ellipseTop {
+      width: 812.68px;
+      height: 812.68px;
+      left: -150px;
+      top: -210.5px;
+
+      border-radius: 50%;
+      z-index: 1;
+    }
+
+    .rectangle {
+      position: absolute;
+      width: 1160px;
+      height: 463px;
+      left: 0px;
+      bottom: 0;
+
+      background: linear-gradient(
+        180deg,
+        rgba(3, 8, 25, 0) 13.81%,
+        rgba(6, 18, 42, 0.92) 42.42%
+      );
+
+      border-radius: 40px;
+      z-index: 3;
+    }
+
+    .textContent {
+      margin-top: 16rem;
+      max-width: 700px;
+
+      button {
+        max-width: 200px;
+        margin: 2rem auto 0 auto;
+      }
+    }
+    .heading {
+      font-size: 68px;
+      line-height: 68px;
+    }
+
+    .h3 {
+      font-size: 68px;
+      line-height: 100%;
+    }
+  }
+  .button {
+    &:hover {
+      transform: scale(1.1);
+
+      & > span {
+        font-weight: 700;
+      }
+    }
+  }
+
+  .black {
+    &:hover {
+      background: #ffffff;
+      box-shadow: 0px 0px 20px 1px rgba(255, 255, 255, 0.5);
+
+      & > span {
+        background: $zus-primary-gradient;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+    }
+  }
+}
+
+@include media("<=smallDesktop", ">tablet") {
+  .containerWithIcon {
+    height: auto;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .blimpContainer {
+    height: 650px;
+  }
+}
