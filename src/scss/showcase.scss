@@ -1,0 +1,329 @@
+@use "variables.scss" as *;
+@use "mixins.scss" as *;
+
+@import "include-media";
+
+$breakpoints: (
+  tablet: 768px,
+  smallDesktop: 1200px,
+);
+
+.showcasecontainer {
+  .rootWrapper {
+    position: relative;
+    border-top: $border-gray;
+    text-align: center;
+    padding-bottom: 6rem;
+    overflow: hidden;
+  }
+
+  .containerWithIcon {
+    button {
+      margin-top: 2rem;
+      padding: 1rem 2rem;
+    }
+  }
+
+  .vultContainer {
+    height: auto;
+  }
+
+  .logo {
+    display: block;
+    position: absolute;
+    top: 100px;
+    left: 55px;
+    z-index: 10;
+  }
+
+  .ellipseContainer {
+    position: absolute;
+    @include inset;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    border-radius: inherit;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+  }
+
+  .ellipseLeft {
+    position: absolute;
+    width: 558.94px;
+    height: 558.94px;
+    left: -260px;
+    top: -130px;
+
+    background: radial-gradient(
+      50% 50% at 50% 50%,
+      #4ba7b4 0%,
+      rgba(5, 11, 25, 0) 100%
+    );
+
+    opacity: 0.3;
+  }
+
+  .ellipseRight {
+    position: absolute;
+    width: 700px;
+    height: 700px;
+    left: 150px;
+    top: 400px;
+
+    background: radial-gradient(
+      50% 50% at 50% 50%,
+      #4ba7b4 0%,
+      rgba(5, 11, 25, 0) 100%
+    );
+    opacity: 0.3;
+  }
+
+  .showcaseArt {
+    position: relative;
+    width: 334.44px;
+    height: 246px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2;
+    margin-top: 2rem;
+    overflow: hidden;
+  }
+
+  .showcaseArt {
+    video {
+      height: 92%;
+      width: 92.5%;
+      position: absolute;
+      top: 9px;
+      left: 13.5px;
+      object-fit: cover;
+      z-index: -1;
+      rotate: -0.5deg;
+      border-top-right-radius: 25px;
+    }
+  }
+
+  .textContentWrapper {
+    position: relative;
+    margin-top: 4rem;
+    padding: 0 1.5rem;
+    z-index: 2;
+
+    button {
+      padding: 1rem 2rem;
+      width: fit-content;
+      margin-top: 2rem;
+    }
+  }
+
+  .textContent {
+    @include flex-center;
+    flex-wrap: wrap;
+
+    h3 {
+      text-align: center;
+    }
+
+    p {
+      margin-top: 2rem;
+    }
+  }
+
+  .listContainer {
+    margin-top: 20px;
+
+    & > div {
+      font-weight: 400;
+      font-size: 18px;
+      line-height: 140%;
+      padding: 2px 0;
+    }
+  }
+  .heading {
+    font-weight: 700;
+    font-size: 42px;
+    line-height: 110%;
+
+    span {
+      color: $primary-blue;
+    }
+  }
+
+  .uppercase {
+    text-align: center;
+    text-transform: uppercase;
+  }
+
+  .withoutPeriod {
+    & > span {
+      display: none;
+    }
+  }
+
+  .h3 {
+    font-weight: 700;
+    font-size: 28px;
+    line-height: 115%;
+  }
+  .bulletTextContainer {
+    display: flex;
+    font-size: 14px;
+    line-height: 160%;
+    color: $grey-3;
+    text-align: left;
+
+    li {
+      list-style-type: disc;
+      display: list-item;
+      list-style-position: inside;
+    }
+  }
+}
+
+@include media(">tablet") {
+  .showcasecontainer {
+    .rootWrapper {
+      padding: 7.8rem 0;
+    }
+
+    .containerWithIcon {
+      position: relative;
+      max-width: 1160px;
+      height: 625px;
+      width: 85%;
+      margin: auto;
+      border-radius: 40px;
+      @include flex-vertical-center(center);
+      flex-direction: row;
+      padding: 18rem 0 7.8rem;
+
+      button {
+        margin: 0;
+        margin-top: 2rem;
+        max-width: 155px;
+      }
+    }
+
+    .vultContainer {
+      height: 680px;
+    }
+
+    .logo {
+      top: 50px;
+      left: 50px;
+    }
+
+    .blimpContainer {
+      height: 650px;
+      flex-direction: column;
+    }
+    .containerWithIcon {
+      padding: 18rem 0 7.8rem;
+    }
+
+    .showcaseArt {
+      position: relative;
+      width: 537px;
+      height: 395px;
+      left: unset;
+      transform: none;
+      top: -350px;
+      z-index: 2;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    .showcaseArt video {
+      height: 92%;
+      width: 93%;
+      position: absolute;
+      top: 14px;
+      left: 21.5px;
+    }
+
+    .ellipseLeft {
+      width: 1694px;
+      height: 1694px;
+      left: -920px;
+      top: -930.5px;
+      opacity: 0.5;
+    }
+
+    .ellipseRight {
+      width: 1694px;
+      height: 1694px;
+      left: 228px;
+      top: -196.5px;
+      opacity: 0.5;
+    }
+
+    .textContentWrapper {
+      position: absolute;
+      bottom: 3rem;
+      padding: 0;
+
+      h3 {
+        font-size: 42px;
+        max-width: 700px;
+        line-height: 110%;
+      }
+
+      button {
+        max-width: fit-content;
+        margin: 2rem auto 0;
+      }
+    }
+
+    .textContent {
+      margin-top: 16px;
+      gap: 20px;
+
+      p {
+        max-width: 382px;
+      }
+    }
+
+    .listContainer {
+      max-width: 382px;
+    }
+    .heading {
+      font-size: 68px;
+      line-height: 68px;
+    }
+
+    .h3 {
+      font-size: 68px;
+      line-height: 100%;
+    }
+  }
+}
+
+@include media("<=smallDesktop", ">tablet") {
+  .showcasecontainer {
+    .containerWithIcon {
+      height: auto;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .blimpContainer {
+      height: 650px;
+    }
+    .showcaseArt {
+      top: -220px;
+    }
+
+    .textContentWrapper {
+      position: static;
+      margin: -10rem auto 3rem;
+    }
+
+    .textContent {
+      margin-top: 0;
+    }
+  }
+}

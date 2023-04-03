@@ -1,0 +1,263 @@
+.showcasecontainer .rootWrapper {
+  position: relative;
+  border-top: 1px solid rgba(139, 139, 139, 0.3);
+  text-align: center;
+  padding-bottom: 6rem;
+  overflow: hidden;
+}
+.showcasecontainer .containerWithIcon button {
+  margin-top: 2rem;
+  padding: 1rem 2rem;
+}
+.showcasecontainer .vultContainer {
+  height: auto;
+}
+.showcasecontainer .logo {
+  display: block;
+  position: absolute;
+  top: 100px;
+  left: 55px;
+  z-index: 10;
+}
+.showcasecontainer .ellipseContainer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  border-radius: inherit;
+  z-index: 1;
+}
+.showcasecontainer .ellipseLeft {
+  position: absolute;
+  width: 558.94px;
+  height: 558.94px;
+  left: -260px;
+  top: -130px;
+  background: radial-gradient(50% 50% at 50% 50%, #4ba7b4 0%, rgba(5, 11, 25, 0) 100%);
+  opacity: 0.3;
+}
+.showcasecontainer .ellipseRight {
+  position: absolute;
+  width: 700px;
+  height: 700px;
+  left: 150px;
+  top: 400px;
+  background: radial-gradient(50% 50% at 50% 50%, #4ba7b4 0%, rgba(5, 11, 25, 0) 100%);
+  opacity: 0.3;
+}
+.showcasecontainer .showcaseArt {
+  position: relative;
+  width: 334.44px;
+  height: 246px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  margin-top: 2rem;
+  overflow: hidden;
+}
+.showcasecontainer .showcaseArt video {
+  height: 92%;
+  width: 92.5%;
+  position: absolute;
+  top: 9px;
+  left: 13.5px;
+  object-fit: cover;
+  z-index: -1;
+  rotate: -0.5deg;
+  border-top-right-radius: 25px;
+}
+.showcasecontainer .textContentWrapper {
+  position: relative;
+  margin-top: 4rem;
+  padding: 0 1.5rem;
+  z-index: 2;
+}
+.showcasecontainer .textContentWrapper button {
+  padding: 1rem 2rem;
+  width: fit-content;
+  margin-top: 2rem;
+}
+.showcasecontainer .textContent {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.showcasecontainer .textContent h3 {
+  text-align: center;
+}
+.showcasecontainer .textContent p {
+  margin-top: 2rem;
+}
+.showcasecontainer .listContainer {
+  margin-top: 20px;
+}
+.showcasecontainer .listContainer > div {
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 140%;
+  padding: 2px 0;
+}
+.showcasecontainer .heading {
+  font-weight: 700;
+  font-size: 42px;
+  line-height: 110%;
+}
+.showcasecontainer .heading span {
+  color: #0b9dff;
+}
+.showcasecontainer .uppercase {
+  text-align: center;
+  text-transform: uppercase;
+}
+.showcasecontainer .withoutPeriod > span {
+  display: none;
+}
+.showcasecontainer .h3 {
+  font-weight: 700;
+  font-size: 28px;
+  line-height: 115%;
+}
+.showcasecontainer .bulletTextContainer {
+  display: flex;
+  font-size: 14px;
+  line-height: 160%;
+  color: #cfd2dc;
+  text-align: left;
+}
+.showcasecontainer .bulletTextContainer li {
+  list-style-type: disc;
+  display: list-item;
+  list-style-position: inside;
+}
+
+@media (min-width: 769px) {
+  .showcasecontainer .rootWrapper {
+    padding: 7.8rem 0;
+  }
+  .showcasecontainer .containerWithIcon {
+    position: relative;
+    max-width: 1160px;
+    height: 625px;
+    width: 85%;
+    margin: auto;
+    border-radius: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .showcasecontainer .containerWithIcon button {
+    margin: 0;
+    margin-top: 2rem;
+    max-width: 155px;
+  }
+  .showcasecontainer .vultContainer {
+    height: 680px;
+  }
+  .showcasecontainer .logo {
+    top: 50px;
+    left: 50px;
+  }
+  .showcasecontainer .blimpContainer {
+    height: 650px;
+    flex-direction: column;
+  }
+  .showcasecontainer .containerWithIcon {
+    padding: 18rem 0 7.8rem;
+  }
+  .showcasecontainer .showcaseArt {
+    position: relative;
+    width: 537px;
+    height: 395px;
+    left: unset;
+    transform: none;
+    top: -350px;
+    z-index: 2;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+  .showcasecontainer .showcaseArt video {
+    height: 92%;
+    width: 93%;
+    position: absolute;
+    top: 14px;
+    left: 21.5px;
+  }
+  .showcasecontainer .ellipseLeft {
+    width: 1694px;
+    height: 1694px;
+    left: -920px;
+    top: -930.5px;
+    opacity: 0.5;
+  }
+  .showcasecontainer .ellipseRight {
+    width: 1694px;
+    height: 1694px;
+    left: 228px;
+    top: -196.5px;
+    opacity: 0.5;
+  }
+  .showcasecontainer .textContentWrapper {
+    position: absolute;
+    bottom: 3rem;
+    padding: 0;
+  }
+  .showcasecontainer .textContentWrapper h3 {
+    font-size: 42px;
+    max-width: 700px;
+    line-height: 110%;
+  }
+  .showcasecontainer .textContentWrapper button {
+    max-width: fit-content;
+    margin: 2rem auto 0;
+  }
+  .showcasecontainer .textContent {
+    margin-top: 16px;
+    gap: 20px;
+  }
+  .showcasecontainer .textContent p {
+    max-width: 382px;
+  }
+  .showcasecontainer .listContainer {
+    max-width: 382px;
+  }
+  .showcasecontainer .heading {
+    font-size: 68px;
+    line-height: 68px;
+  }
+  .showcasecontainer .h3 {
+    font-size: 68px;
+    line-height: 100%;
+  }
+}
+@media (max-width: 1200px) and (min-width: 769px) {
+  .showcasecontainer .containerWithIcon {
+    height: auto;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .showcasecontainer .blimpContainer {
+    height: 650px;
+  }
+  .showcasecontainer .showcaseArt {
+    top: -220px;
+  }
+  .showcasecontainer .textContentWrapper {
+    position: static;
+    margin: -10rem auto 3rem;
+  }
+  .showcasecontainer .textContent {
+    margin-top: 0;
+  }
+}
+
+/*# sourceMappingURL=showcase.css.map */
