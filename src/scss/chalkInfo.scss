@@ -1,0 +1,143 @@
+@use "variables.scss" as *;
+@use "mixins.scss" as *;
+
+@import "include-media";
+
+$breakpoints: (
+  tablet: 768px,
+  smallDesktop: 1200px,
+);
+
+.chalkInfo {
+  .chalkArtMobile {
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 424px;
+    height: 283.05px;
+    margin-top: 200px;
+  }
+
+  .textContent {
+    margin-top: 2rem;
+    padding: 0 1.5rem;
+
+    p {
+      margin-top: 2rem;
+    }
+
+    button {
+      width: 327px;
+    }
+  }
+
+  .chalkArtDesktop {
+    display: none;
+  }
+
+  .ellipseTop {
+    position: absolute;
+    width: 424.89px;
+    height: 424.89px;
+    left: -123.21px;
+    top: -62.94px;
+    background: radial-gradient(
+      44.65% 54.66% at 50% 50%,
+      #ffb076 0,
+      rgba(5, 11, 25, 0) 100%
+    );
+    opacity: 0.4;
+    z-index: -9;
+  }
+}
+
+@include media(">tablet") {
+  .chalkInfo {
+    .chalkArtMobile {
+      display: none;
+    }
+
+    .chalkArtDesktop {
+      display: block;
+      margin-right: -15%;
+      margin-top: -100px;
+    }
+
+    .ellipseContainer {
+      background: rgba(16, 21, 52, 0.7);
+      display: block;
+      position: absolute;
+      inset: 0;
+      height: 100%;
+      width: 100%;
+      overflow: hidden;
+      border-radius: inherit;
+      z-index: -1;
+    }
+
+    .ellipseTop {
+      width: 862.71px;
+      height: 862.71px;
+      left: 47.29px;
+      top: -142.71px;
+    }
+
+    .ellipseBottom {
+      position: absolute;
+      width: 1694px;
+      height: 1694px;
+      left: 219px;
+      top: -305.5px;
+      background: radial-gradient(
+        50% 50% at 50% 50%,
+        #4b4fb4 0,
+        rgba(5, 11, 25, 0) 100%
+      );
+      opacity: 0.5;
+    }
+
+    .textContent {
+      width: 45%;
+      text-align: left;
+      margin: 3rem 0 0;
+
+      p {
+        text-align: left;
+        padding: 0;
+        width: 80%;
+      }
+
+      button {
+        margin: 2rem 0 0;
+        max-width: 155px;
+      }
+    }
+  }
+}
+
+@include media("<=smallDesktop", ">tablet") {
+  .chalkInfo {
+    .chalkArtDesktop {
+      margin: 4rem 0 0;
+      order: 1;
+    }
+
+    .textContent {
+      text-align: center;
+      width: 70%;
+      padding-bottom: 3rem;
+      margin-top: 3rem;
+      order: 2;
+
+      P {
+        text-align: center;
+        width: 100%;
+      }
+
+      button {
+        margin-left: auto;
+        margin-right: auto;
+      }
+    }
+  }
+}

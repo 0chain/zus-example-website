@@ -6,6 +6,12 @@
 .featureListWrapper {
   margin: auto;
   padding-bottom: 6.25rem;
+  background-color: transparent;
+
+  .featuresContainer & {
+    padding-bottom: 2.75rem;
+    background-color: #000;
+  }
 
   .container {
     position: relative;
@@ -59,7 +65,9 @@
   .left {
     text-align: left;
   }
+
   .button {
+    font-family: inherit;
     cursor: pointer;
     margin: auto;
     padding: 0.8rem 1.5rem;
@@ -103,6 +111,10 @@
     border-top: $border-gray;
     padding: 5.5rem 0;
     flex-wrap: wrap;
+
+    .featuresContainer & {
+      padding-bottom: 0;
+    }
 
     .container {
       padding: 0;

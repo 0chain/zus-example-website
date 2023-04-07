@@ -1,0 +1,98 @@
+.chimneyInfo .chimneyArt {
+  position: relative;
+  width: 650px;
+  height: 650px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.chimneyInfo .textContent {
+  margin-top: -9rem;
+  padding: 0 1.5rem;
+}
+.chimneyInfo .textContent p {
+  margin-top: 2rem;
+}
+.chimneyInfo .textContent button {
+  width: 327px;
+}
+.chimneyInfo .ellipseTop {
+  position: absolute;
+  width: 424.89px;
+  height: 424.89px;
+  left: -133.21px;
+  top: -2.94px;
+  background: radial-gradient(50% 50% at 50% 50%, #b44b91 0, rgba(5, 11, 25, 0) 100%);
+  opacity: 0.5;
+  z-index: -9;
+}
+
+@media (min-width: 769px) {
+  .chimneyInfo .chimneyArt {
+    width: 786px;
+    height: 799px;
+    margin-left: -28%;
+    margin-top: 2rem;
+    left: 0;
+    transform: none;
+  }
+  .chimneyInfo .ellipseContainer {
+    display: block;
+    position: absolute;
+    inset: 0;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    border-radius: inherit;
+    z-index: -1;
+  }
+  .chimneyInfo .ellipseTop {
+    width: 1694px;
+    height: 1694px;
+    left: -850px;
+    top: -735.5px;
+  }
+  .chimneyInfo .ellipseBottom {
+    position: absolute;
+    width: 1694px;
+    height: 1694px;
+    left: 400px;
+    top: -250px;
+    background: radial-gradient(50% 50% at 50% 50%, #b44b91 0, rgba(5, 11, 25, 0) 100%);
+    opacity: 0.5;
+  }
+  .chimneyInfo .textContent {
+    margin: 0;
+    max-width: 466px;
+    text-align: left;
+    padding: 0;
+  }
+  .chimneyInfo .textContent p {
+    text-align: left;
+    padding: 0;
+  }
+  .chimneyInfo .textContent button {
+    margin-left: 0;
+  }
+}
+@media (max-width: 1200px) and (min-width: 769px) {
+  .chimneyInfo .chimneyArt {
+    margin-left: 0;
+    margin-top: -3rem;
+  }
+  .chimneyInfo .textContent {
+    text-align: center;
+    width: 70%;
+    padding-bottom: 3rem;
+    margin-top: -8rem;
+  }
+  .chimneyInfo .textContent p {
+    text-align: center;
+    width: 100%;
+  }
+  .chimneyInfo .textContent button {
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+/*# sourceMappingURL=chimneyInfo.css.map */
