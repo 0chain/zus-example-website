@@ -74,6 +74,10 @@ $breakpoints: (
     z-index: -9;
   }
 
+  .ellipseContainer {
+    z-index: -1;
+  }
+
   .blimpArtDesktop {
     display: none;
   }
@@ -115,6 +119,7 @@ $breakpoints: (
     text-align: left;
   }
   .button {
+    font-family: inherit;
     cursor: pointer;
     margin: auto;
     padding: 0.8rem 1.5rem;

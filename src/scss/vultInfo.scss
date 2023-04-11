@@ -1,0 +1,174 @@
+@use "variables.scss" as *;
+@use "mixins.scss" as *;
+
+@import "include-media";
+
+$breakpoints: (
+  tablet: 768px,
+  smallDesktop: 1200px,
+);
+
+.vultInfo {
+  .vultArt {
+    position: relative;
+    width: 336px;
+    height: 271px;
+    left: 55%;
+    transform: translateX(-50%);
+    margin-top: 185px;
+  }
+
+  .textContent {
+    padding: 0 1.5rem;
+    margin: 56px auto 0;
+  }
+
+  .textContent {
+    margin-top: 2rem;
+
+    button {
+      width: 327px;
+    }
+  }
+
+  .vultArtDesktop {
+    display: none;
+  }
+
+  .ellipseTop {
+    position: absolute;
+    width: 740.95px;
+    height: 740.95px;
+    left: -272.48px;
+    top: -238.48px;
+    background: radial-gradient(
+      50% 50% at 50% 50%,
+      #4987ff 0,
+      rgba(0, 10, 240, 0) 100%
+    );
+    opacity: 0.4;
+    z-index: -9;
+  }
+}
+
+@include media(">tablet") {
+  .vultInfo {
+    .vultArt {
+      margin-top: 180px;
+      margin-left: -5%;
+      height: 500px;
+      width: 600px;
+      left: unset;
+      transform: unset;
+      flex-shrink: 0;
+    }
+
+    .ellipseContainer {
+      display: block;
+      position: absolute;
+      inset: 0;
+      height: 100%;
+      width: 100%;
+      overflow: hidden;
+      border-radius: inherit;
+      z-index: -1;
+    }
+
+    .ellipseTop {
+      width: 1694px;
+      height: 1694px;
+      left: -699px;
+      top: -735.5px;
+    }
+
+    .ellipseBottom {
+      position: absolute;
+      width: 1694px;
+      height: 1694px;
+      left: 219px;
+      top: -305.5px;
+      background: radial-gradient(
+        50% 50% at 50% 50%,
+        #4987ff 0,
+        rgba(0, 10, 240, 0) 100%
+      );
+      opacity: 0.5;
+    }
+
+    .textContainerWrapper {
+      margin: 0 0 0 -4%;
+    }
+
+    .textContent {
+      text-align: left;
+      padding: 0;
+
+      p {
+        text-align: left;
+        padding: 0;
+        width: 90%;
+      }
+
+      .button {
+        margin-left: 0;
+      }
+    }
+
+    .textContainerBorderWrapper {
+      display: flex;
+      justify-content: flex-start;
+      align-items: streach;
+      gap: 2.5rem;
+      margin-top: 3.25rem;
+
+      & > div:first-child {
+        width: 173px;
+        height: 156px;
+      }
+
+      & > div:nth-child(2) {
+        width: 307px;
+        height: 156px;
+      }
+    }
+  }
+}
+
+@include media("<=smallDesktop", ">tablet") {
+  .vultInfo {
+    .vultArt {
+      margin-left: 0;
+    }
+
+    .textContainerWrapper {
+      width: 70%;
+      padding-bottom: 3rem;
+      margin: 3rem auto auto;
+
+      .textContent {
+        text-align: center;
+
+        p {
+          text-align: center;
+          width: 100%;
+        }
+
+        button {
+          margin-left: auto;
+          margin-right: auto;
+        }
+      }
+
+      .textContainerBorderWrapper {
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        margin-top: 2rem;
+      }
+    }
+
+    .ellipseTop {
+      top: 200px;
+    }
+  }
+}

@@ -1,0 +1,36 @@
+@use "variables.scss" as *;
+@use "mixins.scss" as *;
+
+@import "include-media";
+
+.partnersContainer {
+  position: relative;
+  max-width: 1160px;
+  margin: auto;
+  padding: 2rem;
+  text-align: center;
+
+  .heading {
+    font-weight: 700;
+    font-size: 42px;
+    line-height: 110%;
+  }
+
+  .partners {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 3rem;
+    justify-content: center;
+    margin-top: 4rem;
+    margin-bottom: 5rem;
+  }
+}
+
+@include media(">tablet") {
+  .partnersContainer {
+    .heading {
+      font-size: 68px;
+      line-height: 68px;
+    }
+  }
+}

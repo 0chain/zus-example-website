@@ -50,6 +50,9 @@
   opacity: 0.4;
   z-index: -9;
 }
+.rootWrapper .ellipseContainer {
+  z-index: -1;
+}
 .rootWrapper .blimpArtDesktop {
   display: none;
 }
@@ -84,6 +87,7 @@
   text-align: left;
 }
 .rootWrapper .button {
+  font-family: inherit;
   cursor: pointer;
   margin: auto;
   padding: 0.8rem 1.5rem;

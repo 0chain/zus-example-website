@@ -262,6 +262,11 @@
 .featureListWrapper {
   margin: auto;
   padding-bottom: 6.25rem;
+  background-color: transparent;
+}
+.featuresContainer .featureListWrapper {
+  padding-bottom: 2.75rem;
+  background-color: #000;
 }
 .featureListWrapper .container {
   position: relative;
@@ -312,6 +317,7 @@
   text-align: left;
 }
 .featureListWrapper .button {
+  font-family: inherit;
   cursor: pointer;
   margin: auto;
   padding: 0.8rem 1.5rem;
@@ -354,6 +360,9 @@
     border-top: 1px solid rgba(139, 139, 139, 0.3);
     padding: 5.5rem 0;
     flex-wrap: wrap;
+  }
+  .featuresContainer .featureListWrapper {
+    padding-bottom: 0;
   }
   .featureListWrapper .container {
     padding: 0;
@@ -449,6 +458,9 @@
   opacity: 0.4;
   z-index: -9;
 }
+.rootWrapper .ellipseContainer {
+  z-index: -1;
+}
 .rootWrapper .blimpArtDesktop {
   display: none;
 }
@@ -483,6 +495,7 @@
   text-align: left;
 }
 .rootWrapper .button {
+  font-family: inherit;
   cursor: pointer;
   margin: auto;
   padding: 0.8rem 1.5rem;
@@ -630,9 +643,9 @@
     height: 650px;
   }
 }
-.showcasecontainer .rootWrapper {
+.showcasecontainer {
   position: relative;
-  border-top: 1px solid rgba(139, 139, 139, 0.3);
+  border-top: 1px solid 1px solid rgba(139, 139, 139, 0.3);
   text-align: center;
   padding-bottom: 6rem;
   overflow: hidden;
@@ -640,16 +653,7 @@
 .showcasecontainer .containerWithIcon button {
   margin-top: 2rem;
   padding: 1rem 2rem;
-}
-.showcasecontainer .vultContainer {
-  height: auto;
-}
-.showcasecontainer .logo {
-  display: block;
-  position: absolute;
-  top: 100px;
-  left: 55px;
-  z-index: 10;
+  font-family: inherit;
 }
 .showcasecontainer .ellipseContainer {
   position: absolute;
@@ -662,6 +666,10 @@
   overflow: hidden;
   border-radius: inherit;
   z-index: 1;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
 }
 .showcasecontainer .ellipseLeft {
   position: absolute;
@@ -718,6 +726,7 @@
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
+  max-width: none;
 }
 .showcasecontainer .textContent h3 {
   text-align: center;
@@ -749,11 +758,6 @@
 .showcasecontainer .withoutPeriod > span {
   display: none;
 }
-.showcasecontainer .h3 {
-  font-weight: 700;
-  font-size: 28px;
-  line-height: 115%;
-}
 .showcasecontainer .bulletTextContainer {
   display: flex;
   font-size: 14px;
@@ -768,8 +772,8 @@
 }
 
 @media (min-width: 769px) {
-  .showcasecontainer .rootWrapper {
-    padding: 7.8rem 0;
+  .showcasecontainer {
+    padding: 18rem 0 7.8rem;
   }
   .showcasecontainer .containerWithIcon {
     position: relative;
@@ -782,9 +786,6 @@
     justify-content: center;
     align-items: center;
     flex-direction: row;
-    display: flex;
-    justify-content: center;
-    align-items: center;
   }
   .showcasecontainer .containerWithIcon button {
     margin: 0;
@@ -801,9 +802,6 @@
   .showcasecontainer .blimpContainer {
     height: 650px;
     flex-direction: column;
-  }
-  .showcasecontainer .containerWithIcon {
-    padding: 18rem 0 7.8rem;
   }
   .showcasecontainer .showcaseArt {
     position: relative;
@@ -889,6 +887,382 @@
   }
   .showcasecontainer .textContent {
     margin-top: 0;
+  }
+}
+.vultInfo .vultArt {
+  position: relative;
+  width: 336px;
+  height: 271px;
+  left: 55%;
+  transform: translateX(-50%);
+  margin-top: 185px;
+}
+.vultInfo .textContent {
+  padding: 0 1.5rem;
+  margin: 56px auto 0;
+}
+.vultInfo .textContent {
+  margin-top: 2rem;
+}
+.vultInfo .textContent button {
+  width: 327px;
+}
+.vultInfo .vultArtDesktop {
+  display: none;
+}
+.vultInfo .ellipseTop {
+  position: absolute;
+  width: 740.95px;
+  height: 740.95px;
+  left: -272.48px;
+  top: -238.48px;
+  background: radial-gradient(50% 50% at 50% 50%, #4987ff 0, rgba(0, 10, 240, 0) 100%);
+  opacity: 0.4;
+  z-index: -9;
+}
+
+@media (min-width: 769px) {
+  .vultInfo .vultArt {
+    margin-top: 180px;
+    margin-left: -5%;
+    height: 500px;
+    width: 600px;
+    left: unset;
+    transform: unset;
+    flex-shrink: 0;
+  }
+  .vultInfo .ellipseContainer {
+    display: block;
+    position: absolute;
+    inset: 0;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    border-radius: inherit;
+    z-index: -1;
+  }
+  .vultInfo .ellipseTop {
+    width: 1694px;
+    height: 1694px;
+    left: -699px;
+    top: -735.5px;
+  }
+  .vultInfo .ellipseBottom {
+    position: absolute;
+    width: 1694px;
+    height: 1694px;
+    left: 219px;
+    top: -305.5px;
+    background: radial-gradient(50% 50% at 50% 50%, #4987ff 0, rgba(0, 10, 240, 0) 100%);
+    opacity: 0.5;
+  }
+  .vultInfo .textContainerWrapper {
+    margin: 0 0 0 -4%;
+  }
+  .vultInfo .textContent {
+    text-align: left;
+    padding: 0;
+  }
+  .vultInfo .textContent p {
+    text-align: left;
+    padding: 0;
+    width: 90%;
+  }
+  .vultInfo .textContent .button {
+    margin-left: 0;
+  }
+  .vultInfo .textContainerBorderWrapper {
+    display: flex;
+    justify-content: flex-start;
+    align-items: streach;
+    gap: 2.5rem;
+    margin-top: 3.25rem;
+  }
+  .vultInfo .textContainerBorderWrapper > div:first-child {
+    width: 173px;
+    height: 156px;
+  }
+  .vultInfo .textContainerBorderWrapper > div:nth-child(2) {
+    width: 307px;
+    height: 156px;
+  }
+}
+@media (max-width: 1200px) and (min-width: 769px) {
+  .vultInfo .vultArt {
+    margin-left: 0;
+  }
+  .vultInfo .textContainerWrapper {
+    width: 70%;
+    padding-bottom: 3rem;
+    margin: 3rem auto auto;
+  }
+  .vultInfo .textContainerWrapper .textContent {
+    text-align: center;
+  }
+  .vultInfo .textContainerWrapper .textContent p {
+    text-align: center;
+    width: 100%;
+  }
+  .vultInfo .textContainerWrapper .textContent button {
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .vultInfo .textContainerWrapper .textContainerBorderWrapper {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    margin-top: 2rem;
+  }
+  .vultInfo .ellipseTop {
+    top: 200px;
+  }
+}
+.chimneyInfo .chimneyArt {
+  position: relative;
+  width: 650px;
+  height: 650px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.chimneyInfo .textContent {
+  margin-top: -9rem;
+  padding: 0 1.5rem;
+}
+.chimneyInfo .textContent p {
+  margin-top: 2rem;
+}
+.chimneyInfo .textContent button {
+  width: 327px;
+}
+.chimneyInfo .ellipseTop {
+  position: absolute;
+  width: 424.89px;
+  height: 424.89px;
+  left: -133.21px;
+  top: -2.94px;
+  background: radial-gradient(50% 50% at 50% 50%, #b44b91 0, rgba(5, 11, 25, 0) 100%);
+  opacity: 0.5;
+  z-index: -9;
+}
+
+@media (min-width: 769px) {
+  .chimneyInfo .chimneyArt {
+    width: 786px;
+    height: 799px;
+    margin-left: -28%;
+    margin-top: 2rem;
+    left: 0;
+    transform: none;
+  }
+  .chimneyInfo .ellipseContainer {
+    display: block;
+    position: absolute;
+    inset: 0;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    border-radius: inherit;
+    z-index: -1;
+  }
+  .chimneyInfo .ellipseTop {
+    width: 1694px;
+    height: 1694px;
+    left: -850px;
+    top: -735.5px;
+  }
+  .chimneyInfo .ellipseBottom {
+    position: absolute;
+    width: 1694px;
+    height: 1694px;
+    left: 400px;
+    top: -250px;
+    background: radial-gradient(50% 50% at 50% 50%, #b44b91 0, rgba(5, 11, 25, 0) 100%);
+    opacity: 0.5;
+  }
+  .chimneyInfo .textContent {
+    margin: 0;
+    max-width: 466px;
+    text-align: left;
+    padding: 0;
+  }
+  .chimneyInfo .textContent p {
+    text-align: left;
+    padding: 0;
+  }
+  .chimneyInfo .textContent button {
+    margin-left: 0;
+  }
+}
+@media (max-width: 1200px) and (min-width: 769px) {
+  .chimneyInfo .chimneyArt {
+    margin-left: 0;
+    margin-top: -3rem;
+  }
+  .chimneyInfo .textContent {
+    text-align: center;
+    width: 70%;
+    padding-bottom: 3rem;
+    margin-top: -8rem;
+  }
+  .chimneyInfo .textContent p {
+    text-align: center;
+    width: 100%;
+  }
+  .chimneyInfo .textContent button {
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+.chalkInfo .chalkArtMobile {
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 424px;
+  height: 283.05px;
+  margin-top: 200px;
+}
+.chalkInfo .textContent {
+  margin-top: 2rem;
+  padding: 0 1.5rem;
+}
+.chalkInfo .textContent p {
+  margin-top: 2rem;
+}
+.chalkInfo .textContent button {
+  width: 327px;
+}
+.chalkInfo .chalkArtDesktop {
+  display: none;
+}
+.chalkInfo .ellipseTop {
+  position: absolute;
+  width: 424.89px;
+  height: 424.89px;
+  left: -123.21px;
+  top: -62.94px;
+  background: radial-gradient(44.65% 54.66% at 50% 50%, #ffb076 0, rgba(5, 11, 25, 0) 100%);
+  opacity: 0.4;
+  z-index: -9;
+}
+
+@media (min-width: 769px) {
+  .chalkInfo .chalkArtMobile {
+    display: none;
+  }
+  .chalkInfo .chalkArtDesktop {
+    display: block;
+    margin-right: -15%;
+    margin-top: -100px;
+  }
+  .chalkInfo .ellipseContainer {
+    background: rgba(16, 21, 52, 0.7);
+    display: block;
+    position: absolute;
+    inset: 0;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    border-radius: inherit;
+    z-index: -1;
+  }
+  .chalkInfo .ellipseTop {
+    width: 862.71px;
+    height: 862.71px;
+    left: 47.29px;
+    top: -142.71px;
+  }
+  .chalkInfo .ellipseBottom {
+    position: absolute;
+    width: 1694px;
+    height: 1694px;
+    left: 219px;
+    top: -305.5px;
+    background: radial-gradient(50% 50% at 50% 50%, #4b4fb4 0, rgba(5, 11, 25, 0) 100%);
+    opacity: 0.5;
+  }
+  .chalkInfo .textContent {
+    width: 45%;
+    text-align: left;
+    margin: 3rem 0 0;
+  }
+  .chalkInfo .textContent p {
+    text-align: left;
+    padding: 0;
+    width: 80%;
+  }
+  .chalkInfo .textContent button {
+    margin: 2rem 0 0;
+    max-width: 155px;
+  }
+}
+@media (max-width: 1200px) and (min-width: 769px) {
+  .chalkInfo .chalkArtDesktop {
+    margin: 4rem 0 0;
+    order: 1;
+  }
+  .chalkInfo .textContent {
+    text-align: center;
+    width: 70%;
+    padding-bottom: 3rem;
+    margin-top: 3rem;
+    order: 2;
+  }
+  .chalkInfo .textContent P {
+    text-align: center;
+    width: 100%;
+  }
+  .chalkInfo .textContent button {
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+.privateSharing {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  max-width: 1100px;
+  margin: 3rem auto 8rem;
+  padding: 2rem;
+  text-align: center;
+}
+.privateSharing .heading {
+  font-weight: 700;
+  font-size: 42px;
+  line-height: 110%;
+}
+
+@media (min-width: 769px) {
+  .privateSharing .heading {
+    font-size: 68px;
+    line-height: 68px;
+  }
+}
+.partnersContainer {
+  position: relative;
+  max-width: 1160px;
+  margin: auto;
+  padding: 2rem;
+  text-align: center;
+}
+.partnersContainer .heading {
+  font-weight: 700;
+  font-size: 42px;
+  line-height: 110%;
+}
+.partnersContainer .partners {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3rem;
+  justify-content: center;
+  margin-top: 4rem;
+  margin-bottom: 5rem;
+}
+
+@media (min-width: 769px) {
+  .partnersContainer .heading {
+    font-size: 68px;
+    line-height: 68px;
   }
 }
 
