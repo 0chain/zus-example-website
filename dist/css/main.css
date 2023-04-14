@@ -1,3 +1,50 @@
+.button {
+  cursor: pointer;
+  margin: auto;
+  padding: 0.8rem 1.5rem;
+  color: #fff;
+  display: block;
+  width: 100%;
+  background: linear-gradient(121.99deg, #00d3ff -26.48%, #1a49ff 64.48%);
+  border-radius: 8px;
+  font-family: inherit;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: all 0.3s ease-in;
+  border: none;
+  outline: none;
+  z-index: 99;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.button:hover transform:scale(1.05) > span {
+  font-weight: 700;
+}
+.button.black {
+  background: #030819;
+  width: 100%;
+  border: 1px solid #fff;
+}
+.button.transparent {
+  background: transparent;
+}
+
+@media (min-width: 769px) {
+  .button:hover transform:scale(1.1) > span {
+    font-weight: 700;
+  }
+  .button.black:hover {
+    background: #fff;
+    box-shadow: 0 0 20px 1px hsla(0, 0%, 100%, 0.5);
+  }
+  .button.black:hover > span {
+    background: linear-gradient(121.99deg, #00d3ff -26.48%, #1a49ff 64.48%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+}
 .mainFeatureContainer {
   width: 100%;
   padding-top: 6.25rem;
@@ -83,6 +130,7 @@
   padding-top: 4rem;
   padding-bottom: 3rem;
   overflow: hidden;
+  position: relative;
 }
 .heroContainer .secondaryHeading {
   font-weight: 600;
@@ -200,12 +248,12 @@
 @media (min-width: 769px) {
   .heroContainer {
     width: 100%;
-    padding-top: 4.5rem;
-    padding-bottom: 4.5rem;
+    padding-top: 7rem;
+    padding-bottom: 7rem;
   }
   .heroContainer .heroBackground {
     position: absolute;
-    background: url("../images/hero/cloud.png") top/827.58px no-repeat;
+    background: url("../images/Hero/cloud.png") top/827.58px no-repeat;
     z-index: -9;
     height: 100%;
     width: 100%;
@@ -213,7 +261,8 @@
     left: 0;
     bottom: 0;
     right: 0;
-    top: 10.7%;
+    top: auto;
+    bottom: 4.5rem;
   }
   .heroContainer .secondaryHeading {
     font-size: 21px;
@@ -262,7 +311,7 @@
 .featureListWrapper {
   margin: auto;
   padding-bottom: 6.25rem;
-  background-color: transparent;
+  background-color: #030819;
 }
 .featuresContainer .featureListWrapper {
   padding-bottom: 2.75rem;
@@ -1263,6 +1312,450 @@
   .partnersContainer .heading {
     font-size: 68px;
     line-height: 68px;
+  }
+}
+.FooterFeature {
+  position: relative;
+  padding: 5rem 1rem;
+  margin: auto;
+  text-align: center;
+  overflow: hidden;
+  background: linear-gradient(180.15deg, #00d3ff -29.76%, #1a49ff 125.39%);
+  border-top: 1px solid hsla(0, 0%, 55%, 0.3);
+  border-bottom: 1px solid hsla(0, 0%, 55%, 0.3);
+}
+.FooterFeature h3 {
+  position: relative;
+  font-size: 28px;
+  line-height: 115%;
+  max-width: 70%;
+  margin: 1.5rem auto auto;
+  z-index: 1;
+}
+.FooterFeature p {
+  margin-top: 2rem;
+  font-weight: 600;
+  line-height: 125%;
+  color: #fff;
+  opacity: 0.9;
+  max-width: 800px;
+  z-index: 1;
+}
+.FooterFeature .bgPattern {
+  position: absolute;
+  z-index: -1;
+  width: 2118.19px;
+  height: 2118.19px;
+  left: calc(50% - 1059.095px);
+  top: -919.1px;
+  background: radial-gradient(50% 50% at 50% 50%, #5da3ff 0, rgba(5, 11, 25, 0) 100%, rgba(156, 185, 255, 0) 0);
+}
+.FooterFeature .zusLogoWhite {
+  position: relative;
+  width: 45.88px;
+  height: 40px;
+  margin: auto;
+}
+.FooterFeature .buttons {
+  margin-top: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+.FooterFeature .buttons button {
+  width: 159px;
+  height: 48px;
+  margin: 0;
+}
+.FooterFeature .buttons button:first-child {
+  background: #fff;
+  color: #202127;
+}
+
+.socialIcons {
+  position: relative;
+  margin-top: 2.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 99;
+}
+.socialIcons li {
+  cursor: pointer;
+  padding: 0 1.8rem;
+  border-right: 1px solid hsla(0, 0%, 100%, 0.1);
+}
+.socialIcons li:last-child {
+  border-right: none;
+}
+
+.FooterCommunity.socialLinksContainer {
+  position: relative;
+  padding: 4rem 1.25rem;
+  background: linear-gradient(208.49deg, #151618 -19.53%, #151618 80.31%), linear-gradient(208.49deg, #092a5c -19.53%, #022d77 80.31%), linear-gradient(213.75deg, #5ac7de -102.42%, #132e95 77.58%);
+  width: 100%;
+  text-align: center;
+  overflow: hidden;
+  border: none;
+}
+.FooterCommunity .background {
+  position: absolute;
+  width: 808px;
+  height: 808px;
+  left: 50%;
+  transform: translateX(-50%);
+  top: -460px;
+  background: radial-gradient(50% 50% at 50% 50%, #1a5aff 0, rgba(5, 11, 25, 0) 100%);
+}
+.FooterCommunity .textContent h3 {
+  position: relative;
+  z-index: 1;
+  font-weight: 600;
+  font-size: 21px;
+  line-height: 125%;
+}
+.FooterCommunity .textContent p {
+  font-size: 14px;
+  line-height: 160%;
+  opacity: 0.9;
+  padding: 1.25rem 0;
+}
+.FooterCommunity .textContent ul {
+  margin-top: 1.5rem;
+}
+.FooterCommunity .textContent ul li {
+  padding: 1rem 1.75rem;
+}
+.FooterCommunity .socialIcons a {
+  display: block;
+}
+.FooterCommunity .socialIcons img {
+  height: 2rem;
+  width: 2rem;
+}
+
+.Footer .menuContainer {
+  margin-top: -1rem;
+  margin-bottom: 4rem;
+  text-align: center;
+}
+.Footer .leftmenuContainer {
+  padding: 0 30px;
+}
+.Footer .leftmenuContainer h3 {
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 150%;
+  color: #cfd2dc;
+  margin-top: 40px;
+}
+.Footer .leftmenuContainer p {
+  font-size: 14px;
+  line-height: 160%;
+  color: #90939e;
+  margin-top: 20px;
+}
+.Footer .menuLinksContainer {
+  width: 100%;
+}
+.Footer .footerMenuItem {
+  margin-top: 2rem;
+  text-align: left;
+}
+.Footer .titleMenu {
+  font-size: 13px;
+  line-height: 15px;
+  letter-spacing: 0.1em;
+  color: #90939e;
+  width: 100%;
+  border-bottom: 1px solid hsla(0, 0%, 55%, 0.3);
+  padding: 20px 30px;
+}
+.Footer .subMenu {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 20px 0 0 30px;
+  gap: 10px;
+}
+.Footer .subMenu li {
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 160%;
+  min-width: 160px;
+  color: #cfd2dc;
+}
+.Footer .subMenu li:hover {
+  color: #0b9dff;
+}
+.Footer .subMenu a[disabled] {
+  opacity: 0.5;
+}
+.Footer .subMenu a[disabled]:hover {
+  color: #cfd2dc;
+}
+.Footer .subMenu a[disabled]:hover span {
+  display: none;
+}
+.Footer .subMenu a[disabled]:hover::after {
+  content: "Coming Soon";
+}
+.Footer .dynamicPosts li {
+  min-width: 300px;
+}
+.Footer .bottomContainer {
+  text-align: center;
+  padding: 2rem 2rem 2.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 1rem;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 160%;
+  color: #cfd2dc;
+}
+.Footer .bottomContainer p {
+  font-size: 16px;
+  color: #cfd2dc;
+}
+
+.FooterSocialIcons {
+  border-top: 1px solid hsla(0, 0%, 55%, 0.3);
+  border-bottom: 1px solid hsla(0, 0%, 55%, 0.3);
+  margin-top: 2.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.FooterSocialIcons .bottomIcons > a:last-child,
+.FooterSocialIcons .topIcons > a:last-child {
+  border-right: 1px solid hsla(0, 0%, 55%, 0.3);
+}
+.FooterSocialIcons .bottomIcons {
+  border-top: 1px solid hsla(0, 0%, 55%, 0.3);
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.FooterSocialIcons_icon {
+  display: inline-block;
+  padding: 43px 25px;
+  border-left: 1px solid hsla(0, 0%, 55%, 0.3);
+}
+
+.FooterProducts {
+  margin-top: 60px;
+  text-align: left;
+}
+.FooterProducts h5 {
+  font-weight: 700;
+  font-size: 13px;
+  line-height: 15px;
+  letter-spacing: 0.1em;
+  color: #90939e;
+  border-bottom: 1px solid hsla(0, 0%, 55%, 0.3);
+  padding: 20px 30px;
+}
+.FooterProducts img {
+  height: 24px;
+  width: 24px;
+}
+.FooterProducts a p:hover {
+  color: #0b9dff;
+}
+.FooterProducts a[disabled] {
+  opacity: 0.5;
+}
+.FooterProducts a[disabled]:hover p {
+  display: none;
+}
+.FooterProducts a[disabled]:hover:after {
+  content: "Coming Soon";
+}
+.FooterProducts .productWrapper {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-top: 20px;
+  gap: 20px;
+  padding: 0 30px;
+}
+.FooterProducts .productWrapper p {
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 160%;
+  color: #f1f2f2;
+}
+
+@media (min-width: 769px) {
+  .FooterFeature {
+    width: 100%;
+    padding: 4.5rem 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .FooterFeature h3 {
+    font-size: 54px;
+    line-height: 110%;
+    max-width: 800px;
+  }
+  .FooterFeature p {
+    font-size: 21px;
+  }
+  .FooterFeature .zusLogoWhite {
+    width: 65px;
+    height: 45px;
+  }
+  .FooterFeature .buttons {
+    gap: 1rem;
+  }
+  .FooterFeature .buttons button {
+    width: 167px;
+    height: 56px;
+  }
+  .FooterCommunity.socialLinksContainer {
+    background: linear-gradient(208.49deg, #151618 -19.53%, #151618 80.31%);
+    padding: 5.5rem 0;
+  }
+  .FooterCommunity .background {
+    width: 2118.19px;
+    height: 2118.19px;
+    top: -1600px;
+    background: radial-gradient(50% 50% at 50% 50%, #1a5aff 0, rgba(5, 11, 25, 0) 100%, rgba(156, 185, 255, 0) 0);
+  }
+  .FooterCommunity .textContent h3 {
+    font-weight: 700;
+    font-size: 28px;
+    line-height: 115%;
+  }
+  .FooterCommunity .textContent p {
+    font-size: 18px;
+    max-width: 700px;
+    margin: auto;
+  }
+  .FooterCommunity .textContent ul {
+    margin-top: 4rem;
+  }
+  .FooterCommunity .textContent ul li {
+    padding: 0 3rem;
+  }
+  .FooterCommunity .socialIcons img {
+    height: 4rem;
+    width: 4rem;
+  }
+  .Footer .menuContainer {
+    overflow: hidden;
+    text-align: left;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding-top: 80px;
+    gap: 6rem;
+    width: -webkit-fit-content;
+    width: -moz-fit-content;
+    width: fit-content;
+    margin: auto;
+  }
+  .Footer .leftmenuContainer {
+    max-width: 250px;
+    text-align: left;
+    padding: 0 0 0 20px;
+    margin-top: -10px;
+    flex-shrink: 0;
+  }
+  .Footer .leftmenuContainer h3 {
+    margin-top: 20px;
+  }
+  .Footer .leftmenuContainer p {
+    text-align: left;
+  }
+  .Footer .menuLinksContainer {
+    margin-top: 0;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 3rem;
+    width: 100%;
+    padding: 0 3rem;
+  }
+  .Footer .footerMenuItem {
+    align-items: flex-start;
+    width: 135px;
+    margin: 0;
+  }
+  .Footer .footerMenuItem h5 {
+    border-bottom: none;
+    padding: 0;
+  }
+  .Footer .dynamicPosts {
+    width: 250px;
+  }
+  .Footer .titleMenu {
+    font-size: 13px;
+  }
+  .Footer .subMenu {
+    display: flex;
+    flex-direction: column;
+    flex-flow: row wrap;
+    width: 100%;
+    font-weight: 600;
+    font-size: 16px;
+    padding: 0;
+    margin-top: 10px;
+  }
+  .Footer .subMenu li {
+    flex: 1 1 130px;
+    width: 130px;
+  }
+  .Footer .bottomContainer {
+    flex-direction: row;
+    justify-content: center;
+    gap: 2.5rem;
+    padding: 2rem 8rem;
+  }
+  .FooterSocialIcons {
+    margin-top: 4rem;
+  }
+  .FooterSocialIcons .bottomIcons {
+    width: auto;
+    display: block;
+  }
+  .FooterSocialIcons_icon {
+    padding: 43px 48px;
+  }
+  .FooterProducts {
+    margin: 0;
+    width: 135px;
+  }
+  .FooterProducts h5 {
+    border-bottom: none;
+    padding: 0;
+  }
+  .FooterProducts > div:first-child {
+    margin-top: 0 !important;
+  }
+  .FooterProducts .productWrapper {
+    justify-content: flex-start;
+    margin-top: 10px;
+    gap: 15px;
+    padding: 0;
+  }
+}
+@media (min-width: 1201px) {
+  .FooterSocialIcons .bottomIcons {
+    border-top: none;
+  }
+  .FooterSocialIcons .bottomIcons > a:first-child {
+    border-left: none;
   }
 }
 
