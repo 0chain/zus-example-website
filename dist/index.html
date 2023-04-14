@@ -1112,6 +1112,171 @@
     </div>
     <!--Partners end-->
 
+    <!--FAQ start-->
+    <div class="FAQ_container">
+      <div class="FAQ_header">
+        <h1 class="FAQ_title">Frequently Asked Questions</h1>
+        <div class="FAQ_description">
+          See below for our most frequently asked questions. For more
+          information, visit our
+          <a
+            href="https://discord.com/invite/h3BFjdtCp4"
+            target="_blank"
+            rel="noreferrer"
+            >Discord</a
+          >,
+          <a href="https://github.com/0chain" target="_blank" rel="noreferrer"
+            >GitHub</a
+          >,
+          <a href="https://api.zus.network" target="_blank" rel="noreferrer"
+            >API</a
+          >, and
+          <a href="https://docs.zus.network" target="_blank" rel="noreferrer"
+            >Documentation</a
+          >
+          pages
+        </div>
+      </div>
+
+      <div class="FAQ_content">
+        <div class="Accordion_container">
+          <div class="Accordion_line"></div>
+          <div class="Accordion_header">
+            <h2 class="Accordion_title">What is Züs?</h2>
+            <img
+              src="images/general/plus.svg"
+              decoding="async"
+              data-nimg="intrinsic"
+            />
+          </div>
+          <div class="Accordion_children">
+            <div>
+              <span class="FAQ_faq"
+                >Züs is the most private cloud. Use Züs to build your privacy
+                solution and store for total protection. Züs is the first
+                decentralized encrypted data sharing network. It is the only
+                network with a QoS (quality-of-service) protocol to ensure total
+                protection.</span
+              >
+            </div>
+          </div>
+        </div>
+
+        <div class="Accordion_container">
+          <div class="Accordion_line"></div>
+          <div class="Accordion_header">
+            <h2 class="Accordion_title">How does Züs help with GDPR?</h2>
+            <img
+              src="images/general/plus.svg"
+              decoding="async"
+              data-nimg="intrinsic"
+            />
+          </div>
+          <div class="Accordion_children">
+            <div>
+              <span class="FAQ_faq"
+                >Given the data is tracked for all file operations on the
+                Blobber, we provide a capability to generate privacy reports on
+                the Blimp app. Also since the data is controlled by the user or
+                customer, storing on Züs is a naturally GDPR compliant storage
+                solution.</span
+              >
+            </div>
+          </div>
+        </div>
+
+        <div class="Accordion_container">
+          <div class="Accordion_line"></div>
+          <div class="Accordion_header">
+            <h2 class="Accordion_title">What are Miners and Sharders?</h2>
+            <img
+              src="images/general/plus.svg"
+              decoding="async"
+              data-nimg="intrinsic"
+            />
+          </div>
+          <div class="Accordion_children">
+            <div>
+              <span class="FAQ_faq"
+                >Miners processes transactions from the client and challenges
+                Blobbers to ensure storage integrity and performance. Sharders
+                store the blockchain history and respond to queries.</span
+              >
+            </div>
+          </div>
+        </div>
+
+        <div class="Accordion_container">
+          <div class="Accordion_line"></div>
+          <div class="Accordion_header">
+            <h2 class="Accordion_title">What is a Blobber?</h2>
+            <img
+              src="images/general/plus.svg"
+              decoding="async"
+              data-nimg="intrinsic"
+            />
+          </div>
+          <div class="Accordion_children">
+            <div>
+              <span class="FAQ_faq"
+                >A Blobber is a storage provider on the Züs network. They are
+                decentralized servers all over the world that connect to Züs
+                network to earn ZCN by providing our users with the storage they
+                need.</span
+              >
+            </div>
+          </div>
+        </div>
+
+        <div class="Accordion_container">
+          <div class="Accordion_line"></div>
+          <div class="Accordion_header">
+            <h2 class="Accordion_title">
+              Are Miners and Sharders centralized?
+            </h2>
+            <img
+              src="images/general/plus.svg"
+              decoding="async"
+              data-nimg="intrinsic"
+            />
+          </div>
+          <div class="Accordion_children">
+            <div>
+              <span class="FAQ_faq"
+                >Miners and Sharders are a limited core group of the Züs
+                ecosystem, but they each have independent instances and
+                keys.</span
+              >
+            </div>
+          </div>
+        </div>
+
+        <div class="Accordion_container">
+          <div class="Accordion_line"></div>
+          <div class="Accordion_header">
+            <h2 class="Accordion_title">
+              What is sharding and how does it protect my data?
+            </h2>
+            <img
+              src="images/general/plus.svg"
+              decoding="async"
+              data-nimg="intrinsic"
+            />
+          </div>
+          <div class="Accordion_children">
+            <div>
+              <span class="FAQ_faq"
+                >In our protocol we split the data into fragments and store it
+                on multiple Blobbers, so one server does not compromise
+                availability and security of your data.</span
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--FAQ end-->
+
     <!-- Email Modal -->
     <section class="modale email-modale" aria-hidden="true">
       <div class="modal-dialog">
@@ -1791,6 +1956,15 @@
       const closeDialog = () => {
         document.querySelector(".email-modale").classList.remove("opened");
       };
+
+      const accordion = document.getElementsByClassName("Accordion_header");
+
+      for (i = 0; i < accordion.length; i++) {
+        accordion[i].addEventListener("click", function () {
+          this.parentNode.classList.toggle("active");
+          console.log("added");
+        });
+      }
     </script>
   </body>
 </html>
