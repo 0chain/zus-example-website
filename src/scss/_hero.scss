@@ -10,6 +10,7 @@
   padding-top: 4rem;
   padding-bottom: 3rem;
   overflow: hidden;
+  position: relative;
 
   .secondaryHeading {
     font-weight: 600;
@@ -144,19 +145,20 @@
 @include media(">tablet") {
   .heroContainer {
     width: 100%;
-    padding-top: 4.5rem;
-    padding-bottom: 4.5rem;
+    padding-top: 7rem;
+    padding-bottom: 7rem;
 
     .heroBackground {
       @include background-image(
-        "../images/hero/cloud.png",
+        "../images/Hero/cloud.png",
         top,
         827.58px,
         100%,
         100%
       );
       @include inset;
-      top: 10.7%;
+      top: auto;
+      bottom: 4.5rem;
     }
 
     .secondaryHeading {

@@ -1,0 +1,566 @@
+@use "variables.scss" as *;
+@use "mixins.scss" as *;
+
+@import "include-media";
+
+.FooterFeature {
+  position: relative;
+  padding: 5rem 1rem;
+  margin: auto;
+  text-align: center;
+  overflow: hidden;
+  background: linear-gradient(180.15deg, #00d3ff -29.76%, #1a49ff 125.39%);
+  border-top: 1px solid hsla(0, 0%, 55%, 0.3);
+  border-bottom: 1px solid hsla(0, 0%, 55%, 0.3);
+
+  h3 {
+    position: relative;
+    font-size: 28px;
+    line-height: 115%;
+    max-width: 70%;
+    margin: 1.5rem auto auto;
+    z-index: 1;
+  }
+
+  p {
+    margin-top: 2rem;
+    font-weight: 600;
+    line-height: 125%;
+    color: #fff;
+    opacity: 0.9;
+    max-width: 800px;
+    z-index: 1;
+  }
+
+  .bgPattern {
+    position: absolute;
+    z-index: -1;
+    width: 2118.19px;
+    height: 2118.19px;
+    left: calc(50% - 1059.095px);
+    top: -919.1px;
+    background: radial-gradient(
+      50% 50% at 50% 50%,
+      #5da3ff 0,
+      rgba(5, 11, 25, 0) 100%,
+      rgba(156, 185, 255, 0) 0
+    );
+  }
+
+  .zusLogoWhite {
+    position: relative;
+    width: 45.88px;
+    height: 40px;
+    margin: auto;
+  }
+
+  .buttons {
+    margin-top: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+
+    button {
+      width: 159px;
+      height: 48px;
+      margin: 0;
+
+      &:first-child {
+        background: #fff;
+        color: #202127;
+      }
+    }
+  }
+}
+
+.socialIcons {
+  position: relative;
+  margin-top: 2.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 99;
+
+  li {
+    cursor: pointer;
+    padding: 0 1.8rem;
+    border-right: 1px solid hsla(0, 0%, 100%, 0.1);
+
+    &:last-child {
+      border-right: none;
+    }
+  }
+}
+
+.FooterCommunity {
+  &.socialLinksContainer {
+    position: relative;
+    padding: 4rem 1.25rem;
+    background: linear-gradient(208.49deg, #151618 -19.53%, #151618 80.31%),
+      linear-gradient(208.49deg, #092a5c -19.53%, #022d77 80.31%),
+      linear-gradient(213.75deg, #5ac7de -102.42%, #132e95 77.58%);
+    width: 100%;
+    text-align: center;
+    overflow: hidden;
+    border: none;
+  }
+
+  .background {
+    position: absolute;
+    width: 808px;
+    height: 808px;
+    left: 50%;
+    transform: translateX(-50%);
+    top: -460px;
+    background: radial-gradient(
+      50% 50% at 50% 50%,
+      #1a5aff 0,
+      rgba(5, 11, 25, 0) 100%
+    );
+  }
+
+  .textContent {
+    h3 {
+      position: relative;
+      z-index: 1;
+      font-weight: 600;
+      font-size: 21px;
+      line-height: 125%;
+    }
+
+    p {
+      font-size: 14px;
+      line-height: 160%;
+      opacity: 0.9;
+      padding: 1.25rem 0;
+    }
+
+    ul {
+      margin-top: 1.5rem;
+
+      li {
+        padding: 1rem 1.75rem;
+      }
+    }
+  }
+
+  .socialIcons {
+    a {
+      display: block;
+    }
+
+    img {
+      height: 2rem;
+      width: 2rem;
+    }
+  }
+}
+
+.Footer {
+  .menuContainer {
+    margin-top: -1rem;
+    margin-bottom: 4rem;
+    text-align: center;
+  }
+
+  .leftmenuContainer {
+    padding: 0 30px;
+
+    h3 {
+      font-weight: 600;
+      font-size: 14px;
+      line-height: 150%;
+      color: #cfd2dc;
+      margin-top: 40px;
+    }
+
+    p {
+      font-size: 14px;
+      line-height: 160%;
+      color: #90939e;
+      margin-top: 20px;
+    }
+  }
+
+  .menuLinksContainer {
+    width: 100%;
+  }
+
+  .footerMenuItem {
+    margin-top: 2rem;
+    text-align: left;
+  }
+
+  .titleMenu {
+    font-size: 13px;
+    line-height: 15px;
+    letter-spacing: 0.1em;
+    color: #90939e;
+    width: 100%;
+    border-bottom: 1px solid hsla(0, 0%, 55%, 0.3);
+    padding: 20px 30px;
+  }
+
+  .subMenu {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 20px 0 0 30px;
+    gap: 10px;
+
+    li {
+      font-weight: 400;
+      font-size: 18px;
+      line-height: 160%;
+      min-width: 160px;
+      color: #cfd2dc;
+
+      &:hover {
+        color: #0b9dff;
+      }
+    }
+
+    a[disabled] {
+      opacity: 0.5;
+
+      &:hover {
+        color: #cfd2dc;
+
+        span {
+          display: none;
+        }
+
+        &::after {
+          content: "Coming Soon";
+        }
+      }
+    }
+  }
+
+  .dynamicPosts {
+    li {
+      min-width: 300px;
+    }
+  }
+
+  .bottomContainer {
+    text-align: center;
+    padding: 2rem 2rem 2.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 1rem;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 160%;
+    color: #cfd2dc;
+
+    p {
+      font-size: 16px;
+      color: #cfd2dc;
+    }
+  }
+}
+
+.FooterSocialIcons {
+  border-top: 1px solid hsla(0, 0%, 55%, 0.3);
+  border-bottom: 1px solid hsla(0, 0%, 55%, 0.3);
+  margin-top: 2.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+
+  .bottomIcons,
+  .topIcons {
+    > a:last-child {
+      border-right: 1px solid hsla(0, 0%, 55%, 0.3);
+    }
+  }
+
+  .bottomIcons {
+    border-top: 1px solid hsla(0, 0%, 55%, 0.3);
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &_icon {
+    display: inline-block;
+    padding: 43px 25px;
+    border-left: 1px solid hsla(0, 0%, 55%, 0.3);
+  }
+}
+
+.FooterProducts {
+  margin-top: 60px;
+  text-align: left;
+
+  h5 {
+    font-weight: 700;
+    font-size: 13px;
+    line-height: 15px;
+    letter-spacing: 0.1em;
+    color: #90939e;
+    border-bottom: 1px solid hsla(0, 0%, 55%, 0.3);
+    padding: 20px 30px;
+  }
+
+  img {
+    height: 24px;
+    width: 24px;
+  }
+
+  a {
+    p:hover {
+      color: #0b9dff;
+    }
+
+    &[disabled] {
+      opacity: 0.5;
+      &:hover {
+        p {
+          display: none;
+        }
+
+        &:after {
+          content: "Coming Soon";
+        }
+      }
+    }
+  }
+
+  .productWrapper {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin-top: 20px;
+    gap: 20px;
+    padding: 0 30px;
+
+    p {
+      font-weight: 600;
+      font-size: 18px;
+      line-height: 160%;
+      color: #f1f2f2;
+    }
+  }
+}
+
+@include media(">tablet") {
+  .FooterFeature {
+    width: 100%;
+    padding: 4.5rem 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    h3 {
+      font-size: 54px;
+      line-height: 110%;
+      max-width: 800px;
+    }
+
+    p {
+      font-size: 21px;
+    }
+
+    .zusLogoWhite {
+      width: 65px;
+      height: 45px;
+    }
+
+    .buttons {
+      gap: 1rem;
+
+      button {
+        width: 167px;
+        height: 56px;
+      }
+    }
+  }
+
+  .FooterCommunity {
+    &.socialLinksContainer {
+      background: linear-gradient(208.49deg, #151618 -19.53%, #151618 80.31%);
+      padding: 5.5rem 0;
+    }
+
+    .background {
+      width: 2118.19px;
+      height: 2118.19px;
+      top: -1600px;
+      background: radial-gradient(
+        50% 50% at 50% 50%,
+        #1a5aff 0,
+        rgba(5, 11, 25, 0) 100%,
+        rgba(156, 185, 255, 0) 0
+      );
+    }
+
+    .textContent {
+      h3 {
+        font-weight: 700;
+        font-size: 28px;
+        line-height: 115%;
+      }
+
+      p {
+        font-size: 18px;
+        max-width: 700px;
+        margin: auto;
+      }
+
+      ul {
+        margin-top: 4rem;
+
+        li {
+          padding: 0 3rem;
+        }
+      }
+    }
+
+    .socialIcons {
+      img {
+        height: 4rem;
+        width: 4rem;
+      }
+    }
+  }
+
+  .Footer {
+    .menuContainer {
+      overflow: hidden;
+      text-align: left;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      padding-top: 80px;
+      gap: 6rem;
+      width: -webkit-fit-content;
+      width: -moz-fit-content;
+      width: fit-content;
+      margin: auto;
+    }
+
+    .leftmenuContainer {
+      max-width: 250px;
+      text-align: left;
+      padding: 0 0 0 20px;
+      margin-top: -10px;
+      flex-shrink: 0;
+
+      h3 {
+        margin-top: 20px;
+      }
+
+      p {
+        text-align: left;
+      }
+    }
+
+    .menuLinksContainer {
+      margin-top: 0;
+      display: flex;
+      justify-content: flex-start;
+      align-items: flex-start;
+      flex-direction: row;
+      flex-wrap: wrap;
+      gap: 3rem;
+      width: 100%;
+      padding: 0 3rem;
+    }
+
+    .footerMenuItem {
+      align-items: flex-start;
+      width: 135px;
+      margin: 0;
+
+      h5 {
+        border-bottom: none;
+        padding: 0;
+      }
+    }
+
+    .dynamicPosts {
+      width: 250px;
+    }
+
+    .titleMenu {
+      font-size: 13px;
+    }
+
+    .subMenu {
+      display: flex;
+      flex-direction: column;
+      flex-flow: row wrap;
+      width: 100%;
+      font-weight: 600;
+      font-size: 16px;
+      padding: 0;
+      margin-top: 10px;
+
+      li {
+        flex: 1 1 130px;
+        width: 130px;
+      }
+    }
+
+    .bottomContainer {
+      flex-direction: row;
+      justify-content: center;
+      gap: 2.5rem;
+      padding: 2rem 8rem;
+    }
+  }
+
+  .FooterSocialIcons {
+    margin-top: 4rem;
+
+    .bottomIcons {
+      width: auto;
+      display: block;
+    }
+
+    &_icon {
+      padding: 43px 48px;
+    }
+  }
+
+  .FooterProducts {
+    margin: 0;
+    width: 135px;
+
+    h5 {
+      border-bottom: none;
+      padding: 0;
+    }
+
+    > div:first-child {
+      margin-top: 0 !important;
+    }
+
+    .productWrapper {
+      justify-content: flex-start;
+      margin-top: 10px;
+      gap: 15px;
+      padding: 0;
+    }
+  }
+}
+
+@include media(">smallDesktop") {
+  .FooterSocialIcons {
+    .bottomIcons {
+      border-top: none;
+
+      > a:first-child {
+        border-left: none;
+      }
+    }
+  }
+}

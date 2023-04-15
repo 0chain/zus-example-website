@@ -1,0 +1,142 @@
+@use "variables.scss" as *;
+@use "mixins.scss" as *;
+
+@import "include-media";
+
+$breakpoints: (
+  tablet: 768px,
+  smallDesktop: 1200px,
+);
+
+.Accordion {
+  &_container {
+    width: 100%;
+  }
+
+  &_title {
+    font-weight: 600;
+    font-size: 21px;
+    line-height: 125%;
+  }
+
+  &_line {
+    border-top: 1px solid hsla(0, 0%, 55%, 0.3);
+  }
+
+  &_header {
+    display: flex;
+    justify-content: space-between;
+    cursor: pointer;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    position: relative;
+    z-index: 2;
+
+    img {
+      width: 20px;
+    }
+  }
+
+  &_children {
+    opacity: 0;
+    height: 0;
+    transform: translateY(10px);
+
+    > div {
+      padding: 0 1rem 1rem;
+    }
+  }
+
+  &_container.active {
+    .Accordion_header {
+      img {
+        display: none;
+      }
+    }
+
+    .Accordion_children {
+      height: auto;
+      opacity: 1;
+      transform: translateZ(0px);
+      transition: height 250ms, opacity 250ms, transform 250ms;
+    }
+  }
+}
+
+.FAQ {
+  &_container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 120px 4rem;
+    gap: 50px;
+    background: #061631;
+  }
+
+  &_header {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0;
+    gap: 16px;
+    max-width: 1040px;
+
+    .FAQ_title {
+      font-weight: 700;
+      font-size: 42px;
+      line-height: 110%;
+      color: #fff;
+    }
+
+    .FAQ_description {
+      font-weight: 400;
+      font-size: 18px;
+      line-height: 160%;
+      color: #cfd2dc;
+
+      > a {
+        color: #0b9dff;
+        display: inline-block;
+      }
+    }
+  }
+
+  &_content {
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    gap: 8px;
+    width: 1040px;
+
+    > div {
+      width: 646px;
+    }
+  }
+
+  &_faq {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 160%;
+    color: #cfd2dc;
+  }
+}
+
+@include media("<=smallDesktop") {
+  .FAQ {
+    &_content {
+      &,
+      & > div {
+        width: 100%;
+      }
+    }
+  }
+}
+
+@include media("<=tablet") {
+  .FAQ {
+    &_container {
+      padding: 4rem 2rem;
+    }
+  }
+}

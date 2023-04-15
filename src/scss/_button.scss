@@ -1,0 +1,63 @@
+@use "variables.scss" as *;
+@use "mixins.scss" as *;
+
+@import "include-media";
+
+.button {
+  cursor: pointer;
+  margin: auto;
+  padding: 0.8rem 1.5rem;
+  color: #fff;
+  display: block;
+  width: 100%;
+  background: linear-gradient(121.99deg, #00d3ff -26.48%, #1a49ff 64.48%);
+  border-radius: 8px;
+  font-family: inherit;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: all 0.3s ease-in;
+  border: none;
+  outline: none;
+  z-index: 99;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &:hover {
+    transform:scale(1.05) > span {
+      font-weight: 700;
+    }
+  }
+
+  &.black {
+    background: #030819;
+    width: 100%;
+    border: 1px solid #fff;
+  }
+
+  &.transparent {
+    background: transparent;
+  }
+}
+
+@include media(">tablet") {
+  .button {
+    &:hover {
+      transform:scale(1.1) > span {
+        font-weight: 700;
+      }
+    }
+
+    &.black:hover {
+      background: #fff;
+      box-shadow: 0 0 20px 1px hsla(0, 0%, 100%, 0.5);
+
+      > span {
+        background: linear-gradient(121.99deg, #00d3ff -26.48%, #1a49ff 64.48%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+    }
+  }
+}
