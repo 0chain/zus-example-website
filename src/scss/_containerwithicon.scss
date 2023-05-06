@@ -16,7 +16,7 @@ $breakpoints: (
   overflow: hidden;
 
   .containerWithIcon {
-    button {
+    .button {
       margin-top: 2rem;
       padding: 1rem 2rem;
     }
@@ -53,7 +53,7 @@ $breakpoints: (
       padding: 0 1.5rem;
     }
 
-    button {
+    .button {
       width: $mobile-width;
     }
   }
@@ -171,7 +171,7 @@ $breakpoints: (
     @include flex-vertical-center(center);
     flex-direction: row;
 
-    button {
+    .button {
       margin: 0;
       margin-top: 2rem;
       max-width: 155px;
@@ -242,7 +242,7 @@ $breakpoints: (
       margin-top: 16rem;
       max-width: 700px;
 
-      button {
+      .button {
         max-width: 200px;
         margin: 2rem auto 0 auto;
       }

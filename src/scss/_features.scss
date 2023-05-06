@@ -22,7 +22,7 @@
     flex-direction: column;
     gap: 30px;
 
-    button {
+    .button {
       width: 146px;
       height: 52px;
       font-weight: 700;
@@ -122,7 +122,7 @@
       width: 350px;
       margin: 0;
 
-      button {
+      .button {
         position: absolute;
         bottom: 0;
         margin-left: auto;

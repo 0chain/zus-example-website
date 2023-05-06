@@ -328,7 +328,7 @@
   flex-direction: column;
   gap: 30px;
 }
-.featureListWrapper .container button {
+.featureListWrapper .container .button {
   width: 146px;
   height: 52px;
   font-weight: 700;
@@ -419,7 +419,7 @@
     width: 350px;
     margin: 0;
   }
-  .featureListWrapper .container button {
+  .featureListWrapper .container .button {
     position: absolute;
     bottom: 0;
     margin-left: auto;
@@ -462,7 +462,7 @@
   padding-bottom: 6rem;
   overflow: hidden;
 }
-.rootWrapper .containerWithIcon button {
+.rootWrapper .containerWithIcon .button {
   margin-top: 2rem;
   padding: 1rem 2rem;
 }
@@ -494,7 +494,7 @@
   margin-top: 2rem;
   padding: 0 1.5rem;
 }
-.rootWrapper .textContent button {
+.rootWrapper .textContent .button {
   width: 327px;
 }
 .rootWrapper .ellipseTop {
@@ -594,7 +594,7 @@
     align-items: center;
     flex-direction: row;
   }
-  .containerWithIcon button {
+  .containerWithIcon .button {
     margin: 0;
     margin-top: 2rem;
     max-width: 155px;
@@ -652,7 +652,7 @@
     margin-top: 16rem;
     max-width: 700px;
   }
-  .containerWithIcon .textContent button {
+  .containerWithIcon .textContent .button {
     max-width: 200px;
     margin: 2rem auto 0 auto;
   }
@@ -699,7 +699,7 @@
   padding-bottom: 6rem;
   overflow: hidden;
 }
-.showcasecontainer .containerWithIcon button {
+.showcasecontainer .containerWithIcon .button {
   margin-top: 2rem;
   padding: 1rem 2rem;
   font-family: inherit;
@@ -765,7 +765,7 @@
   padding: 0 1.5rem;
   z-index: 2;
 }
-.showcasecontainer .textContentWrapper button {
+.showcasecontainer .textContentWrapper .button {
   padding: 1rem 2rem;
   width: fit-content;
   margin-top: 2rem;
@@ -786,12 +786,6 @@
 .showcasecontainer .listContainer {
   margin-top: 20px;
 }
-.showcasecontainer .listContainer > div {
-  font-weight: 400;
-  font-size: 18px;
-  line-height: 140%;
-  padding: 2px 0;
-}
 .showcasecontainer .heading {
   font-weight: 700;
   font-size: 42px;
@@ -808,13 +802,14 @@
   display: none;
 }
 .showcasecontainer .bulletTextContainer {
-  display: flex;
-  font-size: 14px;
-  line-height: 160%;
   color: #cfd2dc;
   text-align: left;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 140%;
 }
 .showcasecontainer .bulletTextContainer li {
+  padding: 2px 0;
   list-style-type: disc;
   display: list-item;
   list-style-position: inside;
@@ -836,7 +831,7 @@
     align-items: center;
     flex-direction: row;
   }
-  .showcasecontainer .containerWithIcon button {
+  .showcasecontainer .containerWithIcon .button {
     margin: 0;
     margin-top: 2rem;
     max-width: 155px;
@@ -894,7 +889,7 @@
     max-width: 700px;
     line-height: 110%;
   }
-  .showcasecontainer .textContentWrapper button {
+  .showcasecontainer .textContentWrapper .button {
     max-width: fit-content;
     margin: 2rem auto 0;
   }
@@ -953,7 +948,7 @@
 .vultInfo .textContent {
   margin-top: 2rem;
 }
-.vultInfo .textContent button {
+.vultInfo .textContent .button {
   width: 327px;
 }
 .vultInfo .vultArtDesktop {
@@ -1052,7 +1047,7 @@
     text-align: center;
     width: 100%;
   }
-  .vultInfo .textContainerWrapper .textContent button {
+  .vultInfo .textContainerWrapper .textContent .button {
     margin-left: auto;
     margin-right: auto;
   }
@@ -1177,7 +1172,7 @@
 .chalkInfo .textContent p {
   margin-top: 2rem;
 }
-.chalkInfo .textContent button {
+.chalkInfo .textContent .button {
   width: 327px;
 }
 .chalkInfo .chalkArtDesktop {
@@ -1239,7 +1234,7 @@
     padding: 0;
     width: 80%;
   }
-  .chalkInfo .textContent button {
+  .chalkInfo .textContent .button {
     margin: 2rem 0 0;
     max-width: 155px;
   }
@@ -1260,7 +1255,7 @@
     text-align: center;
     width: 100%;
   }
-  .chalkInfo .textContent button {
+  .chalkInfo .textContent .button {
     margin-left: auto;
     margin-right: auto;
   }
