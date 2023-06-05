@@ -1,8 +1,10 @@
 import {
     init,
-    download,
     createWallet,
+    download,
     setWallet,
+    decodeAuthTicket,
+    listSharedFiles,
 } from "@zerochain/zus-sdk";
 
 const configJson = {
@@ -14,7 +16,7 @@ const configJson = {
     blockWorker: "https://dev.zus.network/dns",
     zboxHost: "https://0box.dev.zus.network",
     zboxAppType: "blimp",
-  };
+};
 
 
 async function initializeWasm() {
@@ -33,30 +35,29 @@ async function initializeWasm() {
 }
 
 (async function () {
-        await initializeWasm()
-        const { keys, mnemonic } = await createWallet();
-        const {walletId, privateKey, publicKey} = keys
-        await setWallet(walletId, privateKey, publicKey, mnemonic);
-
-        //allocationID, remotePath, authTicket, lookupHash string, downloadThumbnailOnly bool, numBlocks int, callback
-        const file = await download(
-            "f44e906cd5e903c29497337021c78bd9877a575ed49c224ac818352c0fdac76c",
-            "",
-            "eyJjbGllbnRfaWQiOiIiLCJvd25lcl9pZCI6IjI5OWJiN2YxMWUyYmEzNzIzYzRmZGY5MmRhNjVhZjgyYTg2ZDFiY2FhNjg4Mjg4N2YwNDA1Nzk4ZGJmNmM5ZGYiLCJhbGxvY2F0aW9uX2lkIjoiZjQ0ZTkwNmNkNWU5MDNjMjk0OTczMzcwMjFjNzhiZDk4NzdhNTc1ZWQ0OWMyMjRhYzgxODM1MmMwZmRhYzc2YyIsImZpbGVfcGF0aF9oYXNoIjoiY2EwNTFmZDdlYjZmYmVjN2E5MmIyNjEzMTkxYWU3ZjA1OGZhMWE5MGQ2MWJhYjgwMzAxMmUwNzc4MjNhZTk3YiIsImFjdHVhbF9maWxlX2hhc2giOiIiLCJmaWxlX25hbWUiOiJ6dXMtYXNzZXRzIiwicmVmZXJlbmNlX3R5cGUiOiJkIiwiZXhwaXJhdGlvbiI6MCwidGltZXN0YW1wIjoxNjg1ODIwNzQzLCJlbmNyeXB0ZWQiOmZhbHNlLCJzaWduYXR1cmUiOiI5ZDJmNzViN2E5N2I0MTU4OWFiZDkwODc3MzBjNTA4MGI3MzIyNjY5ZWRhY2MwYTgxYWJmZWE4NWY5ODcwZDE5In0=",
-            "d614b59ec44388f1b51e3de9072f7ebd809ccd228dbb4185bcb9e26ff6ea9f44",
+    await initializeWasm()
+    const { keys, mnemonic } = await createWallet();
+    const { walletId, privateKey, publicKey } = keys
+    await setWallet(walletId, privateKey, publicKey, mnemonic);
+    const authTicket = "eyJjbGllbnRfaWQiOiIiLCJvd25lcl9pZCI6ImJmMzM5OWZiZjNkZjBkNGVhMGM5NWRjODNiNDQ5YjZhZDg4NDUxMzViNGI4OTcwOWYwYWFhMzQ5NzY1ZmM3YTMiLCJhbGxvY2F0aW9uX2lkIjoiZDI0ZDE2YmRkNjFlYWEwNGNiNWY4M2E3MjlhZTBmYmJhN2Q1NWZlZjU2Y2I5YmVmNGE3NTAxMWRiODNiZDJmNiIsImZpbGVfcGF0aF9oYXNoIjoiYTI5NTVjNjU4MDAxMzAwZDk3YzJiN2FiNzMzN2NlN2U5NmZiOGEyZWJiZmFjZjY1MWNhYTFkMzMwNWMxNWVjZiIsImFjdHVhbF9maWxlX2hhc2giOiIiLCJmaWxlX25hbWUiOiJuZXctYXNzZXRzLXRlc3QiLCJyZWZlcmVuY2VfdHlwZSI6ImQiLCJleHBpcmF0aW9uIjowLCJ0aW1lc3RhbXAiOjE2ODU5NjYwOTcsImVuY3J5cHRlZCI6ZmFsc2UsInNpZ25hdHVyZSI6IjE4MzEyZDkwNTBmNDg5MzRmMDc3MjBiOTc1ZTcyNjNiMTIwYWU2Yzk0ZTUyNDI5MzU4Nzg3MjBkOTgzYTIyOGIifQ=="
+    const authData = await decodeAuthTicket(authTicket)
+    const { data } = await listSharedFiles(authData?.file_path_hash, authData?.allocation_id, authData?.owner_id)
+    const filesList = data?.list
+    for (let file = 0; file < filesList.length; file++) {
+        const fileDetails = filesList[file]
+        const downloadedFile = await download(
+            fileDetails?.allocation_id,
+            fileDetails?.path,
+            authTicket,
+            fileDetails?.lookup_hash,
             false,
             10,
-            "downloadCallback"
+            null
         );
-        console.log("downloaded file", file);
-    
-        const a = document.createElement("a");
-        document.body.appendChild(a);
-        a.style = "display: none";
-    
-        a.href = file.url;
-        a.download = file.fileName;
-        a.click();
-        window.URL.revokeObjectURL(file.url);
-        document.body.removeChild(a);
+        const element = document.getElementById(downloadedFile?.fileName.replace(/\.[^/.]+$/, ""))
+        if(element){
+            const imageUrl =  window.URL.createObjectURL(downloadedFile?.url);
+            element.src = imageUrl
+        }
+    }
 })();
