@@ -47,12 +47,12 @@ async function initializeWasm() {
         const fileDetails = filesList[file]
         const downloadedFile = await download(
             fileDetails?.allocation_id,
-            fileDetails?.path,
+            '',
             authTicket,
             fileDetails?.lookup_hash,
             false,
-            10,
-            null
+            100,
+            '',
         );
         const element = document.getElementById(downloadedFile?.fileName.replace(/\.[^/.]+$/, ""))
         if(element){
