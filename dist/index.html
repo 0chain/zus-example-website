@@ -40,12 +40,13 @@
   <!-- Site Title  -->
   <title>Züs SDK</title>
 
-  <script async src="assets.js"></script>
+  <!-- load zus resources -->
+  <script src="assets.js" fetchpriority="high"></script>
 
   <!-- Shaka Player compiled library: -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/shaka-player/4.2.0/shaka-player.compiled.js"
+  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/shaka-player/4.2.0/shaka-player.compiled.js"
     integrity="sha512-IMJEFntnvRlPQ309TGE/4MEGA8t7w8+7WsThxt4CT4bXsl8AlhffJAJYYFd0i0hMw5Ylxct1hlaAmMmvB2wq7w=="
-    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
 
   <!-- CSS -->
   <link rel="stylesheet" href="css/fonts.css" />
@@ -77,7 +78,7 @@
 <body>
   <main class="main" id="main">
     <div class="overlay"></div>
-    <video id="video" poster="images/websitedata/poster.png" playsinline loop muted autoplay></video>
+    <video data-imageName="newZusVideo" id="video" poster="poster" playsinline loop muted autoplay></video>
 
     <h1 class="mainHeading" id="title">
       Livestream from Züs
@@ -149,17 +150,17 @@
     <ul class="socialIcons">
       <li>
         <a href="https://discord.com/invite/h3BFjdtCp4" rel="noreferrer" target="_blank">
-          <img src="images/socialicons/discord.svg" alt="discord" height="28" width="28" priority />
+          <img data-imageName="discord" alt="discord" height="28" width="28" priority />
         </a>
       </li>
       <li>
         <a href="https://twitter.com/zus_network" rel="noreferrer" target="_blank">
-          <img src="images/socialicons/twitter.svg" alt="twitter" height="28" width="28" priority />
+          <img data-imageName="twitter" alt="twitter" height="28" width="28" priority />
         </a>
       </li>
       <li>
         <a href="https://t.me/zus_network" rel="noreferrer" target="_blank">
-          <img src="images/socialicons/telegram.svg" alt="telegram" height="28" width="28" priority />
+          <img data-imageName="telegram" alt="telegram" height="28" width="28" priority />
         </a>
       </li>
     </ul>
@@ -453,7 +454,7 @@
       <div class="container" style="min-height: 500px">
         <div class="icon">
           <span>
-            <img sizes="100vw" src="images/Features/storeIcon.png" decoding="async" data-nimg="fill" quality="{80}"
+            <img data-imageName="storeIcon" sizes="100vw" decoding="async" data-nimg="fill" quality="{80}"
               layout="fill" priority /></span>
         </div>
         <div class="textContainer">
@@ -471,7 +472,7 @@
       <div class="container" style="min-height: 500px">
         <div class="icon">
           <span>
-            <img sizes="100vw" src="images/Features/buildIcon.png" decoding="async" data-nimg="fill" quality="{80}"
+            <img sizes="100vw" data-imageName="buildIcon" decoding="async" data-nimg="fill" quality="{80}"
               layout="fill" priority /></span>
         </div>
         <div class="textContainer">
@@ -489,7 +490,7 @@
       <div class="container" style="min-height: 500px">
         <div class="icon">
           <span>
-            <img sizes="100vw" src="images/Features/earnIcon.png" decoding="async" data-nimg="fill" quality="{80}"
+            <img sizes="100vw" data-imageName="earnIcon" decoding="async" data-nimg="fill" quality="{80}"
               layout="fill" priority /></span>
         </div>
         <div class="textContainer">
@@ -506,98 +507,13 @@
   </div>
   <!--Features End-->
 
-  <section class="featuresContainer">
-    <div class="featureListWrapper">
-      <div class="featureListHeading">
-        <h2 id="featureText">
-          Power your customer engagement, reach, and site uptime with
-          decentralized storage
-        </h2>
-      </div>
-      <div class="featureList">
-        <div class="feature">
-          <div class="iconContainer">
-            <img src="images/security.png" alt="Scalable" loading="lazy" />
-          </div>
-          <h2 class="featureHeading" id="feature1.title">
-            Limitless Availability
-          </h2>
-          <p class="paragraph featureParagraph" id="feature1.description">
-            Global reach with CDN-like scale and unparalleled uptime.
-          </p>
-        </div>
-        <div class="feature">
-          <div class="iconContainer">
-            <img src="images/privacy.png " alt="Secure" loading="'lazy" />
-          </div>
-          <h2 class="featureHeading" id="feature2.title">
-            Limitless Performance
-          </h2>
-          <p class="paragraph featureParagraph" id="feature2.description">
-            Maximize engagement by adding rich media files on your website
-          </p>
-        </div>
-
-        <div class="feature">
-          <div class="iconContainer">
-            <img src="images/security.png" alt="High Performance" loading="'lazy" />
-          </div>
-          <h2 class="featureHeading" id="feature3.title">
-            Limitless Resiliency
-          </h2>
-          <p class="paragraph featureParagraph" id="feature3.description">
-            Eliminate attack threats by fragmenting data. No single point of
-            attack.
-          </p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="rootContainer">
-    <div class="performance-section">
-      <div class="ellipseContainer">
-        <div class="ellipseLeft"></div>
-        <div class="ellipseRight"></div>
-      </div>
-
-      <div class="showcaseArt">
-        <img src="images/showcaseArt.png" alt="showcase" loading="lazy" />
-        <video src="https://ayush-gupta.s3.us-east-2.amazonaws.com/test/video2.mp4"
-          poster="images/websitedata/poster2.png" playsinline loop muted autoplay loading="lazy"></video>
-      </div>
-
-      <h3 class="showcase-text" id="streamText">
-        Mesmerize your customer with live streamed data
-      </h3>
-    </div>
-  </section>
-
-  <section class="privacyContainerWrapper">
-    <div class="privacyContainer">
-      <div class="imgContainer">
-        <img src="images/img2.jpg" alt="Privacy" loading="'lazy" />
-      </div>
-      <div class="privacyTextContent">
-        <h4 id="extraFeature.title">Limitless Resiliency</h4>
-        <!-- <h2>As opposed to vulnerable data and network outages</h2> -->
-        <p class="paragraph" id="extraFeature.description">
-          Your data is broken up into fragments and stored with different
-          storage providers, meaning your data does not exist on one distinct
-          node, so there is no single point of failure or attack from hackers,
-          and no business threat from censorship.
-        </p>
-      </div>
-    </div>
-  </section>
-
   <!--ContainerwithIcon Start-->
   <section class="rootWrapper">
     <div class="containerWithIcon blimpContainer">
       <div class="logo">
         <span>
-          <img alt="Blimp Logo" src="images/blimpinfo/blimpLogo.svg" decoding="async" data-nimg="fixed" /><noscript>
-            <img alt="Blimp Logo" src="images/blimpinfo/blimpLogo.svg" decoding="async" data-nimg="fixed"
+          <img alt="Blimp Logo" data-imageName="blimpLogo" decoding="async" data-nimg="fixed" /><noscript>
+            <img alt="Blimp Logo" data-imageName="blimpLogo" decoding="async" data-nimg="fixed"
               loading="lazy" /></noscript>
         </span>
       </div>
@@ -608,7 +524,7 @@
       <div class="blimpArt">
         <div class="css" style="position: relative; height: 100%; width: 100%">
           <span>
-            <img id="blimpArt" alt="Blimp" sizes="100vw" decoding="async"
+            <img data-imageName="blimpArt" alt="Blimp" sizes="100vw" decoding="async"
               data-nimg="fill" /></span>
         </div>
       </div>
@@ -645,8 +561,8 @@
       </div>
 
       <div class="showcaseArt">
-        <img src="images/showcaseArt.png" alt="showcase" loading="lazy" />
-        <video src="https://ayush-gupta.s3.us-east-2.amazonaws.com/test/video2.mp4"
+        <img data-imageName="showcaseArt" alt="showcase" loading="lazy" />
+        <video data-imageName="video2"
           poster="images/websitedata/poster2.png" playsinline loop muted autoplay loading="lazy"></video>
       </div>
 
@@ -720,14 +636,14 @@
     <div class="containerWithIcon vultContainer">
       <div class="logo">
         <span style="display: inline-block; width: 70px; height: 50px">
-          <img alt="Vult Logo" src="images/vultInfo/vultLogo.svg" decoding="async" data-nimg="fixed" />
+          <img alt="Vult Logo" data-imageName="vultLogo" decoding="async" data-nimg="fixed" />
         </span>
       </div>
 
       <div class="css" style="position: relative">
         <div class="vultArt">
           <span>
-            <img alt="Vult" sizes="100vw" src="images/vultInfo/vultArt.png" decoding="async" data-nimg="fill" />
+            <img alt="Vult" sizes="100vw" data-imageName="vultArt" decoding="async" data-nimg="fill" />
           </span>
         </div>
       </div>
@@ -764,7 +680,7 @@
     <div class="containerWithIcon">
       <div class="logo">
         <span style="display: inline-block; width: 40px; height: 40px">
-          <img alt="Chimney Logo" src="images/chimneyInfo/chimneyLogo.svg" decoding="async" data-nimg="fixed" />
+          <img alt="Chimney Logo" data-imageName="chimneyLogo" decoding="async" data-nimg="fixed" />
         </span>
       </div>
 
@@ -776,7 +692,7 @@
       <div class="chimneyArt">
         <div class="css" style="position: relative">
           <span>
-            <img alt="Chimney" sizes="100vw" src="images/chimneyInfo/chimneyArt.png" decoding="async"
+            <img alt="Chimney" sizes="100vw" data-imageName="chimneyArt" decoding="async"
               data-nimg="fill" />
           </span>
         </div>
@@ -811,7 +727,7 @@
     <div class="containerWithIcon">
       <div class="logo">
         <span style="display: inline-block; height: 55px; width: 75px">
-          <img alt="Chalk Logo" src="images/chalkInfo/chalkLogo.svg" decoding="async" data-nimg="fixed" />
+          <img alt="Chalk Logo" data-imageName="chalkLogo" decoding="async" data-nimg="fixed" />
         </span>
       </div>
 
@@ -822,7 +738,7 @@
 
       <div class="chalkArtMobile">
         <div class="css" style="position: relative">
-          <span style="display: inline-block"><img alt="Chalk" src="images/chalkInfo/chalkArtMobile.png"
+          <span style="display: inline-block"><img alt="Chalk" data-imageName="chalkArtMobile"
               decoding="async" data-nimg="fixed" /></span>
         </div>
       </div>
@@ -849,7 +765,7 @@
       <div class="chalkArtDesktop">
         <div class="css" style="position: relative">
           <span style="display: inline-block; height: 550px; width: 600px"><img alt="Chalk"
-              src="images/chalkInfo/chalkArtDesktop.png" decoding="async" data-nimg="fixed" /></span>
+              data-imageName="chalkArtDesktop" decoding="async" data-nimg="fixed" /></span>
         </div>
       </div>
     </div>
@@ -871,7 +787,7 @@
     </p>
 
     <span>
-      <img alt="" aria-hidden="true" src="images/infographic.png" />
+      <img alt="" aria-hidden="true" data-imageName="infographic" />
     </span>
   </div>
   <!--Private Sharing end-->
@@ -885,83 +801,83 @@
 
     <div class="partners">
       <figure>
-        <img src="images/partners/huawei.svg" alt="" />
+        <img data-imageName="huawei" alt="" />
       </figure>
 
       <figure>
-        <img src="images/partners/chainlink.svg" alt="" />
+        <img data-imageName="chainlink" alt="" />
       </figure>
 
       <figure>
-        <img src="images/partners/polygon.svg" alt="" />
+        <img data-imageName="polygon" alt="" />
       </figure>
 
       <figure>
-        <img src="images/partners/fetchai.svg" alt="" />
+        <img data-imageName="fetchai" alt="" />
       </figure>
 
       <figure>
-        <img src="images/partners/ocean.svg" alt="" />
+        <img data-imageName="ocean" alt="" />
       </figure>
 
       <figure>
-        <img src="images/partners/magma.svg" alt="" />
+        <img data-imageName="magma" alt="" />
       </figure>
 
       <figure>
-        <img src="images/partners/wanchain.svg" alt="" />
+        <img data-imageName="wanchain" alt="" />
       </figure>
 
       <figure>
-        <img src="images/partners/geeq.svg" alt="" />
+        <img data-imageName="geeq" alt="" />
       </figure>
 
       <figure>
-        <img src="images/partners/kylin.svg" alt="" />
+        <img data-imageName="kylin" alt="" />
       </figure>
 
       <figure>
-        <img src="images/partners/morpheus-labs.svg" alt="" />
+        <img data-imageName="morpheus-labs" alt="" />
       </figure>
 
       <figure>
-        <img src="images/partners/clover.svg" alt="" />
+        <img data-imageName="clover" alt="" />
       </figure>
 
       <figure>
-        <img src="images/partners/dia.svg" alt="" />
+        <img data-imageName="dia" alt="" />
       </figure>
 
       <figure>
-        <img src="images/partners/fuse.svg" alt="" />
+        <img data-imageName="fuse" alt="" />
       </figure>
 
       <figure>
-        <img src="images/partners/api3.svg" alt="" />
+        <img data-imageName="api3" alt="" />
       </figure>
 
       <figure>
-        <img src="images/partners/teraswitch.svg" alt="" />
+        <img data-imageName="teraswitch" alt="" />
       </figure>
 
       <figure>
-        <img src="images/partners/coresite.svg" alt="" />
+        <img data-imageName="coresite" alt="" />
       </figure>
 
       <figure>
-        <img src="images/partners/cogent.svg" alt="" />
+        <img data-imageName="cogent" alt="" />
       </figure>
 
       <figure>
-        <img src="images/partners/zero.svg" alt="" />
+        <img data-imageName="zero" alt="" />
       </figure>
 
       <figure>
-        <img src="images/partners/unihost.svg" alt="" />
+        <img data-imageName="unihost" alt="" />
       </figure>
 
       <figure>
-        <img src="images/partners/velia.svg" alt="" />
+        <img data-imageName="velia" alt="" />
       </figure>
     </div>
   </div>
@@ -987,7 +903,7 @@
         <div class="Accordion_line"></div>
         <div class="Accordion_header">
           <h2 class="Accordion_title">What is Züs?</h2>
-          <img src="images/general/plus.svg" decoding="async" data-nimg="intrinsic" />
+          <img data-imageName="plus" decoding="async" data-nimg="intrinsic" />
         </div>
         <div class="Accordion_children">
           <div>
@@ -1004,7 +920,7 @@
         <div class="Accordion_line"></div>
         <div class="Accordion_header">
           <h2 class="Accordion_title">How does Züs help with GDPR?</h2>
-          <img src="images/general/plus.svg" decoding="async" data-nimg="intrinsic" />
+          <img data-imageName="plus" decoding="async" data-nimg="intrinsic" />
         </div>
         <div class="Accordion_children">
           <div>
@@ -1021,7 +937,7 @@
         <div class="Accordion_line"></div>
         <div class="Accordion_header">
           <h2 class="Accordion_title">What are Miners and Sharders?</h2>
-          <img src="images/general/plus.svg" decoding="async" data-nimg="intrinsic" />
+          <img data-imageName="plus" decoding="async" data-nimg="intrinsic" />
         </div>
         <div class="Accordion_children">
           <div>
@@ -1036,7 +952,7 @@
         <div class="Accordion_line"></div>
         <div class="Accordion_header">
           <h2 class="Accordion_title">What is a Blobber?</h2>
-          <img src="images/general/plus.svg" decoding="async" data-nimg="intrinsic" />
+          <img data-imageName="plus" decoding="async" data-nimg="intrinsic" />
         </div>
         <div class="Accordion_children">
           <div>
@@ -1054,7 +970,7 @@
           <h2 class="Accordion_title">
             Are Miners and Sharders centralized?
           </h2>
-          <img src="images/general/plus.svg" decoding="async" data-nimg="intrinsic" />
+          <img data-imageName="plus" decoding="async" data-nimg="intrinsic" />
         </div>
         <div class="Accordion_children">
           <div>
@@ -1071,7 +987,7 @@
           <h2 class="Accordion_title">
             What is sharding and how does it protect my data?
           </h2>
-          <img src="images/general/plus.svg" decoding="async" data-nimg="intrinsic" />
+          <img data-imageName="plus" decoding="async" data-nimg="intrinsic" />
         </div>
         <div class="Accordion_children">
           <div>
@@ -1110,7 +1026,7 @@
       <div class="css">
         <div class="zusLogoWhite">
           <span>
-            <img alt="züs" src="images/Footer/zusLogoWhite.svg" decoding="async" data-nimg="fill" sizes="100vw" />
+            <img alt="züs" data-imageName="zusLogoWhite" decoding="async" data-nimg="fill" sizes="100vw" />
           </span>
         </div>
       </div>
@@ -1155,26 +1071,26 @@
           <ul class="socialIcons">
             <li>
               <a href="https://discord.com/invite/h3BFjdtCp4" rel="noreferrer" target="_blank">
-                <img alt="discord" src="images/socialicons/discord.svg" decoding="async" data-nimg="intrinsic" />
+                <img alt="discord" data-imageName="discord_social" decoding="async" data-nimg="intrinsic" />
               </a>
             </li>
 
             <li>
               <a href="https://twitter.com/zus_network" rel="noreferrer" target="_blank">
-                <img alt="twitter" src="images/socialicons/twitter.svg" decoding="async" data-nimg="intrinsic"
+                <img alt="twitter" data-imageName="twitter_social" decoding="async" data-nimg="intrinsic"
                   height="64" width="64" />
               </a>
             </li>
 
             <li>
               <a href="https://medium.com/0chain" rel="noreferrer" target="_blank">
-                <img alt="medium" src="images/socialicons/medium.svg" decoding="async" data-nimg="intrinsic" />
+                <img alt="medium" data-imageName="medium_social" decoding="async" data-nimg="intrinsic" />
               </a>
             </li>
 
             <li>
               <a href="https://t.me/zus_network" rel="noreferrer" target="_blank">
-                <img alt="telegram" src="images/socialicons/telegram.svg" decoding="async" data-nimg="intrinsic" />
+                <img alt="telegram" data-imageName="telegram_social" decoding="async" data-nimg="intrinsic" />
               </a>
             </li>
           </ul>
@@ -1187,32 +1103,32 @@
         <div class="FooterProducts">
           <h5>PRODUCTs</h5>
           <a href="#" target="_self" rel="noreferrer" class="productWrapper" disabled="">
-            <img alt="Atlus" src="images/Footer/footerIcons/atlus.svg" decoding="async" data-nimg="intrinsic" />
+            <img alt="Atlus" data-imageName="atlus" decoding="async" data-nimg="intrinsic" />
             <p>Atlus</p>
           </a>
 
           <a href="https://lp.zus.network/blimp" target="_blank" rel="noreferrer" class="productWrapper">
-            <img alt="Blimp" src="images/Footer/footerIcons/blimp.svg" decoding="async" data-nimg="intrinsic" />
+            <img alt="Blimp" data-imageName="blimp" decoding="async" data-nimg="intrinsic" />
             <p>Blimp</p>
           </a>
 
           <a href="https://lp.zus.network/bolt" target="_blank" rel="noreferrer" class="productWrapper">
-            <img alt="Bolt" src="images/Footer/footerIcons/bolt.svg" decoding="async" data-nimg="intrinsic" />
+            <img alt="Bolt" data-imageName="bolt" decoding="async" data-nimg="intrinsic" />
             <p>Bolt</p>
           </a>
 
           <a href="https://lp.zus.network/chalk" target="_blank" rel="noreferrer" class="productWrapper">
-            <img alt="Chalk" src="images/Footer/footerIcons/chalk.svg" decoding="async" data-nimg="intrinsic" />
+            <img alt="Chalk" data-imageName="chalk" decoding="async" data-nimg="intrinsic" />
             <p>Chalk</p>
           </a>
 
           <a href="https://lp.zus.network/chimney" target="_blank" rel="noreferrer" class="productWrapper">
-            <img alt="Chimney" src="images/Footer/footerIcons/chimney.svg" decoding="async" data-nimg="intrinsic" />
+            <img alt="Chimney" data-imageName="chimney" decoding="async" data-nimg="intrinsic" />
             <p>Chimney</p>
           </a>
 
           <a href="https://lp.zus.network/vult" target="_blank" rel="noreferrer" class="productWrapper">
-            <img alt="Vult" src="images/Footer/footerIcons/vult.svg" decoding="async" data-nimg="intrinsic" />
+            <img alt="Vult" data-imageName="vult" decoding="async" data-nimg="intrinsic" />
             <p>Vult</p>
           </a>
         </div>
@@ -1347,38 +1263,38 @@
     <div class="FooterSocialIcons">
       <div class="topIcons">
         <a href="https://discord.com/invite/h3BFjdtCp4" target="_black" rel="noreferrer" class="FooterSocialIcons_icon">
-          <img alt="discord" src="images/Footer/footerIcons/discord.svg" decoding="async" data-nimg="intrinsic" />
+          <img alt="discord" data-imageName="discord" decoding="async" data-nimg="intrinsic" />
         </a>
 
         <a href="https://twitter.com/zus_network" target="_black" rel="noreferrer" class="FooterSocialIcons_icon">
-          <img alt="twitter" src="images/Footer/footerIcons/twitter.svg" decoding="async" data-nimg="intrinsic" />
+          <img alt="twitter" data-imageName="twitter" decoding="async" data-nimg="intrinsic" />
         </a>
 
         <a href="https://www.facebook.com/ZusNetwork" target="_black" rel="noreferrer" class="FooterSocialIcons_icon">
-          <img alt="facebook" src="images/Footer/footerIcons/facebook.svg" decoding="async" data-nimg="intrinsic" />
+          <img alt="facebook" data-imageName="facebook" decoding="async" data-nimg="intrinsic" />
         </a>
 
         <a href="https://www.linkedin.com/company/zusnetwork/" target="_black" rel="noreferrer"
           class="FooterSocialIcons_icon">
-          <img alt="linkedin" src="images/Footer/footerIcons/linkedin.svg" decoding="async" data-nimg="intrinsic" />
+          <img alt="linkedin" data-imageName="linkedin" decoding="async" data-nimg="intrinsic" />
         </a>
       </div>
 
       <div class="bottomIcons">
         <a href="https://www.youtube.com/@Zus_Network" target="_black" rel="noreferrer" class="FooterSocialIcons_icon">
-          <img alt="youtube" src="images/Footer/footerIcons/youtube.svg" decoding="async" data-nimg="intrinsic" />
+          <img alt="youtube" data-imageName="youtube" decoding="async" data-nimg="intrinsic" />
         </a>
 
         <a href="https://github.com/0chain" target="_black" rel="noreferrer" class="FooterSocialIcons_icon">
-          <img alt="github" src="images/Footer/footerIcons/github.svg" decoding="async" data-nimg="intrinsic" />
+          <img alt="github" data-imageName="github" decoding="async" data-nimg="intrinsic" />
         </a>
 
         <a href="https://medium.com/0chain" target="_black" rel="noreferrer" class="FooterSocialIcons_icon"><img
-            alt="medium" src="images/Footer/footerIcons/medium.svg" decoding="async" data-nimg="intrinsic" />
+            alt="medium" data-imageName="medium" decoding="async" data-nimg="intrinsic" />
         </a>
 
         <a href="https://t.me/zus_network" target="_black" rel="noreferrer" class="FooterSocialIcons_icon">
-          <img alt="telegram" src="images/Footer/footerIcons/telegram.svg" decoding="async" data-nimg="intrinsic" />
+          <img alt="telegram" data-imageName="telegram" decoding="async" data-nimg="intrinsic" />
         </a>
       </div>
     </div>
@@ -1413,10 +1329,8 @@
     });
   </script>
 
-  <script>
-    const manifestUri =
-      "https://ayush-gupta.s3.us-east-2.amazonaws.com/test/newwebsite/h264_master.m3u8";
-
+  <!-- I don't think we need this, commenting out for now, will remove once confirmed that we don't need it -->
+  <!-- <script>
     function initApp() {
       // Install built-in polyfills to patch browser incompatibilities.
       shaka.polyfill.installAll();
@@ -1468,7 +1382,7 @@
     }
 
     document.addEventListener("DOMContentLoaded", initApp);
-  </script>
+  </script> -->
 
   <script>
     // GTM for Page visit
