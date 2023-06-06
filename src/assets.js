@@ -62,6 +62,12 @@ async function initializeWasm() {
             100,
             '',
         );
+        // set poster for video file
+        if (downloadedFile?.fileName === "poster.png") {
+            const videoElement = document.getElementById("video")
+            videoElement.setAttribute("poster", downloadedFile?.url)
+            continue
+        }
         // get file mime type
         const type = mime.getType(downloadedFile?.fileName)
         // this url can be used directly in src attribute of img and video tag
@@ -74,13 +80,15 @@ async function initializeWasm() {
             blobUrl = URL.createObjectURL(blobWithActualType)
         }
         // get img and video element to display fetched assets
-        let elements = findByAttrValue("img", "data-imageName", downloadedFile?.fileName.substr(0, downloadedFile?.fileName.lastIndexOf(".")))
+        let elements = []
         if (type.includes("video")) {
             elements = findByAttrValue("video", "data-imageName", downloadedFile?.fileName.substr(0, downloadedFile?.fileName.lastIndexOf(".")))
         }
+        else {
+            elements = findByAttrValue("img", "data-imageName", downloadedFile?.fileName.substr(0, downloadedFile?.fileName.lastIndexOf(".")))
+        }
         // set src to blob url
         elements.forEach(el => el.src = blobUrl)
-
         // revoke object url to avoid memory lead
         setTimeout(() => URL.revokeObjectURL(blobUrl))
     }
