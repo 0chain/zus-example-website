@@ -89,8 +89,6 @@ async function initializeWasm() {
         }
         // set src to blob url
         elements.forEach(el => el.src = blobUrl)
-        // revoke object url to avoid memory leak
-        setTimeout(() => URL.revokeObjectURL(blobUrl), 10000)
     }
 })();
 
