@@ -88,7 +88,7 @@ img {
   gap: 15px;
 }
 
-#video {
+#poster {
   position: absolute;
   height: 100vh;
   width: 100%;
@@ -382,7 +382,7 @@ img {
   overflow: hidden;
 }
 
-.showcaseArt video {
+#poster2 {
   height: 92%;
   width: 92.5%;
   position: absolute;
@@ -432,7 +432,7 @@ img {
     gap: 40px;
   }
 
-  #video {
+  #poster {
     top: -92px;
     height: calc(100% + 92px);
   }
@@ -576,7 +576,7 @@ img {
     overflow: hidden;
   }
 
-  .showcaseArt video {
+  #poster2 {
     height: 92%;
     width: 93%;
     position: absolute;

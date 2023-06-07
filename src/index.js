@@ -1,7 +1,6 @@
 import {
   init,
   setWallet,
-  Greeter,
   listAllocations,
   createAllocation,
   getAllocation,
@@ -276,8 +275,6 @@ const bindEvents = () => {
 
   onClick("btnGreet", async () => {
     console.log("calling Greet");
-    //Call Greeter method
-    const greetMessage = Greeter("john doe");
     console.log("greetMessage", greetMessage);
     setHtml("message", greetMessage);
   });
