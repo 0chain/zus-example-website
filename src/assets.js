@@ -15,8 +15,7 @@ const configJson = {
     minSubmit: 50,
     confirmationChainLength: 3,
     blockWorker: "https://demo.zus.network/dns",
-    zboxHost: "https://0box.demo.zus.network",
-    zboxAppType: "blimp",
+    zboxHost: "https://0box.demo.zus.network"
 };
 
 // initialize wasm with default config
@@ -71,14 +70,8 @@ async function initializeWasm() {
             const blobWithActualType = new Blob([rawFile], { type })
             blobUrl = URL.createObjectURL(blobWithActualType)
         }
-        // get img and video element to display fetched assets
-        let elements = []
-        if (type.includes("video")) {
-            elements = findByAttrValue("video", "data-imageName", downloadedFile?.fileName.substr(0, downloadedFile?.fileName.lastIndexOf(".")))
-        }
-        else {
-            elements = findByAttrValue("img", "data-imageName", downloadedFile?.fileName.substr(0, downloadedFile?.fileName.lastIndexOf(".")))
-        }
+        // get img elements that will display fetched assets
+        const elements = findByAttrValue("img", "data-imageName", downloadedFile?.fileName.substr(0, downloadedFile?.fileName.lastIndexOf(".")))
         // set src to blob url
         elements.forEach(el => el.src = blobUrl)
     }
