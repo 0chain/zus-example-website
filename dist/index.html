@@ -1,141 +1,163 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <!-- for zcn.wasm-->
+    <script src="https://cdn.jsdelivr.net/gh/herumi/bls-wasm@v1.0.0/browser/bls.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/golang/go@go1.18.5/misc/wasm/wasm_exec.js"></script>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-<head>
-  <!-- for zcn.wasm-->
-  <script src="https://cdn.jsdelivr.net/gh/herumi/bls-wasm@v1.0.0/browser/bls.js"></script>
-  <script src="https://cdn.jsdelivr.net/gh/golang/go@go1.18.5/misc/wasm/wasm_exec.js"></script>
-  <meta charset="UTF-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-  <meta name="keywords" content="blockchain, decentralize, web3, storage, 0Chain, dStorage, crypto " />
-  <meta name="description" content="Power your customer engagement, reach, and site uptime with decentralized storage.
+    <meta
+      name="keywords"
+      content="blockchain, decentralize, web3, storage, 0Chain, dStorage, crypto "
+    />
+    <meta
+      name="description"
+      content="Power your customer engagement, reach, and site uptime with decentralized storage.
       Decentralize your entire project with our SDK. Start by adding a video hosted on 0Chain dStorage
-      Join the Limitless Future Now" />
+      Join the Limitless Future Now"
+    />
 
-  <!-- /****** Open Graph / Facebook ******/ -->
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://lp.zus.network/sdk" />
-  <meta property="og:title" content="Züs SDK" />
-  <meta property="og:description" content="Power your customer engagement,
+    <!-- /****** Open Graph / Facebook ******/ -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://lp.zus.network/sdk" />
+    <meta property="og:title" content="Züs SDK" />
+    <meta property="og:description" content="Power your customer engagement,
     reach, and site uptime with decentralized storage. Decentralize your entire
     project with our SDK. Start by adding a video hosted on 0Chain dStorage Join
     the Limitless Future Now"" />
     <meta property=" og:image" content="images/websitedata/showcaseArt.png" />
 
-  <!-- /****** Twitter ******/ -->
-  <meta property="twitter:card" content="summary_large_image" />
-  <meta property="twitter:url" content="images/websitedata/showcaseArt.png" />
-  <meta property="twitter:title" content="Züs SDK" />
-  <meta property="twitter:description" content="Power your customer
+    <!-- /****** Twitter ******/ -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="images/websitedata/showcaseArt.png" />
+    <meta property="twitter:title" content="Züs SDK" />
+    <meta
+      property="twitter:description"
+      content="Power your customer
     engagement, reach, and site uptime with decentralized storage. Decentralize
     your entire project with our SDK. Start by adding a video hosted on 0Chain
-    dStorage Join the Limitless Future Now" />
-  <meta property=" twitter:image" content="" />
-  <meta name="twitter:image:alt" content="OChain - dStorage " />
+    dStorage Join the Limitless Future Now"
+    />
+    <meta property=" twitter:image" content="" />
+    <meta name="twitter:image:alt" content="OChain - dStorage " />
 
-  <!-- Fav Icon  -->
-  <link rel="shortcut icon" href="images/favicon.ico" />
-  <!-- Site Title  -->
-  <title>Züs SDK</title>
+    <!-- Fav Icon  -->
+    <link rel="shortcut icon" href="images/favicon.ico" />
+    <!-- Site Title  -->
+    <title>Züs SDK</title>
 
-  <!-- load zus resources -->
-  <script src="assets.js" fetchpriority="high"></script>
+    <!-- load zus resources -->
+    <script src="assets.js" fetchpriority="high"></script>
 
-  <!-- Shaka Player compiled library: -->
-  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/shaka-player/4.2.0/shaka-player.compiled.js"
+    <!-- Shaka Player compiled library: -->
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/shaka-player/4.2.0/shaka-player.compiled.js"
     integrity="sha512-IMJEFntnvRlPQ309TGE/4MEGA8t7w8+7WsThxt4CT4bXsl8AlhffJAJYYFd0i0hMw5Ylxct1hlaAmMmvB2wq7w=="
     crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
 
-  <!-- CSS -->
-  <link rel="stylesheet" href="css/fonts.css" />
-  <link rel="stylesheet" href="css/globals.css" />
-  <link rel="stylesheet" href="css/websitedata.css" />
-  <link rel="stylesheet" href="css/lpmodals.css" />
-  <!-- <link rel="stylesheet" href="css/hero.css" /> -->
-  <link rel="stylesheet" href="css/main.css" />
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/fonts.css" />
+    <link rel="stylesheet" href="css/globals.css" />
+    <link rel="stylesheet" href="css/websitedata.css" />
+    <link rel="stylesheet" href="css/lpmodals.css" />
+    <!-- <link rel="stylesheet" href="css/hero.css" /> -->
+    <link rel="stylesheet" href="css/main.css" />
 
-  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
-    integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
-    crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
+      integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
 
-  <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-74JNFGDP42"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag() {
-      dataLayer.push(arguments);
-    }
-    gtag("js", new Date());
-    gtag("config", "G-74JNFGDP42");
-  </script>
-</head>
+    <!-- Google tag (gtag.js) -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-74JNFGDP42"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "G-74JNFGDP42");
+    </script>
+  </head>
 
-
-<body>
-  <main class="main" id="main">
-    <div class="overlay"></div>
-    <!-- <video data-imageName="newZusVideo" id="video" poster="poster" playsinline loop muted autoplay></video> -->
-    <img src="images/websitedata/poster.png" id="poster">
-    <h1 class="mainHeading" id="title">
-      Livestream from Züs
-    </h1>
-    <p class="paragraph" id="description1">
-      <!-- Decentralize your entire project with our SDK. Start by adding a video
+  <body>
+    <main class="main" id="main">
+      <div class="overlay"></div>
+      <!-- <video data-imageName="newZusVideo" id="video" poster="poster" playsinline loop muted autoplay></video> -->
+      <img src="images/websitedata/poster.png" id="poster" />
+      <h1 class="mainHeading" id="title">
+        High Performance Hybrid & Multi Cloud
+      </h1>
+      <p class="paragraph" id="description1">
+        <!-- Decentralize your entire project with our SDK. Start by adding a video
         hosted on 0Chain dStorage. -->
-      Decentralize your entire project with our SDK. Have unparalleled data performance, privacy, and security.
-    </p>
+        Decentralize your entire project with our SDK. Have unparalleled data
+        performance, privacy, and security.
+      </p>
 
-    <!-- <h4 class="secondaryHeading" id="joinText">
+      <!-- <h4 class="secondaryHeading" id="joinText">
         Get early access and win up to 1000 ZCN through referral 
       </h4> -->
 
-    <div class="emailContainer">
-      <!-- <input
+      <div class="emailContainer">
+        <!-- <input
           type="email"
           class="emailInput"
           id="email"
           placeholder="Enter your email" -->
-      <!-- /> -->
-      <!-- <button id="signupButton" class="signupBtn signup-btn">
+        <!-- /> -->
+        <!-- <button id="signupButton" class="signupBtn signup-btn">
           Sign up for the SDK
         </button> -->
-    </div>
+      </div>
 
-    <p class="error"></p>
+      <p class="error"></p>
 
-    <div class="custom-captcha g-recaptcha" data-sitekey="6Lcb0AAjAAAAALD7VOwF1_AupagMN-EoluAKntwa"></div>
+      <div
+        class="custom-captcha g-recaptcha"
+        data-sitekey="6Lcb0AAjAAAAALD7VOwF1_AupagMN-EoluAKntwa"
+      ></div>
 
-    <div class="bottom-text">
-      <span>
-        Footage courtesy of: NASA / ESRS
-        <a href="https://eol.jsc.nasa.gov" target="_blank">
-          eol.jsc.nasa.gov
-        </a></span>
-      <span>
-        Footage repair, image processing:
-        <a href="https://www.youtube.com/watch?v=7KXGZAEWzn0&t=0s" target="_blank">
-          ‘Orbit’
-        </a>
-        Seán Doran
-      </span>
-    </div>
-  </main>
+      <div class="bottom-text">
+        <span>
+          Footage courtesy of: NASA / ESRS
+          <a href="https://eol.jsc.nasa.gov" target="_blank">
+            eol.jsc.nasa.gov
+          </a></span
+        >
+        <span>
+          Footage repair, image processing:
+          <a
+            href="https://www.youtube.com/watch?v=7KXGZAEWzn0&t=0s"
+            target="_blank"
+          >
+            ‘Orbit’
+          </a>
+          Seán Doran
+        </span>
+      </div>
+    </main>
 
-  <!-- Hero Section Start-->
-  <main class="heroContainer">
-    <div class="heroBackground"></div>
-    <!-- <Fade cascade duration={800} damping={0.2} direction="up" triggerOnce> -->
-    <h1 class="heading">The most private cloud<span>.</span></h1>
-    <!-- <CountDownTimer targetDate={targetDate} /> -->
-    <h2 class="secondaryHeading">
-      Build your privacy solution. Store for total protection.
-    </h2>
-    <div class="inputForm">
-      <!-- <input
+    <!-- Hero Section Start-->
+    <main class="heroContainer">
+      <div class="heroBackground"></div>
+      <!-- <Fade cascade duration={800} damping={0.2} direction="up" triggerOnce> -->
+      <h1 class="heading">The most private cloud<span>.</span></h1>
+      <!-- <CountDownTimer targetDate={targetDate} /> -->
+      <h2 class="secondaryHeading">
+        Build your privacy solution. Store for total protection.
+      </h2>
+      <div class="inputForm">
+        <!-- <input
           class="inputBox"
           type="email"
           name="email"
@@ -146,972 +168,1327 @@
         <button class="button">
           <span>Get Notified</span>
         </button> -->
-    </div>
-    <ul class="socialIcons">
-      <li>
-        <a href="https://discord.com/invite/h3BFjdtCp4" rel="noreferrer" target="_blank">
-          <img data-imageName="discord" alt="discord" height="28" width="28" priority />
-        </a>
-      </li>
-      <li>
-        <a href="https://twitter.com/zus_network" rel="noreferrer" target="_blank">
-          <img data-imageName="twitter" alt="twitter" height="28" width="28" priority />
-        </a>
-      </li>
-      <li>
-        <a href="https://t.me/zus_network" rel="noreferrer" target="_blank">
-          <img data-imageName="telegram" alt="telegram" height="28" width="28" priority />
-        </a>
-      </li>
-    </ul>
-    <!-- <SocialIcons /> -->
-    <!-- </Fade> -->
-  </main>
-
-  <!--Main Feature Start-->
-  <section class="mainFeatureContainer">
-    <div class="mainContent">
-      <div class="bgPatternLeft"></div>
-      <div class="bgPatternRight"></div>
-      <div class="css">
-        <h2 class="heading">Best Uptime. Total Protection.</h2>
       </div>
-      <div class="css">
-        <p class="paragraph">
-          Züs is the first encrypted data sharing network. It is
-          the only network with a QoS (quality-of-service) protocol to ensure
-          total protection.
-        </p>
-      </div>
-    </div>
-  </section>
-  <!--Main feature End-->
-
-  <!--Features Start-->
-  <div class="featureListWrapper">
-    <div class="css">
-      <div class="container" style="min-height: 500px">
-        <div class="icon">
-          <span>
-            <img data-imageName="storeIcon" sizes="100vw" decoding="async" data-nimg="fill" quality="{80}" layout="fill"
-              priority /></span>
-        </div>
-        <div class="textContainer">
-          <div>
-            <h3 class="heading">Store</h3>
-            <p class="paragraph">Store for better protection &amp; uptime</p>
-          </div>
-          <a href="https://zus.network/store/" target="_black" rel="noreferrer">
-            <button type="button" class="button black">
-              <span>
-                Learn More
-              </span>
-            </button>
-
+      <ul class="socialIcons">
+        <li>
+          <a
+            href="https://discord.com/invite/h3BFjdtCp4"
+            rel="noreferrer"
+            target="_blank"
+          >
+            <img
+              data-imageName="discord"
+              alt="discord"
+              height="28"
+              width="28"
+              priority
+            />
           </a>
-        </div>
-      </div>
-    </div>
-    <div class="css">
-      <div class="container" style="min-height: 500px">
-        <div class="icon">
-          <span>
-            <img sizes="100vw" data-imageName="buildIcon" decoding="async" data-nimg="fill" quality="{80}" layout="fill"
-              priority /></span>
-        </div>
-        <div class="textContainer">
-          <div>
-            <h3 class="heading">Build</h3>
-            <p class="paragraph">Build for privacy</p>
-          </div>
-          <a href="https://zus.network/build/" target="_black" rel="noreferrer">
-            <button type="button" class="button black">
-              <span>
-                Learn More
-              </span>
-            </button>
+        </li>
+        <li>
+          <a
+            href="https://twitter.com/zus_network"
+            rel="noreferrer"
+            target="_blank"
+          >
+            <img
+              data-imageName="twitter"
+              alt="twitter"
+              height="28"
+              width="28"
+              priority
+            />
           </a>
-        </div>
-      </div>
-    </div>
-    <div class="css">
-      <div class="container" style="min-height: 500px">
-        <div class="icon">
-          <span>
-            <img sizes="100vw" data-imageName="earnIcon" decoding="async" data-nimg="fill" quality="{80}" layout="fill"
-              priority /></span>
-        </div>
-        <div class="textContainer">
-          <div>
-            <h3 class="heading">Earn</h3>
-            <p class="paragraph">Earn by providing capacity</p>
-          </div>
-          <a href="https://zus.network/earn/" target="_black" rel="noreferrer">
-            <button type="button" class="button black">
-              <span>
-                Learn More
-              </span>
-            </button>
-
+        </li>
+        <li>
+          <a href="https://t.me/zus_network" rel="noreferrer" target="_blank">
+            <img
+              data-imageName="telegram"
+              alt="telegram"
+              height="28"
+              width="28"
+              priority
+            />
           </a>
-        </div>
-      </div>
-    </div>
-  </div>
-  <!--Features End-->
+        </li>
+      </ul>
+      <!-- <SocialIcons /> -->
+      <!-- </Fade> -->
+    </main>
 
-  <!--ContainerwithIcon Start-->
-  <section class="rootWrapper">
-    <div class="containerWithIcon blimpContainer">
-      <div class="logo">
-        <span>
-          <img alt="Blimp Logo" data-imageName="blimpLogo" decoding="async" data-nimg="fixed" /><noscript>
-            <img alt="Blimp Logo" data-imageName="blimpLogo" decoding="async" data-nimg="fixed"
-              loading="lazy" /></noscript>
-        </span>
-      </div>
-      <div class="ellipseContainer">
-        <div class="ellipseTop"></div>
-        <div class="rectangle"></div>
-      </div>
-      <div class="blimpArt">
-        <div class="css" style="position: relative; height: 100%; width: 100%">
-          <span>
-            <img data-imageName="blimpArt" alt="Blimp" sizes="100vw" decoding="async" data-nimg="fill" /></span>
-        </div>
-      </div>
-      <div class="textContent">
+    <!--Main Feature Start-->
+    <section class="mainFeatureContainer">
+      <div class="mainContent">
+        <div class="bgPatternLeft"></div>
+        <div class="bgPatternRight"></div>
         <div class="css">
-          <h2 class="heading">
-            Multi-cloud S3<!-- --><span style="color: #2eb5df">.</span>
-          </h2>
+          <h2 class="heading">Best Uptime. Total Protection.</h2>
         </div>
         <div class="css">
           <p class="paragraph">
-            Use Blimp to design a hybrid &amp; multi-cloud strategy. Configure
-            for the best uptime and total protection.
+            Züs is the first encrypted data sharing network. It is the only
+            network with a QoS (quality-of-service) protocol to ensure total
+            protection.
           </p>
         </div>
-        <div class="css">
-          <div class="">
-            <a href="https://blimp.software/" target="_black" rel="noreferrer">
-              <button type="button" class="button black transparent">
-                <span>
-                  Learn More
-                </span>
-              </button>
+      </div>
+    </section>
+    <!--Main feature End-->
 
+    <!--Features Start-->
+    <div class="featureListWrapper">
+      <div class="css">
+        <div class="container" style="min-height: 500px">
+          <div class="icon">
+            <span>
+              <img
+                data-imageName="storeIcon"
+                sizes="100vw"
+                decoding="async"
+                data-nimg="fill"
+                quality="{80}"
+                layout="fill"
+                priority
+            /></span>
+          </div>
+          <div class="textContainer">
+            <div>
+              <h3 class="heading">Store</h3>
+              <p class="paragraph">Store for better protection &amp; uptime</p>
+            </div>
+            <a
+              href="https://zus.network/store/"
+              target="_black"
+              rel="noreferrer"
+            >
+              <button type="button" class="button black">
+                <span> Learn More </span>
+              </button>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="css">
+        <div class="container" style="min-height: 500px">
+          <div class="icon">
+            <span>
+              <img
+                sizes="100vw"
+                data-imageName="buildIcon"
+                decoding="async"
+                data-nimg="fill"
+                quality="{80}"
+                layout="fill"
+                priority
+            /></span>
+          </div>
+          <div class="textContainer">
+            <div>
+              <h3 class="heading">Build</h3>
+              <p class="paragraph">Build for privacy</p>
+            </div>
+            <a
+              href="https://zus.network/build/"
+              target="_black"
+              rel="noreferrer"
+            >
+              <button type="button" class="button black">
+                <span> Learn More </span>
+              </button>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="css">
+        <div class="container" style="min-height: 500px">
+          <div class="icon">
+            <span>
+              <img
+                sizes="100vw"
+                data-imageName="earnIcon"
+                decoding="async"
+                data-nimg="fill"
+                quality="{80}"
+                layout="fill"
+                priority
+            /></span>
+          </div>
+          <div class="textContainer">
+            <div>
+              <h3 class="heading">Earn</h3>
+              <p class="paragraph">Earn by providing capacity</p>
+            </div>
+            <a
+              href="https://zus.network/earn/"
+              target="_black"
+              rel="noreferrer"
+            >
+              <button type="button" class="button black">
+                <span> Learn More </span>
+              </button>
             </a>
           </div>
         </div>
       </div>
     </div>
-  </section>
-  <!--ContainerwithIcon end-->
+    <!--Features End-->
 
-  <!--showcase container start-->
-  <section class="rootWrapper showcasecontainer">
-    <div class="containerWithIcon">
-      <div class="ellipseContainer">
-        <div class="ellipseLeft"></div>
-        <div class="ellipseRight"></div>
+    <!--ContainerwithIcon Start-->
+    <section class="rootWrapper">
+      <div class="containerWithIcon blimpContainer">
+        <div class="logo">
+          <span>
+            <img
+              alt="Blimp Logo"
+              data-imageName="blimpLogo"
+              decoding="async"
+              data-nimg="fixed"
+            /><noscript>
+              <img
+                alt="Blimp Logo"
+                data-imageName="blimpLogo"
+                decoding="async"
+                data-nimg="fixed"
+                loading="lazy"
+            /></noscript>
+          </span>
+        </div>
+        <div class="ellipseContainer">
+          <div class="ellipseTop"></div>
+          <div class="rectangle"></div>
+        </div>
+        <div class="blimpArt">
+          <div
+            class="css"
+            style="position: relative; height: 100%; width: 100%"
+          >
+            <span>
+              <img
+                data-imageName="blimpArt"
+                alt="Blimp"
+                sizes="100vw"
+                decoding="async"
+                data-nimg="fill"
+            /></span>
+          </div>
+        </div>
+        <div class="textContent">
+          <div class="css">
+            <h2 class="heading">
+              Multi-cloud S3<!-- --><span style="color: #2eb5df">.</span>
+            </h2>
+          </div>
+          <div class="css">
+            <p class="paragraph">
+              Use Blimp to design a hybrid &amp; multi-cloud strategy. Configure
+              for the best uptime and total protection.
+            </p>
+          </div>
+          <div class="css">
+            <div class="">
+              <a
+                href="https://blimp.software/"
+                target="_black"
+                rel="noreferrer"
+              >
+                <button type="button" class="button black transparent">
+                  <span> Learn More </span>
+                </button>
+              </a>
+            </div>
+          </div>
+        </div>
       </div>
+    </section>
+    <!--ContainerwithIcon end-->
 
-      <div class="showcaseArt">
-        <img data-imageName="showcaseArt" alt="showcase" loading="lazy" />
-        <img data-imageName="poster2" id="poster2">
-        <!-- <video data-imageName="video2" poster="images/websitedata/poster2.png" playsinline loop muted autoplay
-          loading="lazy"></video> -->
-      </div>
-
-      <div class="textContentWrapper">
-        <div class="css">
-          <h2 class="heading withoutPeriod">Züs SDK<!-- --><span>.</span></h2>
+    <!--showcase container start-->
+    <section class="rootWrapper showcasecontainer">
+      <div class="containerWithIcon">
+        <div class="ellipseContainer">
+          <div class="ellipseLeft"></div>
+          <div class="ellipseRight"></div>
         </div>
 
-        <div class="css">
-          <div class="textContent">
-            <p class="paragraph left">
-              Use Züs SDK to build privacy apps with encrypted data sharing
-            </p>
-            <div class="listContainer">
-              <div class="bulletTextContainer">
-                <div>
-                  <ul>
-                    <li></li>
-                  </ul>
+        <div class="showcaseArt">
+          <img data-imageName="showcaseArt" alt="showcase" loading="lazy" />
+          <img data-imageName="poster2" id="poster2" />
+          <!-- <video data-imageName="video2" poster="images/websitedata/poster2.png" playsinline loop muted autoplay
+          loading="lazy"></video> -->
+        </div>
+
+        <div class="textContentWrapper">
+          <div class="css">
+            <h2 class="heading withoutPeriod">Züs SDK<!-- --><span>.</span></h2>
+          </div>
+
+          <div class="css">
+            <div class="textContent">
+              <p class="paragraph left">
+                Use Züs SDK to build privacy apps with encrypted data sharing
+              </p>
+              <div class="listContainer">
+                <div class="bulletTextContainer">
+                  <div>
+                    <ul>
+                      <li></li>
+                    </ul>
+                  </div>
+                  Build a high resolution website<!-- -->
                 </div>
-                Build a high resolution website<!-- -->
-              </div>
-              <div class="bulletTextContainer">
-                <div>
-                  <ul>
-                    <li></li>
-                  </ul>
+                <div class="bulletTextContainer">
+                  <div>
+                    <ul>
+                      <li></li>
+                    </ul>
+                  </div>
+                  No Cloudfront, Cloudflare, or CDN required<!-- -->
                 </div>
-                No Cloudfront, Cloudflare, or CDN required<!-- -->
-              </div>
-              <div class="bulletTextContainer">
-                <div>
-                  <ul>
-                    <li></li>
-                  </ul>
+                <div class="bulletTextContainer">
+                  <div>
+                    <ul>
+                      <li></li>
+                    </ul>
+                  </div>
+                  Maximize global reach<!-- -->
                 </div>
-                Maximize global reach<!-- -->
-              </div>
-              <div class="bulletTextContainer">
-                <div>
-                  <ul>
-                    <li></li>
-                  </ul>
+                <div class="bulletTextContainer">
+                  <div>
+                    <ul>
+                      <li></li>
+                    </ul>
+                  </div>
+                  Prevent DDoS and single-server attacks<!-- -->
                 </div>
-                Prevent DDoS and single-server attacks<!-- -->
-              </div>
-              <div class="bulletTextContainer">
-                <div>
-                  <ul>
-                    <li></li>
-                  </ul>
+                <div class="bulletTextContainer">
+                  <div>
+                    <ul>
+                      <li></li>
+                    </ul>
+                  </div>
+                  No Censorship<!-- -->
                 </div>
-                No Censorship<!-- -->
               </div>
+            </div>
+          </div>
+
+          <div class="css">
+            <a
+              href="https://lp.zus.network/sdk"
+              target="_black"
+              rel="noreferrer"
+            >
+              <button type="button" class="button black transparent">
+                <span> See it on our demo page </span>
+              </button>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!--showcase container end-->
+
+    <!--vultInfo start-->
+    <section class="vultInfo rootWrapper">
+      <div class="containerWithIcon vultContainer">
+        <div class="logo">
+          <span style="display: inline-block; width: 70px; height: 50px">
+            <img
+              alt="Vult Logo"
+              data-imageName="vultLogo"
+              decoding="async"
+              data-nimg="fixed"
+            />
+          </span>
+        </div>
+
+        <div class="css" style="position: relative">
+          <div class="vultArt">
+            <span>
+              <img
+                alt="Vult"
+                sizes="100vw"
+                data-imageName="vultArt"
+                decoding="async"
+                data-nimg="fill"
+              />
+            </span>
+          </div>
+        </div>
+
+        <div class="textContainerWrapper">
+          <div class="css">
+            <div class="textContent">
+              <h2 class="heading">
+                Personal Cloud<span style="color: rgb(11, 157, 255)">.</span>
+              </h2>
+
+              <p class="paragraph">
+                Use Vult to store and share encrypted files with friends. Browse
+                pictures in their pristine quality.
+              </p>
+
+              <a
+                href="https://zus.network/store/"
+                target="_black"
+                rel="noreferrer"
+              >
+                <button type="button" class="button black transparent">
+                  <span> Store </span>
+                </button>
+              </a>
             </div>
           </div>
         </div>
 
-        <div class="css">
-          <a href="https://lp.zus.network/sdk" target="_black" rel="noreferrer">
-            <button type="button" class="button black transparent">
-              <span>
-                See it on our demo page
-              </span>
-            </button>
+        <div class="ellipseContainer">
+          <div class="ellipseTop"></div>
+          <div class="ellipseBottom"></div>
+        </div>
+      </div>
+    </section>
+    <!--vultInfo end-->
 
-          </a>
+    <!--chimneyInfo start-->
+    <section class="chimneyInfo rootWrapper">
+      <div class="containerWithIcon">
+        <div class="logo">
+          <span style="display: inline-block; width: 40px; height: 40px">
+            <img
+              alt="Chimney Logo"
+              data-imageName="chimneyLogo"
+              decoding="async"
+              data-nimg="fixed"
+            />
+          </span>
+        </div>
+
+        <div class="ellipseContainer">
+          <div class="ellipseTop"></div>
+          <div class="ellipseBottom"></div>
+        </div>
+
+        <div class="chimneyArt">
+          <div class="css" style="position: relative">
+            <span>
+              <img
+                alt="Chimney"
+                sizes="100vw"
+                data-imageName="chimneyArt"
+                decoding="async"
+                data-nimg="fill"
+              />
+            </span>
+          </div>
+        </div>
+
+        <div class="textContent">
+          <div class="css">
+            <h2 class="heading">
+              Plug in &amp; earn<span style="color: rgb(223, 122, 207)">.</span>
+            </h2>
+          </div>
+
+          <div class="css">
+            <p class="paragraph">
+              Chimney makes earning simple. Rent a server or use spare storage
+              for passive income.
+            </p>
+          </div>
+
+          <div class="css">
+            <a
+              href="https://zus.network/earn/"
+              target="_black"
+              rel="noreferrer"
+            >
+              <button type="button" class="button black transparent">
+                <span> Learn More </span>
+              </button>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!--chimneyInfo end-->
+
+    <!--chalkInfo start-->
+    <section class="chalkInfo rootWrapper">
+      <div class="containerWithIcon">
+        <div class="logo">
+          <span style="display: inline-block; height: 55px; width: 75px">
+            <img
+              alt="Chalk Logo"
+              data-imageName="chalkLogo"
+              decoding="async"
+              data-nimg="fixed"
+            />
+          </span>
+        </div>
+
+        <div class="ellipseContainer">
+          <div class="ellipseTop"></div>
+          <div class="ellipseBottom"></div>
+        </div>
+
+        <div class="chalkArtMobile">
+          <div class="css" style="position: relative">
+            <span style="display: inline-block"
+              ><img
+                alt="Chalk"
+                data-imageName="chalkArtMobile"
+                decoding="async"
+                data-nimg="fixed"
+            /></span>
+          </div>
+        </div>
+
+        <div class="textContent">
+          <div class="css">
+            <h2 class="heading">
+              Market your NFT<span style="color: rgb(247, 90, 56)">.</span>
+            </h2>
+          </div>
+          <div class="css">
+            <p class="paragraph">
+              Use Chalk to maximize buyer engagement. Add a backstory to
+              showcase your limitless creativity.
+            </p>
+          </div>
+          <div class="css">
+            <a href="https://zus.network/nft/" target="_black" rel="noreferrer">
+              <button type="button" class="button black transparent">
+                <span> Learn more </span>
+              </button>
+            </a>
+          </div>
+        </div>
+
+        <div class="chalkArtDesktop">
+          <div class="css" style="position: relative">
+            <span style="display: inline-block; height: 550px; width: 600px"
+              ><img
+                alt="Chalk"
+                data-imageName="chalkArtDesktop"
+                decoding="async"
+                data-nimg="fixed"
+            /></span>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!--chalkInfo end-->
+
+    <!--Private Sharing start-->
+    <div class="privateSharing">
+      <h2 class="heading">
+        How does Private sharing work<span style="color: rgb(23, 91, 255)"
+          >?</span
+        >
+      </h2>
+
+      <p class="paragraph">
+        Züs' private sharing technology ensures complete privacy and security.
+        Files are divided into fragments, encrypted, and distributed among
+        multiple storage providers. The sharing proxy key is distributed to
+        providers, ensuring the process is fully decentralized and that only the
+        recipient can access and decrypt the files.
+      </p>
+
+      <span>
+        <img alt="" aria-hidden="true" data-imageName="infographic" />
+      </span>
+    </div>
+    <!--Private Sharing end-->
+
+    <!--Partners start-->
+    <div class="partnersContainer">
+      <h2 class="heading title">
+        Our Partners
+        <span style="color: rgb(23, 91, 255)">.</span>
+      </h2>
+
+      <div class="partners">
+        <figure>
+          <img data-imageName="huawei" alt="" />
+        </figure>
+
+        <figure>
+          <img data-imageName="chainlink" alt="" />
+        </figure>
+
+        <figure>
+          <img data-imageName="polygon" alt="" />
+        </figure>
+
+        <figure>
+          <img data-imageName="fetchai" alt="" />
+        </figure>
+
+        <figure>
+          <img data-imageName="ocean" alt="" />
+        </figure>
+
+        <figure>
+          <img data-imageName="magma" alt="" />
+        </figure>
+
+        <figure>
+          <img data-imageName="wanchain" alt="" />
+        </figure>
+
+        <figure>
+          <img data-imageName="geeq" alt="" />
+        </figure>
+
+        <figure>
+          <img data-imageName="kylin" alt="" />
+        </figure>
+
+        <figure>
+          <img data-imageName="morpheus-labs" alt="" />
+        </figure>
+
+        <figure>
+          <img data-imageName="clover" alt="" />
+        </figure>
+
+        <figure>
+          <img data-imageName="dia" alt="" />
+        </figure>
+
+        <figure>
+          <img data-imageName="fuse" alt="" />
+        </figure>
+
+        <figure>
+          <img data-imageName="api3" alt="" />
+        </figure>
+
+        <figure>
+          <img data-imageName="teraswitch" alt="" />
+        </figure>
+
+        <figure>
+          <img data-imageName="coresite" alt="" />
+        </figure>
+
+        <figure>
+          <img data-imageName="cogent" alt="" />
+        </figure>
+
+        <figure>
+          <img data-imageName="zero" alt="" />
+        </figure>
+
+        <figure>
+          <img data-imageName="unihost" alt="" />
+        </figure>
+
+        <figure>
+          <img data-imageName="velia" alt="" />
+        </figure>
+      </div>
+    </div>
+    <!--Partners end-->
+
+    <!--FAQ start-->
+    <div class="FAQ_container">
+      <div class="FAQ_header">
+        <h1 class="FAQ_title">Frequently Asked Questions</h1>
+        <div class="FAQ_description">
+          See below for our most frequently asked questions. For more
+          information, visit our
+          <a
+            href="https://discord.com/invite/h3BFjdtCp4"
+            target="_blank"
+            rel="noreferrer"
+            >Discord</a
+          >,
+          <a href="https://github.com/0chain" target="_blank" rel="noreferrer"
+            >GitHub</a
+          >,
+          <a href="https://api.zus.network" target="_blank" rel="noreferrer"
+            >API</a
+          >, and
+          <a href="https://docs.zus.network" target="_blank" rel="noreferrer"
+            >Documentation</a
+          >
+          pages
+        </div>
+      </div>
+
+      <div class="FAQ_content">
+        <div class="Accordion_container">
+          <div class="Accordion_line"></div>
+          <div class="Accordion_header">
+            <h2 class="Accordion_title">What is Züs?</h2>
+            <img data-imageName="plus" decoding="async" data-nimg="intrinsic" />
+          </div>
+          <div class="Accordion_children">
+            <div>
+              <span class="FAQ_faq"
+                >Züs is the most private cloud. Use Züs to build your privacy
+                solution and store for total protection. Züs is the first
+                decentralized encrypted data sharing network. It is the only
+                network with a QoS (quality-of-service) protocol to ensure total
+                protection.</span
+              >
+            </div>
+          </div>
+        </div>
+
+        <div class="Accordion_container">
+          <div class="Accordion_line"></div>
+          <div class="Accordion_header">
+            <h2 class="Accordion_title">How does Züs help with GDPR?</h2>
+            <img data-imageName="plus" decoding="async" data-nimg="intrinsic" />
+          </div>
+          <div class="Accordion_children">
+            <div>
+              <span class="FAQ_faq"
+                >Given the data is tracked for all file operations on the
+                Blobber, we provide a capability to generate privacy reports on
+                the Blimp app. Also since the data is controlled by the user or
+                customer, storing on Züs is a naturally GDPR compliant storage
+                solution.</span
+              >
+            </div>
+          </div>
+        </div>
+
+        <div class="Accordion_container">
+          <div class="Accordion_line"></div>
+          <div class="Accordion_header">
+            <h2 class="Accordion_title">What are Miners and Sharders?</h2>
+            <img data-imageName="plus" decoding="async" data-nimg="intrinsic" />
+          </div>
+          <div class="Accordion_children">
+            <div>
+              <span class="FAQ_faq"
+                >Miners processes transactions from the client and challenges
+                Blobbers to ensure storage integrity and performance. Sharders
+                store the blockchain history and respond to queries.</span
+              >
+            </div>
+          </div>
+        </div>
+
+        <div class="Accordion_container">
+          <div class="Accordion_line"></div>
+          <div class="Accordion_header">
+            <h2 class="Accordion_title">What is a Blobber?</h2>
+            <img data-imageName="plus" decoding="async" data-nimg="intrinsic" />
+          </div>
+          <div class="Accordion_children">
+            <div>
+              <span class="FAQ_faq"
+                >A Blobber is a storage provider on the Züs network. They are
+                decentralized servers all over the world that connect to Züs
+                network to earn ZCN by providing our users with the storage they
+                need.</span
+              >
+            </div>
+          </div>
+        </div>
+
+        <div class="Accordion_container">
+          <div class="Accordion_line"></div>
+          <div class="Accordion_header">
+            <h2 class="Accordion_title">
+              Are Miners and Sharders centralized?
+            </h2>
+            <img data-imageName="plus" decoding="async" data-nimg="intrinsic" />
+          </div>
+          <div class="Accordion_children">
+            <div>
+              <span class="FAQ_faq"
+                >Miners and Sharders are a limited core group of the Züs
+                ecosystem, but they each have independent instances and
+                keys.</span
+              >
+            </div>
+          </div>
+        </div>
+
+        <div class="Accordion_container">
+          <div class="Accordion_line"></div>
+          <div class="Accordion_header">
+            <h2 class="Accordion_title">
+              What is sharding and how does it protect my data?
+            </h2>
+            <img data-imageName="plus" decoding="async" data-nimg="intrinsic" />
+          </div>
+          <div class="Accordion_children">
+            <div>
+              <span class="FAQ_faq"
+                >In our protocol we split the data into fragments and store it
+                on multiple Blobbers, so one server does not compromise
+                availability and security of your data.</span
+              >
+            </div>
+          </div>
         </div>
       </div>
     </div>
-  </section>
-  <!--showcase container end-->
+    <!--FAQ end-->
 
-  <!--vultInfo start-->
-  <section class="vultInfo rootWrapper">
-    <div class="containerWithIcon vultContainer">
-      <div class="logo">
-        <span style="display: inline-block; width: 70px; height: 50px">
-          <img alt="Vult Logo" data-imageName="vultLogo" decoding="async" data-nimg="fixed" />
-        </span>
-      </div>
+    <!-- Email Modal -->
+    <section class="modale email-modale" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-header">
+          <em style="font-size: 30px" class="fa fa-envelope"></em>
 
-      <div class="css" style="position: relative">
-        <div class="vultArt">
-          <span>
-            <img alt="Vult" sizes="100vw" data-imageName="vultArt" decoding="async" data-nimg="fill" />
-          </span>
+          <div class="closemodale" onclick="closeDialog()">&times;</div>
+        </div>
+        <div class="modal-body">
+          <p>
+            Thank you for signing up for our email list! Please check your email
+            for verification.
+          </p>
         </div>
       </div>
+    </section>
+    <!-- Email Modal -->
 
-      <div class="textContainerWrapper">
+    <footer class="Footer">
+      <div class="FooterFeature rootContainer">
+        <div class="bgPattern"></div>
+
         <div class="css">
-          <div class="textContent">
-            <h2 class="heading">
-              Personal Cloud<span style="color: rgb(11, 157, 255)">.</span>
-            </h2>
+          <div class="zusLogoWhite">
+            <span>
+              <img
+                alt="züs"
+                data-imageName="zusLogoWhite"
+                decoding="async"
+                data-nimg="fill"
+                sizes="100vw"
+              />
+            </span>
+          </div>
+        </div>
 
-            <p class="paragraph">
-              Use Vult to store and share encrypted files with friends. Browse
-              pictures in their pristine quality.
-            </p>
+        <div class="css">
+          <h3 class="heading withoutPeriod h3">
+            Enjoy encrypted data sharing<!-- --><span>.</span>
+          </h3>
+        </div>
 
-            <a href="https://zus.network/store/" target="_black" rel="noreferrer">
-              <button type="button" class="button black transparent">
-                <span>
-                  Store
-                </span>
+        <div class="css">
+          <p class="paragraph">
+            Design a multi-cloud strategy for the best business uptime
+          </p>
+        </div>
+
+        <div class="css">
+          <div class="buttons">
+            <a
+              href="https://zus.network/build/"
+              target="_black"
+              rel="noreferrer"
+            >
+              <button type="button" class="button">
+                <span>Start building</span>
               </button>
+            </a>
 
+            <a
+              href="https://zus.network/launch-apps/"
+              target="_black"
+              rel="noreferrer"
+            >
+              <button type="button" class="button black transparent">
+                <span>Launch Apps</span>
+              </button>
             </a>
           </div>
         </div>
       </div>
 
-      <div class="ellipseContainer">
-        <div class="ellipseTop"></div>
-        <div class="ellipseBottom"></div>
-      </div>
-    </div>
-  </section>
-  <!--vultInfo end-->
+      <div class="FooterCommunity socialLinksContainer">
+        <div class="background"></div>
+        <div class="textContent">
+          <div class="css">
+            <h3 class="heading h3">
+              Join as a Service Provider<!-- --><span>.</span>
+            </h3>
+          </div>
+          <div class="css">
+            <p class="paragraph">
+              Store on your server. Simplify, enhance your hybrid cloud
+              strategy.
+            </p>
+          </div>
+          <div class="css">
+            <ul class="socialIcons">
+              <li>
+                <a
+                  href="https://discord.com/invite/h3BFjdtCp4"
+                  rel="noreferrer"
+                  target="_blank"
+                >
+                  <img
+                    alt="discord"
+                    data-imageName="discord_social"
+                    decoding="async"
+                    data-nimg="intrinsic"
+                  />
+                </a>
+              </li>
 
-  <!--chimneyInfo start-->
-  <section class="chimneyInfo rootWrapper">
-    <div class="containerWithIcon">
-      <div class="logo">
-        <span style="display: inline-block; width: 40px; height: 40px">
-          <img alt="Chimney Logo" data-imageName="chimneyLogo" decoding="async" data-nimg="fixed" />
-        </span>
-      </div>
+              <li>
+                <a
+                  href="https://twitter.com/zus_network"
+                  rel="noreferrer"
+                  target="_blank"
+                >
+                  <img
+                    alt="twitter"
+                    data-imageName="twitter_social"
+                    decoding="async"
+                    data-nimg="intrinsic"
+                    height="64"
+                    width="64"
+                  />
+                </a>
+              </li>
 
-      <div class="ellipseContainer">
-        <div class="ellipseTop"></div>
-        <div class="ellipseBottom"></div>
-      </div>
+              <li>
+                <a
+                  href="https://medium.com/0chain"
+                  rel="noreferrer"
+                  target="_blank"
+                >
+                  <img
+                    alt="medium"
+                    data-imageName="medium_social"
+                    decoding="async"
+                    data-nimg="intrinsic"
+                  />
+                </a>
+              </li>
 
-      <div class="chimneyArt">
-        <div class="css" style="position: relative">
-          <span>
-            <img alt="Chimney" sizes="100vw" data-imageName="chimneyArt" decoding="async" data-nimg="fill" />
-          </span>
-        </div>
-      </div>
-
-      <div class="textContent">
-        <div class="css">
-          <h2 class="heading">
-            Plug in &amp; earn<span style="color: rgb(223, 122, 207)">.</span>
-          </h2>
-        </div>
-
-        <div class="css">
-          <p class="paragraph">
-            Chimney makes earning simple. Rent a server or use spare storage
-            for passive income.
-          </p>
-        </div>
-
-        <div class="css">
-          <a href="https://zus.network/earn/" target="_black" rel="noreferrer">
-            <button type="button" class="button black transparent">
-              <span>
-                Learn More
-              </span>
-            </button>
-          </a>
-        </div>
-      </div>
-    </div>
-  </section>
-  <!--chimneyInfo end-->
-
-  <!--chalkInfo start-->
-  <section class="chalkInfo rootWrapper">
-    <div class="containerWithIcon">
-      <div class="logo">
-        <span style="display: inline-block; height: 55px; width: 75px">
-          <img alt="Chalk Logo" data-imageName="chalkLogo" decoding="async" data-nimg="fixed" />
-        </span>
-      </div>
-
-      <div class="ellipseContainer">
-        <div class="ellipseTop"></div>
-        <div class="ellipseBottom"></div>
-      </div>
-
-      <div class="chalkArtMobile">
-        <div class="css" style="position: relative">
-          <span style="display: inline-block"><img alt="Chalk" data-imageName="chalkArtMobile" decoding="async"
-              data-nimg="fixed" /></span>
-        </div>
-      </div>
-
-      <div class="textContent">
-        <div class="css">
-          <h2 class="heading">
-            Market your NFT<span style="color: rgb(247, 90, 56)">.</span>
-          </h2>
-        </div>
-        <div class="css">
-          <p class="paragraph">
-            Use Chalk to maximize buyer engagement. Add a backstory to
-            showcase your limitless creativity.
-          </p>
-        </div>
-        <div class="css">
-          <a href="https://zus.network/nft/" target="_black" rel="noreferrer">
-            <button type="button" class="button black transparent">
-              <span>
-                Learn more
-              </span>
-            </button>
-          </a>
-        </div>
-      </div>
-
-      <div class="chalkArtDesktop">
-        <div class="css" style="position: relative">
-          <span style="display: inline-block; height: 550px; width: 600px"><img alt="Chalk"
-              data-imageName="chalkArtDesktop" decoding="async" data-nimg="fixed" /></span>
-        </div>
-      </div>
-    </div>
-  </section>
-  <!--chalkInfo end-->
-
-  <!--Private Sharing start-->
-  <div class="privateSharing">
-    <h2 class="heading">
-      How does Private sharing work<span style="color: rgb(23, 91, 255)">?</span>
-    </h2>
-
-    <p class="paragraph">
-      Züs' private sharing technology ensures complete privacy and security.
-      Files are divided into fragments, encrypted, and distributed among
-      multiple storage providers. The sharing proxy key is distributed to
-      providers, ensuring the process is fully decentralized and that only the
-      recipient can access and decrypt the files.
-    </p>
-
-    <span>
-      <img alt="" aria-hidden="true" data-imageName="infographic" />
-    </span>
-  </div>
-  <!--Private Sharing end-->
-
-  <!--Partners start-->
-  <div class="partnersContainer">
-    <h2 class="heading title">
-      Our Partners
-      <span style="color: rgb(23, 91, 255)">.</span>
-    </h2>
-
-    <div class="partners">
-      <figure>
-        <img data-imageName="huawei" alt="" />
-      </figure>
-
-      <figure>
-        <img data-imageName="chainlink" alt="" />
-      </figure>
-
-      <figure>
-        <img data-imageName="polygon" alt="" />
-      </figure>
-
-      <figure>
-        <img data-imageName="fetchai" alt="" />
-      </figure>
-
-      <figure>
-        <img data-imageName="ocean" alt="" />
-      </figure>
-
-      <figure>
-        <img data-imageName="magma" alt="" />
-      </figure>
-
-      <figure>
-        <img data-imageName="wanchain" alt="" />
-      </figure>
-
-      <figure>
-        <img data-imageName="geeq" alt="" />
-      </figure>
-
-      <figure>
-        <img data-imageName="kylin" alt="" />
-      </figure>
-
-      <figure>
-        <img data-imageName="morpheus-labs" alt="" />
-      </figure>
-
-      <figure>
-        <img data-imageName="clover" alt="" />
-      </figure>
-
-      <figure>
-        <img data-imageName="dia" alt="" />
-      </figure>
-
-      <figure>
-        <img data-imageName="fuse" alt="" />
-      </figure>
-
-      <figure>
-        <img data-imageName="api3" alt="" />
-      </figure>
-
-      <figure>
-        <img data-imageName="teraswitch" alt="" />
-      </figure>
-
-      <figure>
-        <img data-imageName="coresite" alt="" />
-      </figure>
-
-      <figure>
-        <img data-imageName="cogent" alt="" />
-      </figure>
-
-      <figure>
-        <img data-imageName="zero" alt="" />
-      </figure>
-
-      <figure>
-        <img data-imageName="unihost" alt="" />
-      </figure>
-
-      <figure>
-        <img data-imageName="velia" alt="" />
-      </figure>
-    </div>
-  </div>
-  <!--Partners end-->
-
-  <!--FAQ start-->
-  <div class="FAQ_container">
-    <div class="FAQ_header">
-      <h1 class="FAQ_title">Frequently Asked Questions</h1>
-      <div class="FAQ_description">
-        See below for our most frequently asked questions. For more
-        information, visit our
-        <a href="https://discord.com/invite/h3BFjdtCp4" target="_blank" rel="noreferrer">Discord</a>,
-        <a href="https://github.com/0chain" target="_blank" rel="noreferrer">GitHub</a>,
-        <a href="https://api.zus.network" target="_blank" rel="noreferrer">API</a>, and
-        <a href="https://docs.zus.network" target="_blank" rel="noreferrer">Documentation</a>
-        pages
-      </div>
-    </div>
-
-    <div class="FAQ_content">
-      <div class="Accordion_container">
-        <div class="Accordion_line"></div>
-        <div class="Accordion_header">
-          <h2 class="Accordion_title">What is Züs?</h2>
-          <img data-imageName="plus" decoding="async" data-nimg="intrinsic" />
-        </div>
-        <div class="Accordion_children">
-          <div>
-            <span class="FAQ_faq">Züs is the most private cloud. Use Züs to build your privacy
-              solution and store for total protection. Züs is the first
-              decentralized encrypted data sharing network. It is the only
-              network with a QoS (quality-of-service) protocol to ensure total
-              protection.</span>
+              <li>
+                <a
+                  href="https://t.me/zus_network"
+                  rel="noreferrer"
+                  target="_blank"
+                >
+                  <img
+                    alt="telegram"
+                    data-imageName="telegram_social"
+                    decoding="async"
+                    data-nimg="intrinsic"
+                  />
+                </a>
+              </li>
+            </ul>
           </div>
         </div>
       </div>
 
-      <div class="Accordion_container">
-        <div class="Accordion_line"></div>
-        <div class="Accordion_header">
-          <h2 class="Accordion_title">How does Züs help with GDPR?</h2>
-          <img data-imageName="plus" decoding="async" data-nimg="intrinsic" />
-        </div>
-        <div class="Accordion_children">
-          <div>
-            <span class="FAQ_faq">Given the data is tracked for all file operations on the
-              Blobber, we provide a capability to generate privacy reports on
-              the Blimp app. Also since the data is controlled by the user or
-              customer, storing on Züs is a naturally GDPR compliant storage
-              solution.</span>
+      <div class="menuContainer">
+        <div class="menuLinksContainer">
+          <div class="FooterProducts">
+            <h5>PRODUCTS</h5>
+            <a
+              href="https://atlus.cloud/"
+              target="_blank"
+              rel="noreferrer"
+              class="productWrapper"
+            >
+              <img
+                alt="Atlus"
+                data-imageName="atlus"
+                decoding="async"
+                data-nimg="intrinsic"
+              />
+              <p>Atlus</p>
+            </a>
+
+            <a
+              href="https://blimp.software/"
+              target="_blank"
+              rel="noreferrer"
+              class="productWrapper"
+            >
+              <img
+                alt="Blimp"
+                data-imageName="blimp"
+                decoding="async"
+                data-nimg="intrinsic"
+              />
+              <p>Blimp</p>
+            </a>
+
+            <a
+              href="https://bolt.holdings/"
+              target="_blank"
+              rel="noreferrer"
+              class="productWrapper"
+            >
+              <img
+                alt="Bolt"
+                data-imageName="bolt"
+                decoding="async"
+                data-nimg="intrinsic"
+              />
+              <p>Bolt</p>
+            </a>
+
+            <a
+              href="https://chalk.software/"
+              target="_blank"
+              rel="noreferrer"
+              class="productWrapper"
+            >
+              <img
+                alt="Chalk"
+                data-imageName="chalk"
+                decoding="async"
+                data-nimg="intrinsic"
+              />
+              <p>Chalk</p>
+            </a>
+
+            <a
+              href="https://chimney.software/"
+              target="_blank"
+              rel="noreferrer"
+              class="productWrapper"
+            >
+              <img
+                alt="Chimney"
+                data-imageName="chimney"
+                decoding="async"
+                data-nimg="intrinsic"
+              />
+              <p>Chimney</p>
+            </a>
+
+            <a
+              href="https://vult.network/"
+              target="_blank"
+              rel="noreferrer"
+              class="productWrapper"
+            >
+              <img
+                alt="Vult"
+                data-imageName="vult"
+                decoding="async"
+                data-nimg="intrinsic"
+              />
+              <p>Vult</p>
+            </a>
+          </div>
+
+          <div class="footerMenuItem">
+            <h5 class="titleMenu">ZÜS</h5>
+            <ul class="subMenu">
+              <li>
+                <a href="https://zus.network/launch-apps/"
+                  ><span>Ecosystem</span></a
+                >
+              </li>
+              <li>
+                <a href="https://zus.network/about/"><span>About</span></a>
+              </li>
+              <li>
+                <a href="https://zus.network/whitepapers/"
+                  ><span>Whitepapers</span></a
+                >
+              </li>
+              <li>
+                <a href="https://zus.network/roadmap/"><span>Roadmap</span></a>
+              </li>
+              <li>
+                <a href="https://zus.network/faq/"><span>FAQ</span></a>
+              </li>
+              <li>
+                <a href="https://zus.network/contact/"
+                  ><span>Contact Us</span></a
+                >
+              </li>
+            </ul>
+          </div>
+
+          <div class="footerMenuItem">
+            <h5 class="titleMenu">SITE MAP</h5>
+            <ul class="subMenu">
+              <li>
+                <a href="https://zus.network/"><span>Homepage</span></a>
+              </li>
+              <li>
+                <a href="https://zus.network/store/"><span>Store</span></a>
+              </li>
+              <li>
+                <a href="https://zus.network/build/"><span>Build</span></a>
+              </li>
+              <li>
+                <a href="https://zus.network/earn/"><span>Earn</span></a>
+              </li>
+              <li>
+                <a href="https://zus.network/defi/"><span>DeFi</span></a>
+              </li>
+              <li>
+                <a href="https://zus.network/nft/"><span>NFT</span></a>
+              </li>
+              <li>
+                <a href="https://zus.network/blog/"><span>Blog</span></a>
+              </li>
+            </ul>
+          </div>
+
+          <div class="footerMenuItem">
+            <h5 class="titleMenu">ZCN</h5>
+            <ul class="subMenu">
+              <li>
+                <a href="https://zus.network/staking/"><span>Staking</span></a>
+              </li>
+              <li>
+                <a href="https://zus.network/delegation/"
+                  ><span>Delegation</span></a
+                >
+              </li>
+              <li>
+                <a href="https://zus.network/block-rewards/"
+                  ><span>Block Rewards</span></a
+                >
+              </li>
+              <li>
+                <a href="https://zus.network/defi/"><span>Token</span></a>
+              </li>
+              <li>
+                <a href="https://zus.network/zcn-supply-schedule/"
+                  ><span>Supply</span></a
+                >
+              </li>
+              <li>
+                <a target="_blank" href="https://zcn.exchange/"
+                  ><span>Buy ZCN</span></a
+                >
+              </li>
+            </ul>
+          </div>
+
+          <div class="footerMenuItem">
+            <h5 class="titleMenu">RESOURCES</h5>
+            <ul class="subMenu">
+              <li>
+                <a target="_blank" href="https://lp.zus.network/sdk"
+                  ><span>Züs SDK</span></a
+                >
+              </li>
+              <li>
+                <a target="_blank" href="https://docs.zus.network"
+                  ><span>Documentation</span></a
+                >
+              </li>
+              <li>
+                <a target="_blank" href="https://api.zus.network"
+                  ><span>API</span></a
+                >
+              </li>
+              <li>
+                <a target="_blank" href="https://github.com/0chain"
+                  ><span>Github</span></a
+                >
+              </li>
+              <li>
+                <a href="/press/"><span>Media Kit</span></a>
+              </li>
+            </ul>
+          </div>
+
+          <div class="footerMenuItem dynamicPosts">
+            <h5 class="titleMenu">RECENT POSTS</h5>
+            <ul class="subMenu">
+              <li>
+                <a
+                  href="https://zus.network/blog/posts/decentralized-storage-full-control-over-data-security-and-privacy/"
+                  >Decentralized Storage</a
+                >
+              </li>
+              <li>
+                <a
+                  href="https://zus.network/blog/posts/blockchain-based-storage-solutions-are-likely-to-become-the-norm/"
+                  >Blockchain Storage Solutions</a
+                >
+              </li>
+              <li>
+                <a
+                  href="https://zus.network/blog/posts/can-decentralized-cloud-storage-save-the-future-of-retail-holiday-shopping/"
+                  >Decentralized Cloud Storage</a
+                >
+              </li>
+              <li>
+                <a
+                  href="https://zus.network/blog/posts/dstorage-on-the-rise-zus-weekly-debrief-february-22-2023/"
+                  >dStorage Solutions</a
+                >
+              </li>
+              <li>
+                <a
+                  href="https://zus.network/blog/posts/a-decentralized-storage-economy-crypto-market-to-the-next-level/"
+                  >Decentralized Storage Economy</a
+                >
+              </li>
+            </ul>
           </div>
         </div>
       </div>
 
-      <div class="Accordion_container">
-        <div class="Accordion_line"></div>
-        <div class="Accordion_header">
-          <h2 class="Accordion_title">What are Miners and Sharders?</h2>
-          <img data-imageName="plus" decoding="async" data-nimg="intrinsic" />
-        </div>
-        <div class="Accordion_children">
-          <div>
-            <span class="FAQ_faq">Miners processes transactions from the client and challenges
-              Blobbers to ensure storage integrity and performance. Sharders
-              store the blockchain history and respond to queries.</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="Accordion_container">
-        <div class="Accordion_line"></div>
-        <div class="Accordion_header">
-          <h2 class="Accordion_title">What is a Blobber?</h2>
-          <img data-imageName="plus" decoding="async" data-nimg="intrinsic" />
-        </div>
-        <div class="Accordion_children">
-          <div>
-            <span class="FAQ_faq">A Blobber is a storage provider on the Züs network. They are
-              decentralized servers all over the world that connect to Züs
-              network to earn ZCN by providing our users with the storage they
-              need.</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="Accordion_container">
-        <div class="Accordion_line"></div>
-        <div class="Accordion_header">
-          <h2 class="Accordion_title">
-            Are Miners and Sharders centralized?
-          </h2>
-          <img data-imageName="plus" decoding="async" data-nimg="intrinsic" />
-        </div>
-        <div class="Accordion_children">
-          <div>
-            <span class="FAQ_faq">Miners and Sharders are a limited core group of the Züs
-              ecosystem, but they each have independent instances and
-              keys.</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="Accordion_container">
-        <div class="Accordion_line"></div>
-        <div class="Accordion_header">
-          <h2 class="Accordion_title">
-            What is sharding and how does it protect my data?
-          </h2>
-          <img data-imageName="plus" decoding="async" data-nimg="intrinsic" />
-        </div>
-        <div class="Accordion_children">
-          <div>
-            <span class="FAQ_faq">In our protocol we split the data into fragments and store it
-              on multiple Blobbers, so one server does not compromise
-              availability and security of your data.</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <!--FAQ end-->
-
-  <!-- Email Modal -->
-  <section class="modale email-modale" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-header">
-        <em style="font-size: 30px" class="fa fa-envelope"></em>
-
-        <div class="closemodale" onclick="closeDialog()">&times;</div>
-      </div>
-      <div class="modal-body">
-        <p>
-          Thank you for signing up for our email list! Please check your email
-          for verification.
-        </p>
-      </div>
-    </div>
-  </section>
-  <!-- Email Modal -->
-
-  <footer class="Footer">
-    <div class="FooterFeature rootContainer">
-      <div class="bgPattern"></div>
-
-      <div class="css">
-        <div class="zusLogoWhite">
-          <span>
-            <img alt="züs" data-imageName="zusLogoWhite" decoding="async" data-nimg="fill" sizes="100vw" />
-          </span>
-        </div>
-      </div>
-
-      <div class="css">
-        <h3 class="heading withoutPeriod h3">
-          Enjoy encrypted data sharing<!-- --><span>.</span>
-        </h3>
-      </div>
-
-      <div class="css">
-        <p class="paragraph">
-          Design a multi-cloud strategy for the best business uptime
-        </p>
-      </div>
-
-      <div class="css">
-        <div class="buttons">
-          <a href="https://zus.network/build/" target="_black" rel="noreferrer">
-            <button type="button" class="button">
-              <span>Start building</span></button>
+      <div class="FooterSocialIcons">
+        <div class="topIcons">
+          <a
+            href="https://discord.com/invite/h3BFjdtCp4"
+            target="_black"
+            rel="noreferrer"
+            class="FooterSocialIcons_icon"
+          >
+            <img
+              alt="discord"
+              data-imageName="discord"
+              decoding="async"
+              data-nimg="intrinsic"
+            />
           </a>
 
-          <a href="https://zus.network/launch-apps/" target="_black" rel="noreferrer">
-            <button type="button" class="button black transparent">
-              <span>Launch Apps</span>
-            </button>
-          </a>
-        </div>
-      </div>
-    </div>
-
-    <div class="FooterCommunity socialLinksContainer">
-      <div class="background"></div>
-      <div class="textContent">
-        <div class="css">
-          <h3 class="heading h3">
-            Join as a Service Provider<!-- --><span>.</span>
-          </h3>
-        </div>
-        <div class="css">
-          <p class="paragraph">
-            Store on your server. Simplify, enhance your hybrid cloud
-            strategy.
-          </p>
-        </div>
-        <div class="css">
-          <ul class="socialIcons">
-            <li>
-              <a href="https://discord.com/invite/h3BFjdtCp4" rel="noreferrer" target="_blank">
-                <img alt="discord" data-imageName="discord_social" decoding="async" data-nimg="intrinsic" />
-              </a>
-            </li>
-
-            <li>
-              <a href="https://twitter.com/zus_network" rel="noreferrer" target="_blank">
-                <img alt="twitter" data-imageName="twitter_social" decoding="async" data-nimg="intrinsic" height="64"
-                  width="64" />
-              </a>
-            </li>
-
-            <li>
-              <a href="https://medium.com/0chain" rel="noreferrer" target="_blank">
-                <img alt="medium" data-imageName="medium_social" decoding="async" data-nimg="intrinsic" />
-              </a>
-            </li>
-
-            <li>
-              <a href="https://t.me/zus_network" rel="noreferrer" target="_blank">
-                <img alt="telegram" data-imageName="telegram_social" decoding="async" data-nimg="intrinsic" />
-              </a>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </div>
-
-    <div class="menuContainer">
-      <div class="menuLinksContainer">
-        <div class="FooterProducts">
-          <h5>PRODUCTS</h5>
-          <a href="https://atlus.cloud/" target="_blank" rel="noreferrer" class="productWrapper">
-            <img alt="Atlus" data-imageName="atlus" decoding="async" data-nimg="intrinsic" />
-            <p>Atlus</p>
+          <a
+            href="https://twitter.com/zus_network"
+            target="_black"
+            rel="noreferrer"
+            class="FooterSocialIcons_icon"
+          >
+            <img
+              alt="twitter"
+              data-imageName="twitter"
+              decoding="async"
+              data-nimg="intrinsic"
+            />
           </a>
 
-          <a href="https://blimp.software/" target="_blank" rel="noreferrer" class="productWrapper">
-            <img alt="Blimp" data-imageName="blimp" decoding="async" data-nimg="intrinsic" />
-            <p>Blimp</p>
+          <a
+            href="https://www.facebook.com/ZusNetwork"
+            target="_black"
+            rel="noreferrer"
+            class="FooterSocialIcons_icon"
+          >
+            <img
+              alt="facebook"
+              data-imageName="facebook"
+              decoding="async"
+              data-nimg="intrinsic"
+            />
           </a>
 
-          <a href="https://bolt.holdings/" target="_blank" rel="noreferrer" class="productWrapper">
-            <img alt="Bolt" data-imageName="bolt" decoding="async" data-nimg="intrinsic" />
-            <p>Bolt</p>
-          </a>
-
-          <a href="https://chalk.software/" target="_blank" rel="noreferrer" class="productWrapper">
-            <img alt="Chalk" data-imageName="chalk" decoding="async" data-nimg="intrinsic" />
-            <p>Chalk</p>
-          </a>
-
-          <a href="https://chimney.software/" target="_blank" rel="noreferrer" class="productWrapper">
-            <img alt="Chimney" data-imageName="chimney" decoding="async" data-nimg="intrinsic" />
-            <p>Chimney</p>
-          </a>
-
-          <a href="https://vult.network/" target="_blank" rel="noreferrer" class="productWrapper">
-            <img alt="Vult" data-imageName="vult" decoding="async" data-nimg="intrinsic" />
-            <p>Vult</p>
+          <a
+            href="https://www.linkedin.com/company/zusnetwork/"
+            target="_black"
+            rel="noreferrer"
+            class="FooterSocialIcons_icon"
+          >
+            <img
+              alt="linkedin"
+              data-imageName="linkedin"
+              decoding="async"
+              data-nimg="intrinsic"
+            />
           </a>
         </div>
 
-        <div class="footerMenuItem">
-          <h5 class="titleMenu">ZÜS</h5>
-          <ul class="subMenu">
-            <li>
-              <a href="https://zus.network/launch-apps/"><span>Ecosystem</span></a>
-            </li>
-            <li>
-              <a href="https://zus.network/about/"><span>About</span></a>
-            </li>
-            <li>
-              <a href="https://zus.network/whitepapers/"><span>Whitepapers</span></a>
-            </li>
-            <li>
-              <a href="https://zus.network/roadmap/"><span>Roadmap</span></a>
-            </li>
-            <li>
-              <a href="https://zus.network/faq/"><span>FAQ</span></a>
-            </li>
-            <li>
-              <a href="https://zus.network/contact/"><span>Contact Us</span></a>
-            </li>
-          </ul>
-        </div>
+        <div class="bottomIcons">
+          <a
+            href="https://www.youtube.com/@Zus_Network"
+            target="_black"
+            rel="noreferrer"
+            class="FooterSocialIcons_icon"
+          >
+            <img
+              alt="youtube"
+              data-imageName="youtube"
+              decoding="async"
+              data-nimg="intrinsic"
+            />
+          </a>
 
-        <div class="footerMenuItem">
-          <h5 class="titleMenu">SITE MAP</h5>
-          <ul class="subMenu">
-            <li>
-              <a href="https://zus.network/"><span>Homepage</span></a>
-            </li>
-            <li>
-              <a href="https://zus.network/store/"><span>Store</span></a>
-            </li>
-            <li>
-              <a href="https://zus.network/build/"><span>Build</span></a>
-            </li>
-            <li>
-              <a href="https://zus.network/earn/"><span>Earn</span></a>
-            </li>
-            <li>
-              <a href="https://zus.network/defi/"><span>DeFi</span></a>
-            </li>
-            <li>
-              <a href="https://zus.network/nft/"><span>NFT</span></a>
-            </li>
-            <li>
-              <a href="https://zus.network/blog/"><span>Blog</span></a>
-            </li>
-          </ul>
-        </div>
+          <a
+            href="https://github.com/0chain"
+            target="_black"
+            rel="noreferrer"
+            class="FooterSocialIcons_icon"
+          >
+            <img
+              alt="github"
+              data-imageName="github"
+              decoding="async"
+              data-nimg="intrinsic"
+            />
+          </a>
 
-        <div class="footerMenuItem">
-          <h5 class="titleMenu">ZCN</h5>
-          <ul class="subMenu">
-            <li>
-              <a href="https://zus.network/staking/"><span>Staking</span></a>
-            </li>
-            <li>
-              <a href="https://zus.network/delegation/"><span>Delegation</span></a>
-            </li>
-            <li>
-              <a href="https://zus.network/block-rewards/"><span>Block Rewards</span></a>
-            </li>
-            <li>
-              <a href="https://zus.network/defi/"><span>Token</span></a>
-            </li>
-            <li>
-              <a href="https://zus.network/zcn-supply-schedule/"><span>Supply</span></a>
-            </li>
-            <li>
-              <a target="_blank" href="https://zcn.exchange/"><span>Buy ZCN</span></a>
-            </li>
-          </ul>
-        </div>
+          <a
+            href="https://medium.com/0chain"
+            target="_black"
+            rel="noreferrer"
+            class="FooterSocialIcons_icon"
+            ><img
+              alt="medium"
+              data-imageName="medium"
+              decoding="async"
+              data-nimg="intrinsic"
+            />
+          </a>
 
-        <div class="footerMenuItem">
-          <h5 class="titleMenu">RESOURCES</h5>
-          <ul class="subMenu">
-            <li>
-              <a target="_blank" href="https://lp.zus.network/sdk"><span>Züs SDK</span></a>
-            </li>
-            <li>
-              <a target="_blank" href="https://docs.zus.network"><span>Documentation</span></a>
-            </li>
-            <li>
-              <a target="_blank" href="https://api.zus.network"><span>API</span></a>
-            </li>
-            <li>
-              <a target="_blank" href="https://github.com/0chain"><span>Github</span></a>
-            </li>
-            <li>
-              <a href="/press/"><span>Media Kit</span></a>
-            </li>
-          </ul>
-        </div>
-
-        <div class="footerMenuItem dynamicPosts">
-          <h5 class="titleMenu">RECENT POSTS</h5>
-          <ul class="subMenu">
-            <li>
-              <a
-                href="https://zus.network/blog/posts/decentralized-storage-full-control-over-data-security-and-privacy/">Decentralized
-                Storage</a>
-            </li>
-            <li>
-              <a
-                href="https://zus.network/blog/posts/blockchain-based-storage-solutions-are-likely-to-become-the-norm/">Blockchain
-                Storage Solutions</a>
-            </li>
-            <li>
-              <a
-                href="https://zus.network/blog/posts/can-decentralized-cloud-storage-save-the-future-of-retail-holiday-shopping/">Decentralized
-                Cloud Storage</a>
-            </li>
-            <li>
-              <a href="https://zus.network/blog/posts/dstorage-on-the-rise-zus-weekly-debrief-february-22-2023/">dStorage
-                Solutions</a>
-            </li>
-            <li>
-              <a href="https://zus.network/blog/posts/a-decentralized-storage-economy-crypto-market-to-the-next-level/">Decentralized
-                Storage Economy</a>
-            </li>
-          </ul>
+          <a
+            href="https://t.me/zus_network"
+            target="_black"
+            rel="noreferrer"
+            class="FooterSocialIcons_icon"
+          >
+            <img
+              alt="telegram"
+              data-imageName="telegram"
+              decoding="async"
+              data-nimg="intrinsic"
+            />
+          </a>
         </div>
       </div>
-    </div>
 
-    <div class="FooterSocialIcons">
-      <div class="topIcons">
-        <a href="https://discord.com/invite/h3BFjdtCp4" target="_black" rel="noreferrer" class="FooterSocialIcons_icon">
-          <img alt="discord" data-imageName="discord" decoding="async" data-nimg="intrinsic" />
-        </a>
-
-        <a href="https://twitter.com/zus_network" target="_black" rel="noreferrer" class="FooterSocialIcons_icon">
-          <img alt="twitter" data-imageName="twitter" decoding="async" data-nimg="intrinsic" />
-        </a>
-
-        <a href="https://www.facebook.com/ZusNetwork" target="_black" rel="noreferrer" class="FooterSocialIcons_icon">
-          <img alt="facebook" data-imageName="facebook" decoding="async" data-nimg="intrinsic" />
-        </a>
-
-        <a href="https://www.linkedin.com/company/zusnetwork/" target="_black" rel="noreferrer"
-          class="FooterSocialIcons_icon">
-          <img alt="linkedin" data-imageName="linkedin" decoding="async" data-nimg="intrinsic" />
-        </a>
+      <div class="bottomContainer">
+        <a href="https://zus.network/terms-and-conditions/"
+          >Terms &amp; Conditions</a
+        ><a href="https://zus.network/privacy-policy/">Privacy Policy</a>
+        <p class="paragraph">Copyright © 2023 ZÜS All Rights Reserved.</p>
       </div>
+    </footer>
 
-      <div class="bottomIcons">
-        <a href="https://www.youtube.com/@Zus_Network" target="_black" rel="noreferrer" class="FooterSocialIcons_icon">
-          <img alt="youtube" data-imageName="youtube" decoding="async" data-nimg="intrinsic" />
-        </a>
+    <script>
+      fetchTranslations = async (languageKey) => {
+        const projectToken = "563004a1acf746cb9386e3f08d9b3bc8";
+        const url = `https://cdn.simplelocalize.io/${projectToken}/_latest/en/websitedata`;
+        return fetch(url, { cache: "reload" }).then((data) => data.json());
+      };
 
-        <a href="https://github.com/0chain" target="_black" rel="noreferrer" class="FooterSocialIcons_icon">
-          <img alt="github" data-imageName="github" decoding="async" data-nimg="intrinsic" />
-        </a>
+      fetchTranslations().then((data) => {
+        const keys = Object.keys(data);
+        keys.forEach((key) => {
+          const element = document.getElementById(key);
 
-        <a href="https://medium.com/0chain" target="_black" rel="noreferrer" class="FooterSocialIcons_icon"><img
-            alt="medium" data-imageName="medium" decoding="async" data-nimg="intrinsic" />
-        </a>
+          if (key === "emailPlaceholder") {
+            document.getElementById("email").placeholder = data[key];
+          }
 
-        <a href="https://t.me/zus_network" target="_black" rel="noreferrer" class="FooterSocialIcons_icon">
-          <img alt="telegram" data-imageName="telegram" decoding="async" data-nimg="intrinsic" />
-        </a>
-      </div>
-    </div>
-
-    <div class="bottomContainer">
-      <a href="https://zus.network/terms-and-conditions/">Terms &amp; Conditions</a><a
-        href="https://zus.network/privacy-policy/">Privacy Policy</a>
-      <p class="paragraph">Copyright © 2023 ZÜS All Rights Reserved.</p>
-    </div>
-  </footer>
-
-  <script>
-    fetchTranslations = async (languageKey) => {
-      const projectToken = "563004a1acf746cb9386e3f08d9b3bc8";
-      const url = `https://cdn.simplelocalize.io/${projectToken}/_latest/en/websitedata`;
-      return fetch(url, { cache: "reload" }).then((data) => data.json());
-    };
-
-    fetchTranslations().then((data) => {
-      const keys = Object.keys(data);
-      keys.forEach((key) => {
-        const element = document.getElementById(key);
-
-        if (key === "emailPlaceholder") {
-          document.getElementById("email").placeholder = data[key];
-        }
-
-        if (element) {
-          element.innerHTML = data[key];
-        }
+          if (element) {
+            element.innerHTML = data[key];
+          }
+        });
       });
-    });
-  </script>
+    </script>
 
-  <!-- I don't think we need this, commenting out for now, will remove once confirmed that we don't need it -->
-  <!-- <script>
+    <!-- I don't think we need this, commenting out for now, will remove once confirmed that we don't need it -->
+    <!-- <script>
     function initApp() {
       // Install built-in polyfills to patch browser incompatibilities.
       shaka.polyfill.installAll();
@@ -1165,110 +1542,109 @@
     document.addEventListener("DOMContentLoaded", initApp);
   </script> -->
 
-  <script>
-    // GTM for Page visit
-    window.dataLayer.push({ event: "sdk_visit" });
+    <script>
+      // GTM for Page visit
+      window.dataLayer.push({ event: "sdk_visit" });
 
-    const appName = "sdk";
+      const appName = "sdk";
 
-    const emailInput = document.querySelector("#email");
-    const signupBtn = document.querySelector(".signup-btn");
-    const error = document.querySelector(".error");
-    const emailModale = document.querySelector(".email-modale");
+      const emailInput = document.querySelector("#email");
+      const signupBtn = document.querySelector(".signup-btn");
+      const error = document.querySelector(".error");
+      const emailModale = document.querySelector(".email-modale");
 
-    const setSignupBtn = (val) => {
-      signupBtn.innerHTML = val;
-    };
-
-    const openEmailModal = () => {
-      emailModale.classList.add("opened");
-    };
-
-    const setError = (msg) => {
-      error.innerHTML = msg;
-    };
-
-    const resetForm = () => {
-      emailInput.value = "";
-      setSignupBtn("Sign up for the SDK");
-    };
-
-    emailInput.addEventListener("input", function () {
-      setError("");
-    });
-
-    //Function to register new user
-    signupBtn.addEventListener("click", async (event) => {
-      event.preventDefault();
-
-      setError("");
-
-      userEmail = emailInput.value;
-
-      setSignupBtn("Loading...");
-
-      //Simple Email Validation
-      const emailValidation = (email) => {
-        const pattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
-        if (email.match(pattern)) {
-          setError("");
-          return true;
-        }
-        return false;
+      const setSignupBtn = (val) => {
+        signupBtn.innerHTML = val;
       };
 
-      if (userEmail) {
-        if (!emailValidation(userEmail)) {
-          setError("Entered email is invalid. Try again.");
-          setSignupBtn("Sign up for the SDK");
-          return;
-        }
-      }
+      const openEmailModal = () => {
+        emailModale.classList.add("opened");
+      };
 
-      try {
-        const response = await fetch("/referral/send-email", {
-          method: "POST",
-          headers: { "Content-type": "application/json" },
-          body: JSON.stringify({ email: userEmail, appName }),
-        });
-        const { error, insert_error } = await response.json();
+      const setError = (msg) => {
+        error.innerHTML = msg;
+      };
 
-        if (error) {
-          setError("Email send failed. Please Try again");
-        } else if (insert_error) {
-          setError(
-            "Email is already being used for Sign up. Please try with another email"
-          );
-        } else {
-          //Open Email popup + show Refer button, when user Submits the Email
-          openEmailModal();
+      const resetForm = () => {
+        emailInput.value = "";
+        setSignupBtn("Sign up for the SDK");
+      };
 
-          // GTM for Email Signup
-          window.dataLayer.push({ event: "sdk_signup_click" });
-        }
-      } catch (error) {
-        console.log(error);
-        setError("Something went wrong. Please try again later.");
-      }
-
-      resetForm();
-    });
-  </script>
-
-  <script>
-    const closeDialog = () => {
-      document.querySelector(".email-modale").classList.remove("opened");
-    };
-
-    const accordion = document.getElementsByClassName("Accordion_header");
-
-    for (i = 0; i < accordion.length; i++) {
-      accordion[i].addEventListener("click", function () {
-        this.parentNode.classList.toggle("active");
-        console.log("added");
+      emailInput.addEventListener("input", function () {
+        setError("");
       });
-    }
-  </script>
-</body>
 
+      //Function to register new user
+      signupBtn.addEventListener("click", async (event) => {
+        event.preventDefault();
+
+        setError("");
+
+        userEmail = emailInput.value;
+
+        setSignupBtn("Loading...");
+
+        //Simple Email Validation
+        const emailValidation = (email) => {
+          const pattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+          if (email.match(pattern)) {
+            setError("");
+            return true;
+          }
+          return false;
+        };
+
+        if (userEmail) {
+          if (!emailValidation(userEmail)) {
+            setError("Entered email is invalid. Try again.");
+            setSignupBtn("Sign up for the SDK");
+            return;
+          }
+        }
+
+        try {
+          const response = await fetch("/referral/send-email", {
+            method: "POST",
+            headers: { "Content-type": "application/json" },
+            body: JSON.stringify({ email: userEmail, appName }),
+          });
+          const { error, insert_error } = await response.json();
+
+          if (error) {
+            setError("Email send failed. Please Try again");
+          } else if (insert_error) {
+            setError(
+              "Email is already being used for Sign up. Please try with another email"
+            );
+          } else {
+            //Open Email popup + show Refer button, when user Submits the Email
+            openEmailModal();
+
+            // GTM for Email Signup
+            window.dataLayer.push({ event: "sdk_signup_click" });
+          }
+        } catch (error) {
+          console.log(error);
+          setError("Something went wrong. Please try again later.");
+        }
+
+        resetForm();
+      });
+    </script>
+
+    <script>
+      const closeDialog = () => {
+        document.querySelector(".email-modale").classList.remove("opened");
+      };
+
+      const accordion = document.getElementsByClassName("Accordion_header");
+
+      for (i = 0; i < accordion.length; i++) {
+        accordion[i].addEventListener("click", function () {
+          this.parentNode.classList.toggle("active");
+          console.log("added");
+        });
+      }
+    </script>
+  </body>
 </html>
