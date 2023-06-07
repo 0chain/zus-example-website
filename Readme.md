@@ -1,63 +1,110 @@
-# ZusExampleWebsite
+# Setting up the project:
 
-This is a test project for the Zus GO SDK. In this website you can find examples of how to use the
-SDK.
+1. Install Docker for Windows, Mac or Linux from [here](https://docs.docker.com/engine/install/).
 
-The website covers demo for two product lines of Zus i.e. bolt and vult.
+2. Clone the repo
+```
+git clone https://github.com/0chain/zus-example-website
+```
+3. Navigate to the `docker.local` directory and run this command:
+```
+docker-compose -f docker-compose-dev.yaml up -d
+```
+4. Open `localhost:3008` in your browser to see the sample website
 
-## Bolt
 
-It is a cryptocurrency wallet for exchange of zcn ERC 20 and ethereum tokens. Tokens can also be
-staked and users get rewards for staking.
 
-## Vult
+# Guide to transform website using ZÜS
+We will go through how we're downloading assets from allocations on ZÜS and using them on this sample website. This can be used as a guide to transform any website using zus-js-sdk
 
-Vult is a dencentralised anonymous file sharing platform. Users can upload files and share them with
-other users.
+## Prequisites
+- `authTicket` of the directory the assets are stored in
+- `zus-js-sdk`, instructions on how to setup it up can be found [here](https://github.com/0chain/zus-js-sdk#installation)
 
-## SDK
-
-Both of the apps rely on the [gosdk](https://github.com/0chain/gosdk) for interacting with the
-0chain blockchain.
-
-## Setup the SDK
-
-# Guide to deployment.
-
-## For dev env
-  1. Clone the repository<br />
-  2. Navigate to the `docker.local` dir<br />
-  3. Run `docker-compose -f docker-compose-dev.yaml up -d`<br />
-
-Now we also need to initialize the `Zcncore` in our `Application` class.
-
-```kotlin
-Zcncore.init(configJsonString)
+The following functions from `zus-js-sdk` are used in this transformation:
+```
+import {
+    init,
+    createWallet,
+    download,
+    setWallet,
+    decodeAuthTicket,
+    listSharedFiles,
+} from "@zerochain/zus-sdk";
 ```
 
-configJson is the json string which contains the configuration for the sdk.
+## Steps:
 
-```json
- {
-  "config": {
-    "signature_scheme": "bls0chain",
-    "block_worker": "https://demo.zus.network/dns",
-    "confirmation_chain_length": 3
-  },
-  "data_shards": 2,
-  "parity_shards": 2,
-  "zbox_url": "https://0box.demo.zus.network/",
-  "block_worker": "https://demo.zus.network",
-  "domain_url": "demo.zus.network",
-  "network_fee_url": "https://demo.zus.network/miner01/v1/block/get/fee_stats",
-  "explorer_url": "https://demo.zus.network/"
-}
+1. Create a script file and add it to your `html` file, inside `head` tag, with `priority` set to `high`, all the code in next steps would be placed inside this script
+```
+script src="assets.js" fetchpriority="high"></script>
 ```
 
-## How to create a wallet.
-To create a wallet you need to call the `Zcncore.createWalletOffline()` function.
-## Some common terms used in our code and blockchain
+2. Initialize `gosdk` with default config:
+```
+  const configJson = {
+      chainId: "0afc093ffb509f059c55478bc1a60351cef7b4e9c008a53a6cc8241ca8617dfe",
+      signatureScheme: "bls0chain",
+      minConfirmation: 50,
+      minSubmit: 50,
+      confirmationChainLength: 3,
+      blockWorker: "https://demo.zus.network/dns",
+      zboxHost: "https://0box.demo.zus.network"
+  };
+  const config = [
+      configJson.chainId,
+      configJson.blockWorker,
+      configJson.signatureScheme,
+      configJson.minConfirmation,
+      configJson.minSubmit,
+      configJson.confirmationChainLength,
+      configJson.zboxHost,
+      configJson.zboxAppType,
+  ];
 
+  await init(config);
+```
+
+3. Create a service wallet
+```
+    const { keys, mnemonic } = await createWallet();
+    const { walletId, privateKey, publicKey } = keys
+    
+```
+
+4. Set wallet on wasm
+```
+await setWallet(walletId, privateKey, publicKey, mnemonic);
+```
+
+5. Decode `authTicket` to get `path_hash`, `allocation_id` and `owner_id`
+```
+const authData = await decodeAuthTicket(authTicket)
+```
+
+6. Get the list of files inside this directory
+```
+const { data } = await listSharedFiles(authData?.file_path_hash, authData?.allocation_id, authData?.owner_id)
+```
+
+7. Loop over each file from the list to download it and set `src` on required DOM element to `url` in response
+```
+  for (let file = 0; file < filesList.length; file++) {
+      const fileDetails = filesList[file]
+      const downloadedFile = await download(
+          fileDetails?.allocation_id,
+          '',
+          authTicket,
+          fileDetails?.lookup_hash,
+          false,
+          100,
+          '',
+      );
+      document.getElementById("my-image").src = downloadedFile?.url
+  }
+```
+
+# Some common terms used in our code and blockchain
 - `blobber` - A blobber is a storage provider. It is a server that stores files on behalf of users.
   Blobbers are paid for storing files and for serving files to users. Blobbers are also paid for
   serving files to other blobbers. Blobbers are paid in ZCN tokens.
@@ -81,5 +128,5 @@ To create a wallet you need to call the `Zcncore.createWalletOffline()` function
 - `mnemonics` - Mnemonics are a set of words that are used to generate a wallet. Mnemonics are used
   to generate a wallet for a user.
 
-## Hackathon Discord Link
+# Hackathon Discord Link
 https://discord.gg/7JSzwpcK55
