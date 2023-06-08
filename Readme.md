@@ -118,6 +118,41 @@ const { data } = await listSharedFiles(authData?.file_path_hash, authData?.alloc
   }
 ```
 
+8. Cache the asset in `indexedDB` to use on page reload
+```
+function createStore(dbName, storeName) {
+    const request = indexedDB.open(dbName);
+    request.onupgradeneeded = () => request.result.createObjectStore(storeName);
+    const dbp = promisifyRequest(request);
+
+    return (txMode, callback) =>
+        dbp.then((db) =>
+            callback(db.transaction(storeName, txMode).objectStore(storeName)),
+        );
+}
+
+function setValue(key, value, customStore = getDefaultStore()) {
+    return customStore('readwrite', (store) => {
+        store.put(value, key);
+        return promisifyRequest(store.transaction);
+    });
+}
+
+function getDefaultStore() {
+    if (!defaultGetStoreFunc) {
+        defaultGetStoreFunc = createStore('zus-assets-store', 'zus-assets');
+    }
+    return defaultGetStoreFunc;
+}
+
+function promisifyRequest(request) {
+    return new Promise((resolve, reject) => {
+        request.oncomplete = request.onsuccess = () => resolve(request.result);
+        request.onabort = request.onerror = () => reject(request.error);
+    });
+}
+```
+
 ### Edit the Website
 
 You can start editing the website by modifying src/index.js. Once the modification is done, Build the website and start the website as done above.

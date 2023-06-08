@@ -46,10 +46,13 @@ async function initializeWasm() {
     // list files in the directory
     const { data } = await listSharedFiles(authData?.file_path_hash, authData?.allocation_id, authData?.owner_id)
     // rearrage the file list so we can download in the order assets are displayed on website
-    const  filesList = reArrageArray(data?.list)
+    const filesList = reArrageArray(data?.list)
     // loop over the list and download each file, this is currently done sequentially, will do it in parallel once parallel download is working on wasm
     for (let file = 0; file < filesList.length; file++) {
         const fileDetails = filesList[file]
+        const elements = findByAttrValue("img", "data-imageName", fileDetails?.name)
+        const populatedFromCache = await loadAssetFromCache(fileDetails?.name, elements)
+        if (populatedFromCache) continue
         const downloadedFile = await download(
             fileDetails?.allocation_id,
             '',
@@ -62,31 +65,27 @@ async function initializeWasm() {
         // get file mime type
         const type = mime.getType(downloadedFile?.fileName)
         // this url can be used directly in src attribute of img and video tag
-        let blobUrl = downloadedFile?.url
-        // if file type is svg, the blob url doesn't work directly in img src attribute since the mime type is octet-stream
-        if (type.includes("svg")) {
-            // convert to raw form and back to blob but with proper mime type this time
-            const rawFile = await (await fetch(downloadedFile?.url)).blob()
-            const blobWithActualType = new Blob([rawFile], { type })
-            blobUrl = URL.createObjectURL(blobWithActualType)
-        }
+        // convert to raw form and back to blob but with proper mime type this time
+        const rawFile = await createBlob(downloadedFile?.url)
+        const blobWithActualType = new Blob([rawFile], { type })
+        const blobUrl = URL.createObjectURL(blobWithActualType)
         // get img elements that will display fetched assets
-        const elements = findByAttrValue("img", "data-imageName", downloadedFile?.fileName.substr(0, downloadedFile?.fileName.lastIndexOf(".")))
         // set src to blob url
         elements.forEach(el => el.src = blobUrl)
+        cacheAsset(downloadedFile?.fileName, blobWithActualType)
     }
 })();
 
 // find element from dom by type, attribute name and attribute value
 function findByAttrValue(type, attr, value) {
     const elements = document.getElementsByTagName(type);
-    const matchingElements = []
+    const matchingElements = [];
     for (let i = 0; i < elements.length; i++) {
         if (elements[i].getAttribute(attr) === value) {
-            matchingElements.push(elements[i])
-        }
-    }
-    return matchingElements
+            matchingElements.push(elements[i]);
+        };
+    };
+    return matchingElements;
 }
 
 // using map to fetch priority in constant time
@@ -146,19 +145,76 @@ const assetPriority = {
     "youtube.svg": 53,
     "github.svg": 54,
     "medium.svg": 55,
-}
+};
 
 // rearrange array so we can download images in order they're displayed on the webpage
 function reArrageArray(filesArr) {
-    let newArray = []
+    let newArray = [];
     for (let i = 0; i < filesArr.length; i++) {
-        let currentValue = assetPriority[filesArr[i].name]
-        if(!currentValue || !filesArr[i]) continue
-        newArray[currentValue - 1] = filesArr[i]
+        let currentValue = assetPriority[filesArr[i].name];
+        if (!currentValue || !filesArr[i]) continue;
+        newArray[currentValue - 1] = filesArr[i];
+    };
+    return newArray;
+};
+
+async function cacheAsset(key, data) {
+    await setValue(key, data);
+};
+
+async function loadAssetFromCache(key, elements) {
+    const cachedData = await getValue(key);
+    if (cachedData) {
+        const url = URL.createObjectURL(cachedData);
+        elements.forEach(el => el.src = url);
+        return true;
     }
-    return newArray
+    else return false;
 }
 
+let defaultGetStoreFunc;
+
+async function createBlob(url) {
+    const response = await fetch(url);
+    const data = await response.blob();
+    return data;
+}
+
+function createStore(dbName, storeName) {
+    const request = indexedDB.open(dbName);
+    request.onupgradeneeded = () => request.result.createObjectStore(storeName);
+    const dbp = promisifyRequest(request);
+
+    return (txMode, callback) =>
+        dbp.then((db) =>
+            callback(db.transaction(storeName, txMode).objectStore(storeName)),
+        );
+}
+
+function setValue(key, value, customStore = getDefaultStore()) {
+    return customStore('readwrite', (store) => {
+        store.put(value, key);
+        return promisifyRequest(store.transaction);
+    });
+}
+
+function getDefaultStore() {
+    if (!defaultGetStoreFunc) {
+        defaultGetStoreFunc = createStore('zus-assets-store', 'zus-assets');
+    }
+    return defaultGetStoreFunc;
+}
+
+function getValue(key, customStore = getDefaultStore()) {
+    return customStore('readonly', (store) => promisifyRequest(store.get(key)));
+}
+
+function promisifyRequest(request) {
+    return new Promise((resolve, reject) => {
+        request.oncomplete = request.onsuccess = () => resolve(request.result);
+        request.onabort = request.onerror = () => reject(request.error);
+    });
+}
 
 // To use when parallel download issue is fixed on wasm
 // const promises = filesList.map(file => new Promise(async (resolve, reject) => {
