@@ -34,8 +34,6 @@ async function initializeWasm() {
     await init(config);
 }
 
-const assetsToCache = {};
-
 (async function () {
     // initialiaze and configure wasm
     await initializeWasm()
@@ -64,7 +62,6 @@ const assetsToCache = {};
             100,
             '',
         );
-        assetsToCache[downloadedFile?.fileName] = downloadedFile?.url
         // get file mime type
         const type = mime.getType(downloadedFile?.fileName)
         // this url can be used directly in src attribute of img and video tag
