@@ -13,6 +13,14 @@ Züs has ecosystem apps to encourage traditional storage consumption such as [Bl
 
 Other apps are [Bolt](https://bolt.holdings/), a wallet that is very secure with air-gapped 2FA split-key protocol to prevent hacks from compromising your digital assets, and it enables you to stake and earn from the storage providers; [Atlus](https://atlus.cloud/), a blockchain explorer and [Chimney](https://demo.chimney.software/), which allows anyone to join the network and earn using their server or by just renting one, with no prior knowledge required.
 
+### Preview
+
+<div align="center">
+ 
+  https://www.loom.com/share/10c4d98ac942498a8a29df4d67c70cf8
+    
+</div>
+
 ## Setting up the project:
 
 1. Install Docker for Windows, Mac or Linux from [here](https://docs.docker.com/engine/install/).
