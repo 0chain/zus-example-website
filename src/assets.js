@@ -18,7 +18,10 @@ const configJson = {
     zboxHost: "https://0box.demo.zus.network"
 };
 
+// This will keep track of assets already populated from cache, it's a map so checking it would be done in constant time
 const assetsPopulatedFromCache = {};
+
+// to keep track of zus-assets store
 let defaultGetStoreFunc;
 
 // initialize wasm with default config
@@ -37,7 +40,6 @@ async function initializeWasm() {
     await init(config);
 }
 
-// This will keep track of assets already populated from cache, it's a map so checking it would be done in constant time
 
 (async function () {
     // try populating everything from cache before doing any calls
@@ -59,8 +61,6 @@ async function initializeWasm() {
         const fileDetails = filesList[file];
         if(assetsPopulatedFromCache[fileDetails?.name]) continue;
         const elements = findByAttrValue("img", "data-imageName", fileDetails?.name);
-        const populatedFromCache = await loadAssetFromCache(fileDetails?.name, elements);
-        if (populatedFromCache) continue;
         const downloadedFile = await download(
             fileDetails?.allocation_id,
             '',
@@ -81,7 +81,7 @@ async function initializeWasm() {
         // set src to blob url
         elements.forEach(el => el.src = blobUrl)
         if(blobWithActualType.size > 0){
-            cacheAsset(downloadedFile?.fileName, blobWithActualType)
+            cacheAsset(downloadedFile?.fileName, blobWithActualType);
         };
     }
 })();
@@ -184,26 +184,19 @@ function reArrageArray(filesArr) {
     return newArray;
 };
 
+// cache asset into indexed db
 async function cacheAsset(key, data) {
     await setValue(key, data);
 };
 
-async function loadAssetFromCache(key, elements) {
-    const cachedData = await getValue(key);
-    if (cachedData) {
-        const url = URL.createObjectURL(cachedData);
-        elements.forEach(el => el.src = url);
-        return true;
-    }
-    else return false;
-}
-
+// get blob data from url
 async function createBlob(url) {
     const response = await fetch(url);
     const data = await response.blob();
     return data;
 }
 
+// create/return indexed db
 function createStore(dbName, storeName) {
     const request = indexedDB.open(dbName);
     request.onupgradeneeded = () => request.result.createObjectStore(storeName);
@@ -215,6 +208,8 @@ function createStore(dbName, storeName) {
         );
 }
 
+
+// save value to indexed db
 function setValue(key, value, customStore = getDefaultStore()) {
     return customStore('readwrite', (store) => {
         store.put(value, key);
@@ -222,7 +217,7 @@ function setValue(key, value, customStore = getDefaultStore()) {
     });
 }
 
-
+// get zus db from indexed db if already exits, else create new db and store
 function getDefaultStore() {
     if (!defaultGetStoreFunc) {
         defaultGetStoreFunc = createStore('zus-assets-store', 'zus-assets');
@@ -230,6 +225,7 @@ function getDefaultStore() {
     return defaultGetStoreFunc;
 }
 
+// retrieve value from indexed db
 function getValue(key, customStore = getDefaultStore()) {
     return customStore('readonly', (store) => promisifyRequest(store.get(key)));
 }
