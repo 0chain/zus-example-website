@@ -18,6 +18,9 @@ const configJson = {
     zboxHost: "https://0box.demo.zus.network"
 };
 
+const assetsPopulatedFromCache = {};
+let defaultGetStoreFunc;
+
 // initialize wasm with default config
 async function initializeWasm() {
     const config = [
@@ -34,7 +37,11 @@ async function initializeWasm() {
     await init(config);
 }
 
+// This will keep track of assets already populated from cache, it's a map so checking it would be done in constant time
+
 (async function () {
+    // try populating everything from cache before doing any calls
+    await tryPopulatingFromCache();
     // initialiaze and configure wasm
     await initializeWasm();
     const { keys, mnemonic } = await createWallet();
@@ -50,6 +57,7 @@ async function initializeWasm() {
     // loop over the list and download each file, this is currently done sequentially, will do it in parallel once parallel download is working on wasm
     for (let file = 0; file < filesList.length; file++) {
         const fileDetails = filesList[file];
+        if(assetsPopulatedFromCache[fileDetails?.name]) continue;
         const elements = findByAttrValue("img", "data-imageName", fileDetails?.name);
         const populatedFromCache = await loadAssetFromCache(fileDetails?.name, elements);
         if (populatedFromCache) continue;
@@ -78,6 +86,21 @@ async function initializeWasm() {
     }
 })();
 
+// This will try populating from cache before doing wasm init or any API calls,
+async function tryPopulatingFromCache() {
+    const elements = document.querySelectorAll("img[data-imagename]");
+    for (let el of elements) {
+        const assetName = el.getAttribute("data-imagename")
+        if (assetName) {
+            const cachedData = await getValue(assetName);
+            if (cachedData) {
+                const url = URL.createObjectURL(cachedData);
+                el.src = url;
+                assetsPopulatedFromCache[assetName] = true;
+            }
+        }
+    }
+}
 // find element from dom by type, attribute name and attribute value
 function findByAttrValue(type, attr, value) {
     const elements = document.getElementsByTagName(type);
@@ -175,8 +198,6 @@ async function loadAssetFromCache(key, elements) {
     else return false;
 }
 
-let defaultGetStoreFunc;
-
 async function createBlob(url) {
     const response = await fetch(url);
     const data = await response.blob();
@@ -200,6 +221,7 @@ function setValue(key, value, customStore = getDefaultStore()) {
         return promisifyRequest(store.transaction);
     });
 }
+
 
 function getDefaultStore() {
     if (!defaultGetStoreFunc) {
