@@ -41,7 +41,7 @@ async function initializeWasm() {
     const { walletId, privateKey, publicKey } = keys
     await setWallet(walletId, privateKey, publicKey, mnemonic);
     // authTicket of the directory containing zus assets
-    const authTicket = "eyJjbGllbnRfaWQiOiIiLCJvd25lcl9pZCI6ImZhNmI4ZDdkN2RiZjY1OWEzZjQ2NzIxOWU4ZTFjY2E4YmM3YzE3ZmY0Y2M4MzkxNjQzMTMwNDhiNjVmMzViZGYiLCJhbGxvY2F0aW9uX2lkIjoiZDVjZTg5MzIzNjNkOWM4NGY4NTU3MzhmNDllNTIzM2RkOTY1MGQ2MmU3MjA2ZTNhYWNiNDMwNDQ5OTlmNWYwNiIsImZpbGVfcGF0aF9oYXNoIjoiNjVkNjQ2YjcxZjNlZGQ0NzllYjZmNjY3MzU2NzlkZjc3OGRhMTYxYzRkYWY5MjYwZjFkNWU2YTJjNmM1ZjUyNSIsImFjdHVhbF9maWxlX2hhc2giOiIiLCJmaWxlX25hbWUiOiJOZXcgRm9sZGVyIiwicmVmZXJlbmNlX3R5cGUiOiJkIiwiZXhwaXJhdGlvbiI6MCwidGltZXN0YW1wIjoxNjg1OTg3Mjc5LCJlbmNyeXB0ZWQiOmZhbHNlLCJzaWduYXR1cmUiOiJkYmMxZTBkNWJkNDVlYzU0MjkxMTIxOTRhZTIzNWViNDk1MDdmMjM1OWY5YjJhZDM2OWUwNDk3NDNiOWNhODAwIn0="
+    const authTicket = "eyJjbGllbnRfaWQiOiIiLCJvd25lcl9pZCI6ImE2Nzg1YjdjMzIxN2U5ODcyZTUwMmU2YTcwYmQwMTZiMDA3MGEyMDg3YzAzMTUyNmIxODMxZjU4OTVlMzZiMWEiLCJhbGxvY2F0aW9uX2lkIjoiY2M0OWUwOWE2ZWZjMzY4ZDJlNzdiYjEzMjQwNDI0YzQ5NzAwZDg1NTMzYmE3NGFkNzliMDU0NzA0NzdiYjQ4MiIsImZpbGVfcGF0aF9oYXNoIjoiMDMyMTU3NGIyMjM4YWU2YWFkNzY5MTNmNGZjNjUwMzE3NzgxNDAxYzY2YWNmMDMxNGEyNzIwNTU3MTkxNWYxZCIsImFjdHVhbF9maWxlX2hhc2giOiIiLCJmaWxlX25hbWUiOiJOZXcgRm9sZGVyIiwicmVmZXJlbmNlX3R5cGUiOiJkIiwiZXhwaXJhdGlvbiI6MCwidGltZXN0YW1wIjoxNjg2Mzg1NzA2LCJlbmNyeXB0ZWQiOmZhbHNlLCJzaWduYXR1cmUiOiI4ZWM3YzgxNTdhZDdjZWUxMzYzYWZlZjMyMWE5ZjEzMDE0M2JmN2FkODVhN2Q2NDEzMGMwZWFmYmVlOGFmMThmIn0=";
     const authData = await decodeAuthTicket(authTicket)
     // list files in the directory
     const { data } = await listSharedFiles(authData?.file_path_hash, authData?.allocation_id, authData?.owner_id)
@@ -72,7 +72,9 @@ async function initializeWasm() {
         // get img elements that will display fetched assets
         // set src to blob url
         elements.forEach(el => el.src = blobUrl)
-        cacheAsset(downloadedFile?.fileName, blobWithActualType)
+        if(blobWithActualType.size > 0){
+            cacheAsset(downloadedFile?.fileName, blobWithActualType)
+        }
     }
 })();
 
@@ -155,6 +157,7 @@ function reArrageArray(filesArr) {
         if (!currentValue || !filesArr[i]) continue;
         newArray[currentValue - 1] = filesArr[i];
     };
+    newArray = newArray.filter(item => item)
     return newArray;
 };
 
