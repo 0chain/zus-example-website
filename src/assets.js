@@ -41,27 +41,28 @@ async function initializeWasm() {
     const { walletId, privateKey, publicKey } = keys
     await setWallet(walletId, privateKey, publicKey, mnemonic);
     // authTicket of the directory containing zus assets
-    const authTicket = "eyJjbGllbnRfaWQiOiIiLCJvd25lcl9pZCI6ImZhNmI4ZDdkN2RiZjY1OWEzZjQ2NzIxOWU4ZTFjY2E4YmM3YzE3ZmY0Y2M4MzkxNjQzMTMwNDhiNjVmMzViZGYiLCJhbGxvY2F0aW9uX2lkIjoiZDVjZTg5MzIzNjNkOWM4NGY4NTU3MzhmNDllNTIzM2RkOTY1MGQ2MmU3MjA2ZTNhYWNiNDMwNDQ5OTlmNWYwNiIsImZpbGVfcGF0aF9oYXNoIjoiNjVkNjQ2YjcxZjNlZGQ0NzllYjZmNjY3MzU2NzlkZjc3OGRhMTYxYzRkYWY5MjYwZjFkNWU2YTJjNmM1ZjUyNSIsImFjdHVhbF9maWxlX2hhc2giOiIiLCJmaWxlX25hbWUiOiJOZXcgRm9sZGVyIiwicmVmZXJlbmNlX3R5cGUiOiJkIiwiZXhwaXJhdGlvbiI6MCwidGltZXN0YW1wIjoxNjg1OTg3Mjc5LCJlbmNyeXB0ZWQiOmZhbHNlLCJzaWduYXR1cmUiOiJkYmMxZTBkNWJkNDVlYzU0MjkxMTIxOTRhZTIzNWViNDk1MDdmMjM1OWY5YjJhZDM2OWUwNDk3NDNiOWNhODAwIn0="
-    const authData = await decodeAuthTicket(authTicket)
+    const authTicket = "eyJjbGllbnRfaWQiOiIiLCJvd25lcl9pZCI6ImE2Nzg1YjdjMzIxN2U5ODcyZTUwMmU2YTcwYmQwMTZiMDA3MGEyMDg3YzAzMTUyNmIxODMxZjU4OTVlMzZiMWEiLCJhbGxvY2F0aW9uX2lkIjoiY2M0OWUwOWE2ZWZjMzY4ZDJlNzdiYjEzMjQwNDI0YzQ5NzAwZDg1NTMzYmE3NGFkNzliMDU0NzA0NzdiYjQ4MiIsImZpbGVfcGF0aF9oYXNoIjoiMDMyMTU3NGIyMjM4YWU2YWFkNzY5MTNmNGZjNjUwMzE3NzgxNDAxYzY2YWNmMDMxNGEyNzIwNTU3MTkxNWYxZCIsImFjdHVhbF9maWxlX2hhc2giOiIiLCJmaWxlX25hbWUiOiJOZXcgRm9sZGVyIiwicmVmZXJlbmNlX3R5cGUiOiJkIiwiZXhwaXJhdGlvbiI6MCwidGltZXN0YW1wIjoxNjg2Mzg1NzA2LCJlbmNyeXB0ZWQiOmZhbHNlLCJzaWduYXR1cmUiOiI4ZWM3YzgxNTdhZDdjZWUxMzYzYWZlZjMyMWE5ZjEzMDE0M2JmN2FkODVhN2Q2NDEzMGMwZWFmYmVlOGFmMThmIn0=";
+    const authData = await decodeAuthTicket(authTicket);
     // list files in the directory
-    const { data } = await listSharedFiles(authData?.file_path_hash, authData?.allocation_id, authData?.owner_id)
+    const { data } = await listSharedFiles(authData?.file_path_hash, authData?.allocation_id, authData?.owner_id);
     // rearrage the file list so we can download in the order assets are displayed on website
-    const filesList = reArrageArray(data?.list)
+    const filesList = reArrageArray(data?.list);
     // loop over the list and download each file, this is currently done sequentially, will do it in parallel once parallel download is working on wasm
-    for (let file = 0; file < filesList.length; file++) {
-        const fileDetails = filesList[file]
-        const elements = findByAttrValue("img", "data-imageName", fileDetails?.name)
-        const populatedFromCache = await loadAssetFromCache(fileDetails?.name, elements)
-        if (populatedFromCache) continue
-        const downloadedFile = await download(
-            fileDetails?.allocation_id,
+    const promises = filesList.map((file, index) => new Promise(async (resolve, reject) => {
+        const elements = findByAttrValue("img", "data-imageName", file?.name)
+        const populatedFromCache = await loadAssetFromCache(file?.name, elements)
+        if (populatedFromCache) resolve()
+        const params = [            
+            file?.allocation_id,
             '',
             authTicket,
-            fileDetails?.lookup_hash,
+            file?.lookup_hash,
             false,
             100,
             '',
-        );
+            index === filesList.length - 1 ? true : false
+        ]
+        const downloadedFile = await download(...params);
         // get file mime type
         const type = mime.getType(downloadedFile?.fileName)
         // this url can be used directly in src attribute of img and video tag
@@ -72,8 +73,42 @@ async function initializeWasm() {
         // get img elements that will display fetched assets
         // set src to blob url
         elements.forEach(el => el.src = blobUrl)
-        cacheAsset(downloadedFile?.fileName, blobWithActualType)
-    }
+        if(blobWithActualType.size > 0){
+            cacheAsset(downloadedFile?.fileName, blobWithActualType)
+        }
+        resolve()
+    }))
+    await Promise.all([...promises])
+
+
+
+    // for (let file = 0; file < filesList.length; file++) {
+    //     const fileDetails = filesList[file]
+    //     const elements = findByAttrValue("img", "data-imageName", fileDetails?.name)
+    //     const populatedFromCache = await loadAssetFromCache(fileDetails?.name, elements)
+    //     if (populatedFromCache) continue
+    //     const downloadedFile = await download(
+    //         fileDetails?.allocation_id,
+    //         '',
+    //         authTicket,
+    //         fileDetails?.lookup_hash,
+    //         false,
+    //         100,
+    //         '',
+    //         file === filesList.length - 1 ? true : false
+    //     );
+    //     // get file mime type
+    //     const type = mime.getType(downloadedFile?.fileName)
+    //     // this url can be used directly in src attribute of img and video tag
+    //     // convert to raw form and back to blob but with proper mime type this time
+    //     const rawFile = await createBlob(downloadedFile?.url)
+    //     const blobWithActualType = new Blob([rawFile], { type })
+    //     const blobUrl = URL.createObjectURL(blobWithActualType)
+    //     // get img elements that will display fetched assets
+    //     // set src to blob url
+    //     elements.forEach(el => el.src = blobUrl)
+    //     cacheAsset(downloadedFile?.fileName, blobWithActualType)
+    // }
 })();
 
 // find element from dom by type, attribute name and attribute value
@@ -155,6 +190,8 @@ function reArrageArray(filesArr) {
         if (!currentValue || !filesArr[i]) continue;
         newArray[currentValue - 1] = filesArr[i];
     };
+    //removing empty items
+    newArray = newArray.filter(item => item)
     return newArray;
 };
 

@@ -17,7 +17,7 @@
     "webpack-cli": "^5.0.1"
   },
   "dependencies": {
-    "@zerochain/zus-sdk": "^0.0.37",
+    "@zerochain/zus-sdk": "./zerochain-zus-sdk-0.1.0.tgz",
     "include-media": "^2.0.0",
     "mime": "^3.0.0"
   }
