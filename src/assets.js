@@ -1,12 +1,5 @@
 import mime from "mime";
-import {
-    init,
-    createWallet,
-    download,
-    setWallet,
-    decodeAuthTicket,
-    listSharedFiles,
-} from "@zerochain/zus-sdk";
+import {createWallet, decodeAuthTicket, download, init, listSharedFiles, setWallet,} from "@zerochain/zus-sdk";
 
 const configJson = {
     chainId: "0afc093ffb509f059c55478bc1a60351cef7b4e9c008a53a6cc8241ca8617dfe",
@@ -17,6 +10,12 @@ const configJson = {
     blockWorker: "https://demo.zus.network/dns",
     zboxHost: "https://0box.demo.zus.network"
 };
+
+// This will keep track of assets already populated from cache, it's a map so checking it would be done in constant time
+const assetsPopulatedFromCache = {};
+
+// to keep track of zus-assets store
+let defaultGetStoreFunc;
 
 // initialize wasm with default config
 async function initializeWasm() {
@@ -34,59 +33,56 @@ async function initializeWasm() {
     await init(config);
 }
 
+
 (async function () {
+    // try populating everything from cache before doing any calls
+    await tryPopulatingFromCache();
     // initialiaze and configure wasm
-    await initializeWasm()
-    const { keys, mnemonic } = await createWallet();
-    const { walletId, privateKey, publicKey } = keys
+    await initializeWasm();
+    const {keys, mnemonic} = await createWallet();
+    const {walletId, privateKey, publicKey} = keys;
     await setWallet(walletId, privateKey, publicKey, mnemonic);
     // authTicket of the directory containing zus assets
     const authTicket = "eyJjbGllbnRfaWQiOiIiLCJvd25lcl9pZCI6ImE2Nzg1YjdjMzIxN2U5ODcyZTUwMmU2YTcwYmQwMTZiMDA3MGEyMDg3YzAzMTUyNmIxODMxZjU4OTVlMzZiMWEiLCJhbGxvY2F0aW9uX2lkIjoiY2M0OWUwOWE2ZWZjMzY4ZDJlNzdiYjEzMjQwNDI0YzQ5NzAwZDg1NTMzYmE3NGFkNzliMDU0NzA0NzdiYjQ4MiIsImZpbGVfcGF0aF9oYXNoIjoiMDMyMTU3NGIyMjM4YWU2YWFkNzY5MTNmNGZjNjUwMzE3NzgxNDAxYzY2YWNmMDMxNGEyNzIwNTU3MTkxNWYxZCIsImFjdHVhbF9maWxlX2hhc2giOiIiLCJmaWxlX25hbWUiOiJOZXcgRm9sZGVyIiwicmVmZXJlbmNlX3R5cGUiOiJkIiwiZXhwaXJhdGlvbiI6MCwidGltZXN0YW1wIjoxNjg2Mzg1NzA2LCJlbmNyeXB0ZWQiOmZhbHNlLCJzaWduYXR1cmUiOiI4ZWM3YzgxNTdhZDdjZWUxMzYzYWZlZjMyMWE5ZjEzMDE0M2JmN2FkODVhN2Q2NDEzMGMwZWFmYmVlOGFmMThmIn0=";
     const authData = await decodeAuthTicket(authTicket);
     // list files in the directory
-    const { data } = await listSharedFiles(authData?.file_path_hash, authData?.allocation_id, authData?.owner_id);
+    const {data} = await listSharedFiles(authData?.file_path_hash, authData?.allocation_id, authData?.owner_id);
     // rearrage the file list so we can download in the order assets are displayed on website
     const filesList = reArrageArray(data?.list);
-    // loop over the list and download each file, this is currently done sequentially, will do it in parallel once parallel download is working on wasm
-    const promises = filesList.map((file, index) => new Promise(async (resolve, reject) => {
-        const elements = findByAttrValue("img", "data-imageName", file?.name)
-        const populatedFromCache = await loadAssetFromCache(file?.name, elements)
-        if (populatedFromCache) resolve()
-        const params = [            
+    const promises = filesList.map((file, index) => new Promise(async (resolve) => {
+        if (assetsPopulatedFromCache[file?.name]) resolve();
+        const elements = findByAttrValue("img", "data-imageName", file?.name);
+        const downloadedFile = await download(
             file?.allocation_id,
-            '',
+            file?.path,
             authTicket,
             file?.lookup_hash,
             false,
             100,
             '',
-            index === filesList.length - 1 ? true : false
-        ]
-        const downloadedFile = await download(...params);
+            index === filesList.length - 1
+        );
         // get file mime type
-        const type = mime.getType(downloadedFile?.fileName)
+        const type = mime.getType(downloadedFile?.fileName);
         // this url can be used directly in src attribute of img and video tag
         // convert to raw form and back to blob but with proper mime type this time
-        const rawFile = await createBlob(downloadedFile?.url)
-        const blobWithActualType = new Blob([rawFile], { type })
-        const blobUrl = URL.createObjectURL(blobWithActualType)
+        const rawFile = await createBlob(downloadedFile?.url);
+        const blobWithActualType = new Blob([rawFile], {type});
+        const blobUrl = URL.createObjectURL(blobWithActualType);
         // get img elements that will display fetched assets
         // set src to blob url
         elements.forEach(el => el.src = blobUrl)
-        if(blobWithActualType.size > 0){
-            cacheAsset(downloadedFile?.fileName, blobWithActualType)
+        if (blobWithActualType.size > 0) {
+            await cacheAsset(downloadedFile?.fileName, blobWithActualType);
         }
         resolve()
     }))
-    await Promise.all([...promises])
-
-
-
+    await Promise.allSettled([...promises])
+    // loop over the list and download each file, this is currently done sequentially, will do it in parallel once parallel download is working on wasm
     // for (let file = 0; file < filesList.length; file++) {
-    //     const fileDetails = filesList[file]
-    //     const elements = findByAttrValue("img", "data-imageName", fileDetails?.name)
-    //     const populatedFromCache = await loadAssetFromCache(fileDetails?.name, elements)
-    //     if (populatedFromCache) continue
+    //     const fileDetails = filesList[file];
+    //     if (assetsPopulatedFromCache[fileDetails?.name]) continue;
+    //     const elements = findByAttrValue("img", "data-imageName", fileDetails?.name);
     //     const downloadedFile = await download(
     //         fileDetails?.allocation_id,
     //         '',
@@ -95,21 +91,38 @@ async function initializeWasm() {
     //         false,
     //         100,
     //         '',
-    //         file === filesList.length - 1 ? true : false
     //     );
     //     // get file mime type
-    //     const type = mime.getType(downloadedFile?.fileName)
+    //     const type = mime.getType(downloadedFile?.fileName);
     //     // this url can be used directly in src attribute of img and video tag
     //     // convert to raw form and back to blob but with proper mime type this time
-    //     const rawFile = await createBlob(downloadedFile?.url)
-    //     const blobWithActualType = new Blob([rawFile], { type })
-    //     const blobUrl = URL.createObjectURL(blobWithActualType)
+    //     const rawFile = await createBlob(downloadedFile?.url);
+    //     const blobWithActualType = new Blob([rawFile], {type});
+    //     const blobUrl = URL.createObjectURL(blobWithActualType);
     //     // get img elements that will display fetched assets
     //     // set src to blob url
     //     elements.forEach(el => el.src = blobUrl)
-    //     cacheAsset(downloadedFile?.fileName, blobWithActualType)
+    //     if (blobWithActualType.size > 0) {
+    //         cacheAsset(downloadedFile?.fileName, blobWithActualType);
+    //     }
     // }
 })();
+
+// This will try populating from cache before doing wasm init or any API calls,
+async function tryPopulatingFromCache() {
+    const elements = document.querySelectorAll("img[data-imagename]");
+    for (let el of elements) {
+        const assetName = el.getAttribute("data-imagename")
+        if (assetName) {
+            const cachedData = await getValue(assetName);
+            if (cachedData) {
+                const url = URL.createObjectURL(cachedData);
+                el.src = url;
+                assetsPopulatedFromCache[assetName] = true;
+            }
+        }
+    }
+}
 
 // find element from dom by type, attribute name and attribute value
 function findByAttrValue(type, attr, value) {
@@ -118,8 +131,10 @@ function findByAttrValue(type, attr, value) {
     for (let i = 0; i < elements.length; i++) {
         if (elements[i].getAttribute(attr) === value) {
             matchingElements.push(elements[i]);
-        };
-    };
+        }
+
+    }
+
     return matchingElements;
 }
 
@@ -189,34 +204,25 @@ function reArrageArray(filesArr) {
         let currentValue = assetPriority[filesArr[i].name];
         if (!currentValue || !filesArr[i]) continue;
         newArray[currentValue - 1] = filesArr[i];
-    };
-    //removing empty items
-    newArray = newArray.filter(item => item)
-    return newArray;
-};
-
-async function cacheAsset(key, data) {
-    await setValue(key, data);
-};
-
-async function loadAssetFromCache(key, elements) {
-    const cachedData = await getValue(key);
-    if (cachedData) {
-        const url = URL.createObjectURL(cachedData);
-        elements.forEach(el => el.src = url);
-        return true;
     }
-    else return false;
+
+    newArray = newArray.filter(item => item);
+    return newArray;
 }
 
-let defaultGetStoreFunc;
+// cache asset into indexed db
+async function cacheAsset(key, data) {
+    await setValue(key, data);
+}
 
+// get blob data from url
 async function createBlob(url) {
     const response = await fetch(url);
     const data = await response.blob();
     return data;
 }
 
+// create/return indexed db
 function createStore(dbName, storeName) {
     const request = indexedDB.open(dbName);
     request.onupgradeneeded = () => request.result.createObjectStore(storeName);
@@ -228,6 +234,8 @@ function createStore(dbName, storeName) {
         );
 }
 
+
+// save value to indexed db
 function setValue(key, value, customStore = getDefaultStore()) {
     return customStore('readwrite', (store) => {
         store.put(value, key);
@@ -235,6 +243,7 @@ function setValue(key, value, customStore = getDefaultStore()) {
     });
 }
 
+// get zus db from indexed db if already exits, else create new db and store
 function getDefaultStore() {
     if (!defaultGetStoreFunc) {
         defaultGetStoreFunc = createStore('zus-assets-store', 'zus-assets');
@@ -242,6 +251,7 @@ function getDefaultStore() {
     return defaultGetStoreFunc;
 }
 
+// retrieve value from indexed db
 function getValue(key, customStore = getDefaultStore()) {
     return customStore('readonly', (store) => promisifyRequest(store.get(key)));
 }
