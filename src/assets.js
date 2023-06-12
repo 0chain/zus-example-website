@@ -37,7 +37,7 @@ async function initializeWasm() {
 (async function () {
     // try populating everything from cache before doing any calls
     await tryPopulatingFromCache();
-    // initialiaze and configure wasm
+    // initialize and configure wasm
     await initializeWasm();
     const {keys, mnemonic} = await createWallet();
     const {walletId, privateKey, publicKey} = keys;
@@ -47,10 +47,14 @@ async function initializeWasm() {
     const authData = await decodeAuthTicket(authTicket);
     // list files in the directory
     const {data} = await listSharedFiles(authData?.file_path_hash, authData?.allocation_id, authData?.owner_id);
-    // rearrage the file list so we can download in the order assets are displayed on website
-    const filesList = reArrageArray(data?.list);
-    const promises = filesList.map((file, index) => new Promise(async (resolve) => {
-        if (assetsPopulatedFromCache[file?.name]) resolve();
+    // rearrange the file list, so we can download in the order assets are displayed on website
+    const filesList = reArrangeArray(data?.list);
+    // Run download for each file in parallel
+    const promises = filesList.map(async (file, index) => {
+        if (assetsPopulatedFromCache[file?.name]) return {
+            fromCache: true,
+        };
+        // get img elements that will display fetched assets
         const elements = findByAttrValue("img", "data-imageName", file?.name);
         const downloadedFile = await download(
             file?.allocation_id,
@@ -64,48 +68,19 @@ async function initializeWasm() {
         );
         // get file mime type
         const type = mime.getType(downloadedFile?.fileName);
-        // this url can be used directly in src attribute of img and video tag
         // convert to raw form and back to blob but with proper mime type this time
         const rawFile = await createBlob(downloadedFile?.url);
         const blobWithActualType = new Blob([rawFile], {type});
         const blobUrl = URL.createObjectURL(blobWithActualType);
-        // get img elements that will display fetched assets
         // set src to blob url
         elements.forEach(el => el.src = blobUrl)
         if (blobWithActualType.size > 0) {
-            await cacheAsset(downloadedFile?.fileName, blobWithActualType);
+            cacheAsset(downloadedFile?.fileName, blobWithActualType);
         }
-        resolve()
-    }))
-    await Promise.allSettled([...promises])
-    // loop over the list and download each file, this is currently done sequentially, will do it in parallel once parallel download is working on wasm
-    // for (let file = 0; file < filesList.length; file++) {
-    //     const fileDetails = filesList[file];
-    //     if (assetsPopulatedFromCache[fileDetails?.name]) continue;
-    //     const elements = findByAttrValue("img", "data-imageName", fileDetails?.name);
-    //     const downloadedFile = await download(
-    //         fileDetails?.allocation_id,
-    //         '',
-    //         authTicket,
-    //         fileDetails?.lookup_hash,
-    //         false,
-    //         100,
-    //         '',
-    //     );
-    //     // get file mime type
-    //     const type = mime.getType(downloadedFile?.fileName);
-    //     // this url can be used directly in src attribute of img and video tag
-    //     // convert to raw form and back to blob but with proper mime type this time
-    //     const rawFile = await createBlob(downloadedFile?.url);
-    //     const blobWithActualType = new Blob([rawFile], {type});
-    //     const blobUrl = URL.createObjectURL(blobWithActualType);
-    //     // get img elements that will display fetched assets
-    //     // set src to blob url
-    //     elements.forEach(el => el.src = blobUrl)
-    //     if (blobWithActualType.size > 0) {
-    //         cacheAsset(downloadedFile?.fileName, blobWithActualType);
-    //     }
-    // }
+        return(downloadedFile);
+    })
+    const results = await Promise.allSettled([...promises])
+    console.log(results, "results here")
 })();
 
 // This will try populating from cache before doing wasm init or any API calls,
@@ -132,9 +107,7 @@ function findByAttrValue(type, attr, value) {
         if (elements[i].getAttribute(attr) === value) {
             matchingElements.push(elements[i]);
         }
-
     }
-
     return matchingElements;
 }
 
@@ -197,8 +170,8 @@ const assetPriority = {
     "medium.svg": 55,
 };
 
-// rearrange array so we can download images in order they're displayed on the webpage
-function reArrageArray(filesArr) {
+// rearrange array, so we can download images in order they're displayed on the webpage
+function reArrangeArray(filesArr) {
     let newArray = [];
     for (let i = 0; i < filesArr.length; i++) {
         let currentValue = assetPriority[filesArr[i].name];
@@ -218,8 +191,7 @@ async function cacheAsset(key, data) {
 // get blob data from url
 async function createBlob(url) {
     const response = await fetch(url);
-    const data = await response.blob();
-    return data;
+    return response.blob();
 }
 
 // create/return indexed db
@@ -262,30 +234,3 @@ function promisifyRequest(request) {
         request.onabort = request.onerror = () => reject(request.error);
     });
 }
-
-// To use when parallel download issue is fixed on wasm
-// const promises = filesList.map(file => new Promise(async (resolve, reject) => {
-//     const downloadedFile = await download(
-//         file?.allocation_id,
-//         '',
-//         authTicket,
-//         file?.lookup_hash,
-//         false,
-//         100,
-//         '',
-//     );
-//     const type = mime.getType(downloadedFile?.fileName)
-//     let blobUrl = downloadedFile?.url
-//     if (type.includes("svg")) {
-//         const rawFile = await (await fetch(downloadedFile?.url)).blob()
-//         const blobWithActualType = new Blob([rawFile], { type })
-//         blobUrl = URL.createObjectURL(blobWithActualType)
-//     }
-//     let elements = findByAttrValue("img", downloadedFile?.fileName.substr(0, downloadedFile?.fileName.lastIndexOf(".")))
-//     if (type.includes("video")) {
-//         elements = findByAttrValue("video", downloadedFile?.fileName.substr(0, downloadedFile?.fileName.lastIndexOf(".")))
-//     }
-//     elements.forEach(el => el.src = blobUrl)
-//     resolve()
-// }))
-// await Promise.all([...promises])
