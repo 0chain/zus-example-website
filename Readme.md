@@ -48,7 +48,10 @@ We will go through how we're downloading assets from allocations on ZÜS and usi
 #### Prequisites
 
 - `authTicket` of the directory the assets are stored in
-- `zus-js-sdk`, instructions on how to setup it up can be found [here](https://github.com/0chain/zus-js-sdk#installation)
+    1. Signup for Blimp if you haven't already [here](https://blimp.software/authentication/login)
+    2. Create an allocation, create a directory and upload your assets to it
+    3. Use `share` option from folder options menu to get your `authTicket`
+- `zus-js-sdk`, instructions on how to setup it up as an npm package can be found [here](https://github.com/0chain/zus-js-sdk#installation)
 - latest build of `wasm`, placed in the same dicrectory as your app's entrypoint, in most cases it would be the `public` or `dist` directory. You can get the latest build of wasm from the first action on [this](https://github.com/0chain/gosdk/actions/workflows/sdk-release.yml?query=branch%3Astaging) page
 
 The following functions from `zus-js-sdk` are used in this transformation:
@@ -68,7 +71,7 @@ All the transformation described below has been done in [this script](src/assets
 
 ### Steps:
 
-1. Create a script file and add it to your entrypoint `html` file, with `priority` set to `high`, all the code in next steps would be placed inside this script
+1. Create a script file and add it to your entrypoint `html` file, all the code in next steps would be placed inside this script
 
 ```
 script src="assets.js" fetchpriority="high"></script>
@@ -105,7 +108,6 @@ script src="assets.js" fetchpriority="high"></script>
 ```
     const { keys, mnemonic } = await createWallet();
     const { walletId, privateKey, publicKey } = keys
-
 ```
 
 4. Set wallet on wasm
