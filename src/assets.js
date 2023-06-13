@@ -236,30 +236,3 @@ function promisifyRequest(request) {
         request.onabort = request.onerror = () => reject(request.error);
     });
 }
-
-// To use when parallel download issue is fixed on wasm
-// const promises = filesList.map(file => new Promise(async (resolve, reject) => {
-//     const downloadedFile = await download(
-//         file?.allocation_id,
-//         '',
-//         authTicket,
-//         file?.lookup_hash,
-//         false,
-//         100,
-//         '',
-//     );
-//     const type = mime.getType(downloadedFile?.fileName)
-//     let blobUrl = downloadedFile?.url
-//     if (type.includes("svg")) {
-//         const rawFile = await (await fetch(downloadedFile?.url)).blob()
-//         const blobWithActualType = new Blob([rawFile], { type })
-//         blobUrl = URL.createObjectURL(blobWithActualType)
-//     }
-//     let elements = findByAttrValue("img", downloadedFile?.fileName.substr(0, downloadedFile?.fileName.lastIndexOf(".")))
-//     if (type.includes("video")) {
-//         elements = findByAttrValue("video", downloadedFile?.fileName.substr(0, downloadedFile?.fileName.lastIndexOf(".")))
-//     }
-//     elements.forEach(el => el.src = blobUrl)
-//     resolve()
-// }))
-// await Promise.all([...promises])
