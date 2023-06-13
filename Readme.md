@@ -52,7 +52,7 @@ We will go through how we're downloading assets from allocations on ZÜS and usi
     2. Create an allocation, create a directory and upload your assets to it
     3. Use `share` option from folder options menu to get your `authTicket`
 - `zus-js-sdk`, instructions on how to setup it up as an npm package can be found [here](https://github.com/0chain/zus-js-sdk#installation)
-- latest build of `wasm`, placed in the same dicrectory as your app's entrypoint, in most cases it would be the `public` or `dist` directory. You can get the latest build of wasm from the first action on [this](https://github.com/0chain/gosdk/actions/workflows/sdk-release.yml?query=branch%3Astaging) page
+- latest build of `wasm`(goSdk), placed in the same dicrectory as your app's entrypoint, in most cases it would be the `public` or `dist` directory. You can get the latest build of wasm from the first action on [this](https://github.com/0chain/gosdk/actions/workflows/sdk-release.yml?query=branch%3Astaging) page
 
 The following functions from `zus-js-sdk` are used in this transformation:
 
@@ -71,13 +71,19 @@ All the transformation described below has been done in [this script](src/assets
 
 ### Steps:
 
-1. Create a script file and add it to your entrypoint `html` file, all the code in next steps would be placed inside this script
+1. Add these two scripts to the `head` of your entrypoint `html` file. These are required by `wasm` for it's operations 
+```
+    <script src="https://cdn.jsdelivr.net/gh/herumi/bls-wasm@v1.0.0/browser/bls.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/golang/go@go1.18.5/misc/wasm/wasm_exec.js"></script>
+```
+
+2. Create a script file and add it to your entrypoint `html` file, all the code in next steps would be placed inside this script
 
 ```
 script src="assets.js" fetchpriority="high"></script>
 ```
 
-2. Initialize `gosdk` with default config:
+3. Initialize `gosdk` with default config:
 
 ```
   const configJson = {
@@ -103,32 +109,32 @@ script src="assets.js" fetchpriority="high"></script>
   await init(config);
 ```
 
-3. Create a service wallet
+4. Create a service wallet
 
 ```
     const { keys, mnemonic } = await createWallet();
     const { walletId, privateKey, publicKey } = keys
 ```
 
-4. Set wallet on wasm
+5. Set wallet on wasm
 
 ```
 await setWallet(walletId, privateKey, publicKey, mnemonic);
 ```
 
-5. Decode `authTicket` to get `path_hash`, `allocation_id` and `owner_id`
+6. Decode `authTicket` to get `path_hash`, `allocation_id` and `owner_id`
 
 ```
 const authData = await decodeAuthTicket(authTicket)
 ```
 
-6. Get the list of files inside this directory
+7. Get the list of files inside this directory
 
 ```
 const { data } = await listSharedFiles(authData?.file_path_hash, authData?.allocation_id, authData?.owner_id)
 ```
 
-7. Loop over each file from the list to download it and set `src` on required DOM element to `url` in response
+8. Loop over each file from the list to download it and set `src` on required DOM element to `url` in response
 
 ```
   for (let file = 0; file < filesList.length; file++) {
@@ -146,7 +152,7 @@ const { data } = await listSharedFiles(authData?.file_path_hash, authData?.alloc
   }
 ```
 
-8. Cache the asset in `indexedDB` to use on page reload
+9. Cache the asset in `indexedDB` to use on page reload
 ```
 function createStore(dbName, storeName) {
     const request = indexedDB.open(dbName);
