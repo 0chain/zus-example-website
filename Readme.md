@@ -189,7 +189,7 @@ function promisifyRequest(request) {
 
 ### Edit the Website
 
-You can start editing the website by modifying src/index.js. Once the modification is done, Build the website and start the website as done above.
+You can start editing the website by modifying [assets.js](src/assets.js) and [index.html](dist/index.html). Once the modification is done, Build the website and start the website as done above.
 For detailed description of code check this [guide](https://docs.zus.network/guides/zus-js-sdk/js-sdk-sample-website/describing-code) on gitbook.
 
 #### Common Terms
