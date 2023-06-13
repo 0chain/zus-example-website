@@ -83,7 +83,7 @@ All the transformation described below has been done in [this script](src/assets
 script src="assets.js" fetchpriority="high"></script>
 ```
 
-3. Initialize `gosdk` with default config:
+3. Initialize `wasm` with default config:
 
 ```
   const configJson = {
