@@ -1,6 +1,7 @@
 import mime from "mime";
 import {createWallet, decodeAuthTicket, download, init, listSharedFiles, setWallet,} from "@zerochain/zus-sdk";
 
+// default config for wasm
 const configJson = {
     chainId: "0afc093ffb509f059c55478bc1a60351cef7b4e9c008a53a6cc8241ca8617dfe",
     signatureScheme: "bls0chain",
@@ -13,7 +14,6 @@ const configJson = {
 
 // This will keep track of assets already populated from cache, it's a map so checking it would be done in constant time
 const assetsPopulatedFromCache = {};
-
 // to keep track of zus-assets store
 let defaultGetStoreFunc;
 
@@ -32,7 +32,6 @@ async function initializeWasm() {
 
     await init(config);
 }
-
 
 (async function () {
     // try populating everything from cache before doing any calls
@@ -56,7 +55,7 @@ async function initializeWasm() {
         };
         // get img elements that will display fetched assets
         const elements = findByAttrValue("img", "data-imageName", file?.name);
-        const downloadedFile = await download(
+        const params = [
             file?.allocation_id,
             file?.path,
             authTicket,
@@ -65,7 +64,8 @@ async function initializeWasm() {
             100,
             '',
             index === filesList.length - 1
-        );
+        ]
+        const downloadedFile = await download(...params);
         // get file mime type
         const type = mime.getType(downloadedFile?.fileName);
         // convert to raw form and back to blob but with proper mime type this time
