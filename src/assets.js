@@ -54,10 +54,9 @@ async function initializeWasm() {
     // list files in the directory
     const { data } = await listSharedFiles(authData?.file_path_hash, authData?.allocation_id, authData?.owner_id);
     // rearrage the file list so we can download in the order assets are displayed on website
-    const filesList = reArrageArray(data?.list);
     const files = []
     // create a list of files to be downloaded
-    filesList.forEach(file => {
+    data?.list.forEach(file => {
         if (!assetsPopulatedFromCache[file?.name]) {
             const { path, lookup_hash, name } = file;
             files.push({
