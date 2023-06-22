@@ -2,7 +2,7 @@ import mime from "mime";
 import {
     init,
     createWallet,
-    download,
+    multiDownload,
     setWallet,
     decodeAuthTicket,
     listSharedFiles,
@@ -40,7 +40,6 @@ async function initializeWasm() {
     await init(config);
 }
 
-
 (async function () {
     // try populating everything from cache before doing any calls
     await tryPopulatingFromCache();
@@ -50,40 +49,52 @@ async function initializeWasm() {
     const { walletId, privateKey, publicKey } = keys;
     await setWallet(walletId, privateKey, publicKey, mnemonic);
     // authTicket of the directory containing zus assets
-    const authTicket = "eyJjbGllbnRfaWQiOiIiLCJvd25lcl9pZCI6ImE2Nzg1YjdjMzIxN2U5ODcyZTUwMmU2YTcwYmQwMTZiMDA3MGEyMDg3YzAzMTUyNmIxODMxZjU4OTVlMzZiMWEiLCJhbGxvY2F0aW9uX2lkIjoiY2M0OWUwOWE2ZWZjMzY4ZDJlNzdiYjEzMjQwNDI0YzQ5NzAwZDg1NTMzYmE3NGFkNzliMDU0NzA0NzdiYjQ4MiIsImZpbGVfcGF0aF9oYXNoIjoiMDMyMTU3NGIyMjM4YWU2YWFkNzY5MTNmNGZjNjUwMzE3NzgxNDAxYzY2YWNmMDMxNGEyNzIwNTU3MTkxNWYxZCIsImFjdHVhbF9maWxlX2hhc2giOiIiLCJmaWxlX25hbWUiOiJOZXcgRm9sZGVyIiwicmVmZXJlbmNlX3R5cGUiOiJkIiwiZXhwaXJhdGlvbiI6MCwidGltZXN0YW1wIjoxNjg2Mzg1NzA2LCJlbmNyeXB0ZWQiOmZhbHNlLCJzaWduYXR1cmUiOiI4ZWM3YzgxNTdhZDdjZWUxMzYzYWZlZjMyMWE5ZjEzMDE0M2JmN2FkODVhN2Q2NDEzMGMwZWFmYmVlOGFmMThmIn0=";
+    const authTicket = "eyJjbGllbnRfaWQiOiIiLCJvd25lcl9pZCI6Ijk4YzJjNjRmMmZkMTlmNTFlZmIxYTEzZWJkYWVhODU4M2Y1YzY3YTM2ZTIxYzMzOWU0YzRiNTJmYWMzNmVmZjMiLCJhbGxvY2F0aW9uX2lkIjoiY2M2OTg0YTU1MzY2ZDM2NmU3NjQ3NzdjODQyNThjYjE2M2YxOWY0MGVhMzExYjdhYjg1ZDkxODlhNjRjNzVjYiIsImZpbGVfcGF0aF9oYXNoIjoiMzBmYzBlOTBlNTcyMTJmZjdhMzkxZjQ1YTc5YzFiMTdiYWU4ZjQzZWQxYTk1MmQzNjIzYTdlZTM1YjVhMWZhOSIsImFjdHVhbF9maWxlX2hhc2giOiIiLCJmaWxlX25hbWUiOiJOZXcgRm9sZGVyIiwicmVmZXJlbmNlX3R5cGUiOiJkIiwiZXhwaXJhdGlvbiI6MCwidGltZXN0YW1wIjoxNjg3NDU0MzM0LCJlbmNyeXB0ZWQiOmZhbHNlLCJzaWduYXR1cmUiOiJmYzM4MzI2M2E3NjFkMGY5NmI2ZmU3NTc3ZTkxODIzMzRiOWZiYzQ3NzE0NDdjMjUwNzU1YmJkNTFlYjEwMDk3In0=";
     const authData = await decodeAuthTicket(authTicket);
     // list files in the directory
     const { data } = await listSharedFiles(authData?.file_path_hash, authData?.allocation_id, authData?.owner_id);
     // rearrage the file list so we can download in the order assets are displayed on website
     const filesList = reArrageArray(data?.list);
-    // loop over the list and download each file, this is currently done sequentially, will do it in parallel once parallel download is working on wasm
-    for (let file = 0; file < filesList.length; file++) {
-        const fileDetails = filesList[file];
-        if(assetsPopulatedFromCache[fileDetails?.name]) continue;
-        const elements = findByAttrValue("img", "data-imageName", fileDetails?.name);
-        const downloadedFile = await download(
-            fileDetails?.allocation_id,
-            '',
-            authTicket,
-            fileDetails?.lookup_hash,
-            false,
-            100,
-            '',
-        );
-        // get file mime type
-        const type = mime.getType(downloadedFile?.fileName);
-        // this url can be used directly in src attribute of img and video tag
-        // convert to raw form and back to blob but with proper mime type this time
-        const rawFile = await createBlob(downloadedFile?.url);
-        const blobWithActualType = new Blob([rawFile], { type });
-        const blobUrl = URL.createObjectURL(blobWithActualType);
-        // get img elements that will display fetched assets
-        // set src to blob url
-        elements.forEach(el => el.src = blobUrl)
-        if(blobWithActualType.size > 0){
-            cacheAsset(downloadedFile?.fileName, blobWithActualType);
+    const files = []
+    // create a list of files to be downloaded
+    filesList.forEach(file => {
+        if (!assetsPopulatedFromCache[file?.name]) {
+            const { path, lookup_hash, name } = file;
+            files.push({
+                remotePath: path,
+                localPath: '',
+                downloadOp: 1, // 1 -> download file, 2 -> download thumbnail
+                numBlocks: 100,
+                remoteFileName: name,
+                remoteLookupHash: lookup_hash,
+            });
+        }
+    })
+
+    if (files.length > 0) {
+        let downloadedFiles = await multiDownload(authData?.allocation_id, JSON.stringify(files), authTicket, '');
+        downloadedFiles = JSON.parse(downloadedFiles);
+        if (downloadedFiles.length > 0) {
+            for (const file of downloadedFiles) {
+                if (file?.commandSuccess) {
+                    const elements = findByAttrValue("img", "data-imageName", file?.fileName);
+                    // get file mime type
+                    const type = mime.getType(file?.fileName);
+                    // this url can be used directly in src attribute of img and video tag
+                    // convert to raw form and back to blob but with proper mime type this time
+                    const rawFile = await createBlob(file?.url);
+                    const blobWithActualType = new Blob([rawFile], { type });
+                    const blobUrl = URL.createObjectURL(blobWithActualType);
+                    // get img elements that will display fetched assets
+                    // set src to blob url
+                    elements.forEach(el => el.src = blobUrl)
+                    if (blobWithActualType.size > 0) {
+                        cacheAsset(file?.fileName, blobWithActualType);
+                    };
+                };
+            };
         };
-    }
+    };
 })();
 
 // This will try populating from cache before doing wasm init or any API calls,
@@ -113,77 +124,6 @@ function findByAttrValue(type, attr, value) {
     return matchingElements;
 }
 
-// using map to fetch priority in constant time
-const assetPriority = {
-    "discord.svg": 1,
-    "twitter.svg": 2,
-    "telegram.svg": 3,
-    "storeIcon.png": 4,
-    "buildIcon.png": 5,
-    "earnIcon.png": 6,
-    "blimpLogo.svg": 7,
-    "blimpArt.png": 8,
-    "showcaseArt.png": 9,
-    "poster2.jpg": 10,
-    "vultLogo.svg": 11,
-    "vultArt.png": 12,
-    "chimneyLogo.svg": 13,
-    "chimneyArt.png": 14,
-    "chalkLogo.svg": 15,
-    "chalkArtMobile.png": 16,
-    "chalkArtDesktop.png": 17,
-    'infographic.png': 18,
-    "huawei.svg": 19,
-    "chainlink.svg": 20,
-    "polygon.svg": 21,
-    "fetchai.svg": 22,
-    "ocean.svg": 23,
-    "magma.svg": 24,
-    "wanchain.svg": 25,
-    "geeq.svg": 26,
-    "kylin.svg": 27,
-    "morpheus-labs.svg": 28,
-    "clover.svg": 29,
-    "dia.svg": 30,
-    "fuse.svg": 31,
-    "api3.svg": 32,
-    "teraswitch.svg": 33,
-    "coresite.svg": 34,
-    "cogent.svg": 35,
-    "zero.svg": 36,
-    "unihost.svg": 37,
-    "velia.svg": 38,
-    "plus.svg": 39,
-    "zusLogoWhite.svg": 40,
-    "discord_social.svg": 41,
-    "twitter_social.svg": 42,
-    "medium_social.svg": 43,
-    "telegram_social.svg": 44,
-    "atlus.svg": 45,
-    "blimp.svg": 46,
-    "bolt.svg": 47,
-    "chalk.svg": 48,
-    "chimney.svg": 49,
-    "vult.svg": 50,
-    "facebook.svg": 51,
-    "linkedin.svg": 52,
-    "youtube.svg": 53,
-    "github.svg": 54,
-    "medium.svg": 55,
-};
-
-// rearrange array so we can download images in order they're displayed on the webpage
-function reArrageArray(filesArr) {
-    let newArray = [];
-    for (let i = 0; i < filesArr.length; i++) {
-        let currentValue = assetPriority[filesArr[i].name];
-        if (!currentValue || !filesArr[i]) continue;
-        newArray[currentValue - 1] = filesArr[i];
-    };
-    newArray = newArray.filter(item => item);
-    return newArray;
-};
-
 // cache asset into indexed db
 async function cacheAsset(key, data) {
     await setValue(key, data);
@@ -207,7 +147,6 @@ function createStore(dbName, storeName) {
             callback(db.transaction(storeName, txMode).objectStore(storeName)),
         );
 }
-
 
 // save value to indexed db
 function setValue(key, value, customStore = getDefaultStore()) {
