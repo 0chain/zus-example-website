@@ -70,16 +70,13 @@ async function initializeWasm() {
             });
         }
     })
-
-    console.time('downloadTime')
     while (files.length > 0) {
-        let batch = []
-        if(files.length >= 10){
+        let batch = [];
+        if (files.length >= 10) {
             batch = files.splice(0, 10);
-        }else{
-            batch = files.splice(0, files.length)
+        } else {
+            batch = files.splice(0, files.length);
         }
-
         let downloadedFiles = await multiDownload(authData?.allocation_id, JSON.stringify(batch), authTicket, '');
         downloadedFiles = JSON.parse(downloadedFiles);
         if (downloadedFiles.length > 0) {
@@ -103,11 +100,11 @@ async function initializeWasm() {
             };
         };
     }
-    console.timeEnd('downloadTime')
 })();
 
 // using map to fetch priority in constant time
 const assetPriority = {
+    "poster.png": 0,
     "discord.svg": 1,
     "twitter.svg": 2,
     "telegram.svg": 3,
@@ -170,10 +167,11 @@ function reArrangeArray(filesArr) {
     let newArray = [];
     for (let i = 0; i < filesArr.length; i++) {
         let currentValue = assetPriority[filesArr[i].name];
-        if (!currentValue || !filesArr[i]) continue;
-        newArray[currentValue - 1] = filesArr[i];
+        if (isNaN(currentValue) || !filesArr[i]) continue;
+        newArray[currentValue] = filesArr[i];
     };
     newArray = newArray.filter(item => item);
+    console.log(newArray)
     return newArray;
 };
 
