@@ -70,13 +70,20 @@ async function initializeWasm() {
             });
         }
     })
+
+
     while (files.length > 0) {
         let batch = [];
-        if (files.length >= 10) {
-            batch = files.splice(0, 10);
-        } else {
-            batch = files.splice(0, files.length);
+        if(files.length === filesList.length){
+            batch = [files.shift()]
+        }else{
+            if (files.length >= 10) {
+                batch = files.splice(0, 10);
+            } else {
+                batch = files.splice(0, files.length);
+            }
         }
+
         let downloadedFiles = await multiDownload(authData?.allocation_id, JSON.stringify(batch), authTicket, '');
         downloadedFiles = JSON.parse(downloadedFiles);
         if (downloadedFiles.length > 0) {
