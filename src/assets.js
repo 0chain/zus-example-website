@@ -54,9 +54,10 @@ async function initializeWasm() {
     // list files in the directory
     const { data } = await listSharedFiles(authData?.file_path_hash, authData?.allocation_id, authData?.owner_id);
     // rearrage the file list so we can download in the order assets are displayed on website
+    const filesList = reArrangeArray(data?.list);
     const files = []
     // create a list of files to be downloaded
-    data?.list.forEach(file => {
+    filesList.forEach(file => {
         if (!assetsPopulatedFromCache[file?.name]) {
             const { path, lookup_hash, name } = file;
             files.push({
@@ -70,8 +71,16 @@ async function initializeWasm() {
         }
     })
 
-    if (files.length > 0) {
-        let downloadedFiles = await multiDownload(authData?.allocation_id, JSON.stringify(files), authTicket, '');
+    console.time('downloadTime')
+    while (files.length > 0) {
+        let batch = []
+        if(files.length >= 10){
+            batch = files.splice(0, 10);
+        }else{
+            batch = files.splice(0, files.length)
+        }
+
+        let downloadedFiles = await multiDownload(authData?.allocation_id, JSON.stringify(batch), authTicket, '');
         downloadedFiles = JSON.parse(downloadedFiles);
         if (downloadedFiles.length > 0) {
             for (const file of downloadedFiles) {
@@ -93,8 +102,80 @@ async function initializeWasm() {
                 };
             };
         };
-    };
+    }
+    console.timeEnd('downloadTime')
 })();
+
+// using map to fetch priority in constant time
+const assetPriority = {
+    "discord.svg": 1,
+    "twitter.svg": 2,
+    "telegram.svg": 3,
+    "storeIcon.png": 4,
+    "buildIcon.png": 5,
+    "earnIcon.png": 6,
+    "blimpLogo.svg": 7,
+    "blimpArt.png": 8,
+    "showcaseArt.png": 9,
+    "poster2.jpg": 10,
+    "vultLogo.svg": 11,
+    "vultArt.png": 12,
+    "chimneyLogo.svg": 13,
+    "chimneyArt.png": 14,
+    "chalkLogo.svg": 15,
+    "chalkArtMobile.png": 16,
+    "chalkArtDesktop.png": 17,
+    'infographic.png': 18,
+    "huawei.svg": 19,
+    "chainlink.svg": 20,
+    "polygon.svg": 21,
+    "fetchai.svg": 22,
+    "ocean.svg": 23,
+    "magma.svg": 24,
+    "wanchain.svg": 25,
+    "geeq.svg": 26,
+    "kylin.svg": 27,
+    "morpheus-labs.svg": 28,
+    "clover.svg": 29,
+    "dia.svg": 30,
+    "fuse.svg": 31,
+    "api3.svg": 32,
+    "teraswitch.svg": 33,
+    "coresite.svg": 34,
+    "cogent.svg": 35,
+    "zero.svg": 36,
+    "unihost.svg": 37,
+    "velia.svg": 38,
+    "plus.svg": 39,
+    "zusLogoWhite.svg": 40,
+    "discord_social.svg": 41,
+    "twitter_social.svg": 42,
+    "medium_social.svg": 43,
+    "telegram_social.svg": 44,
+    "atlus.svg": 45,
+    "blimp.svg": 46,
+    "bolt.svg": 47,
+    "chalk.svg": 48,
+    "chimney.svg": 49,
+    "vult.svg": 50,
+    "facebook.svg": 51,
+    "linkedin.svg": 52,
+    "youtube.svg": 53,
+    "github.svg": 54,
+    "medium.svg": 55,
+};
+
+// rearrange array so we can download images in order they're displayed on the webpage
+function reArrangeArray(filesArr) {
+    let newArray = [];
+    for (let i = 0; i < filesArr.length; i++) {
+        let currentValue = assetPriority[filesArr[i].name];
+        if (!currentValue || !filesArr[i]) continue;
+        newArray[currentValue - 1] = filesArr[i];
+    };
+    newArray = newArray.filter(item => item);
+    return newArray;
+};
 
 // This will try populating from cache before doing wasm init or any API calls,
 async function tryPopulatingFromCache() {
