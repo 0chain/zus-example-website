@@ -40,6 +40,29 @@ async function initializeWasm() {
     await init(config);
 }
 
+window.onFileDownload = async (totalBytes, completedBytes, objName, objURL, err) => {
+    if (err) {
+        console.error('error:', err)
+        return;
+    };
+    if (objName && objURL) {
+        const elements = findByAttrValue("img", "data-imageName", objName);
+        // get file mime type
+        const type = mime.getType(objName);
+        // this url can be used directly in src attribute of img and video tag
+        // convert to raw form and back to blob but with proper mime type this time
+        const rawFile = await createBlob(objURL);
+        const blobWithActualType = new Blob([rawFile], { type });
+        const blobUrl = URL.createObjectURL(blobWithActualType);
+        // get img elements that will display fetched assets
+        // set src to blob url
+        elements.forEach(el => el.src = blobUrl);
+        if (blobWithActualType.size > 0) {
+            cacheAsset(objName, blobWithActualType);
+        };
+    };
+}
+
 (async function () {
     // try populating everything from cache before doing any calls
     await tryPopulatingFromCache();
@@ -70,42 +93,15 @@ async function initializeWasm() {
             });
         }
     })
-
-
+    // Create bactches of size 20 to download files using multiDownload in batches
     while (files.length > 0) {
         let batch = [];
-        if(files.length === filesList.length){
-            batch = [files.shift()]
-        }else{
-            if (files.length >= 10) {
-                batch = files.splice(0, 10);
-            } else {
-                batch = files.splice(0, files.length);
-            }
+        if (files.length >= 10) {
+            batch = files.splice(0, 10);
+        } else {
+            batch = files.splice(0, files.length);
         }
-
-        let downloadedFiles = await multiDownload(authData?.allocation_id, JSON.stringify(batch), authTicket, '');
-        downloadedFiles = JSON.parse(downloadedFiles);
-        if (downloadedFiles.length > 0) {
-            for (const file of downloadedFiles) {
-                if (file?.commandSuccess) {
-                    const elements = findByAttrValue("img", "data-imageName", file?.fileName);
-                    // get file mime type
-                    const type = mime.getType(file?.fileName);
-                    // this url can be used directly in src attribute of img and video tag
-                    // convert to raw form and back to blob but with proper mime type this time
-                    const rawFile = await createBlob(file?.url);
-                    const blobWithActualType = new Blob([rawFile], { type });
-                    const blobUrl = URL.createObjectURL(blobWithActualType);
-                    // get img elements that will display fetched assets
-                    // set src to blob url
-                    elements.forEach(el => el.src = blobUrl)
-                    if (blobWithActualType.size > 0) {
-                        cacheAsset(file?.fileName, blobWithActualType);
-                    };
-                };
-            };
-        };
+        await multiDownload(authData?.allocation_id, JSON.stringify(batch), authTicket, 'onFileDownload');
     }
 })();
 
@@ -178,7 +174,6 @@ function reArrangeArray(filesArr) {
         newArray[currentValue] = filesArr[i];
     };
     newArray = newArray.filter(item => item);
-    console.log(newArray)
     return newArray;
 };
 
