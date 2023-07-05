@@ -44,7 +44,7 @@ window.onFileDownload = async (totalBytes, completedBytes, objName, objURL, err)
     if (err) {
         console.error('error:', err)
         return;
-    };
+    }
     if (objName && objURL) {
         const elements = findByAttrValue("img", "data-imageName", objName);
         // get file mime type
@@ -59,8 +59,8 @@ window.onFileDownload = async (totalBytes, completedBytes, objName, objURL, err)
         elements.forEach(el => el.src = blobUrl);
         if (blobWithActualType.size > 0) {
             cacheAsset(objName, blobWithActualType);
-        };
-    };
+        }
+    }
 }
 
 (async function () {
@@ -72,7 +72,7 @@ window.onFileDownload = async (totalBytes, completedBytes, objName, objURL, err)
     const { walletId, privateKey, publicKey } = keys;
     await setWallet(walletId, privateKey, publicKey, mnemonic);
     // authTicket of the directory containing zus assets
-    const authTicket = "eyJjbGllbnRfaWQiOiIiLCJvd25lcl9pZCI6Ijk4YzJjNjRmMmZkMTlmNTFlZmIxYTEzZWJkYWVhODU4M2Y1YzY3YTM2ZTIxYzMzOWU0YzRiNTJmYWMzNmVmZjMiLCJhbGxvY2F0aW9uX2lkIjoiY2M2OTg0YTU1MzY2ZDM2NmU3NjQ3NzdjODQyNThjYjE2M2YxOWY0MGVhMzExYjdhYjg1ZDkxODlhNjRjNzVjYiIsImZpbGVfcGF0aF9oYXNoIjoiMzBmYzBlOTBlNTcyMTJmZjdhMzkxZjQ1YTc5YzFiMTdiYWU4ZjQzZWQxYTk1MmQzNjIzYTdlZTM1YjVhMWZhOSIsImFjdHVhbF9maWxlX2hhc2giOiIiLCJmaWxlX25hbWUiOiJOZXcgRm9sZGVyIiwicmVmZXJlbmNlX3R5cGUiOiJkIiwiZXhwaXJhdGlvbiI6MCwidGltZXN0YW1wIjoxNjg3NDU0MzM0LCJlbmNyeXB0ZWQiOmZhbHNlLCJzaWduYXR1cmUiOiJmYzM4MzI2M2E3NjFkMGY5NmI2ZmU3NTc3ZTkxODIzMzRiOWZiYzQ3NzE0NDdjMjUwNzU1YmJkNTFlYjEwMDk3In0=";
+    const authTicket = "eyJjbGllbnRfaWQiOiIiLCJvd25lcl9pZCI6IjVhZDZlNGQyMDZkODUzODMzZTk2ZmY1YzgzMzM2OWU1NjdkMmVmNDFhZTFkNTA5MzE0MWUxZjkwZjFlOGRjYjAiLCJhbGxvY2F0aW9uX2lkIjoiYTRlZDQyN2UwZjI5ZTRhNzY0MDExZjFkMmQwNzYzMzczMGUzZGZlYTY5Y2Q0YjQyZGMxM2E4YjFhZGIyYmJiZCIsImZpbGVfcGF0aF9oYXNoIjoiMjJjOGNjMDVlYjU0ZDNmODAyMmIwMDI3YTc4NGJmYzJjYWI2Y2YwOTE0NzM2ZWNhNWExMTdjZmVhNWEwZWNjMCIsImFjdHVhbF9maWxlX2hhc2giOiIiLCJmaWxlX25hbWUiOiJzaGFyZWQiLCJyZWZlcmVuY2VfdHlwZSI6ImQiLCJleHBpcmF0aW9uIjowLCJ0aW1lc3RhbXAiOjE2ODg1OTQxMTMsImVuY3J5cHRlZCI6ZmFsc2UsInNpZ25hdHVyZSI6Ijc4OGM1NmYxYTM1ZDg5MThlZjM1ODhmOTQ4NWNiZmRhZWVlMjhjZTM1YjNmM2NlMDg0YmUwMGM5NmRiNmU4ODgifQ==";
     const authData = await decodeAuthTicket(authTicket);
     // list files in the directory
     const { data } = await listSharedFiles(authData?.file_path_hash, authData?.allocation_id, authData?.owner_id);
@@ -172,10 +172,10 @@ function reArrangeArray(filesArr) {
         let currentValue = assetPriority[filesArr[i].name];
         if (isNaN(currentValue) || !filesArr[i]) continue;
         newArray[currentValue] = filesArr[i];
-    };
+    }
     newArray = newArray.filter(item => item);
     return newArray;
-};
+}
 
 // This will try populating from cache before doing wasm init or any API calls,
 async function tryPopulatingFromCache() {
@@ -199,15 +199,15 @@ function findByAttrValue(type, attr, value) {
     for (let i = 0; i < elements.length; i++) {
         if (elements[i].getAttribute(attr) === value) {
             matchingElements.push(elements[i]);
-        };
-    };
+        }
+    }
     return matchingElements;
 }
 
 // cache asset into indexed db
 async function cacheAsset(key, data) {
     await setValue(key, data);
-};
+}
 
 // get blob data from url
 async function createBlob(url) {
