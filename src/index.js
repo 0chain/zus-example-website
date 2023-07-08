@@ -49,6 +49,9 @@ import {
 import { get, onClick, onClickGroup, setHtml, onChange, setValue } from "./dom";
 import { startPlay, stopPlay } from "./player";
 
+const shouldShowLogs = process.env.NODE_ENV === "development";
+const log = (...args) => shouldShowLogs && console.log(...args);
+
 const getWallet = () => {
   const clientID = get("clientId").value;
   const publicKey = get("publicKey").value;
@@ -85,9 +88,7 @@ const config = [
 ];
 
 window.downloadCallback = function (totalBytes, completedBytes, error) {
-  console.log(
-    "download: " + completedBytes + "/" + totalBytes + " err:" + error
-  );
+  log("download: " + completedBytes + "/" + totalBytes + " err:" + error);
 };
 
 const getAppendedFileName = (filename, postfix) => {
@@ -97,14 +98,14 @@ const getAppendedFileName = (filename, postfix) => {
       postfix +
       filename.substring(filename.lastIndexOf("."), filename.length)
     : filename + postfix;
-  console.log("getAppendedFileName", newFileName);
+  log("getAppendedFileName", newFileName);
   return newFileName;
 };
 
 const listAllocationsClick = async () => {
   //Call listAllocations method
   const allocations = await listAllocations();
-  console.log("allocations", allocations);
+  log("allocations", allocations);
   let allocationListHtml = "";
   allocations.map((allocation, index) => {
     allocationListHtml += `
@@ -130,12 +131,12 @@ const listAllocationsClick = async () => {
 const listFilesClick = async () => {
   //Call listFiles method
   const selectedAllocation = getSelectedAllocation();
-  console.log("listFilesClick selectedAllocation", selectedAllocation);
+  log("listFilesClick selectedAllocation", selectedAllocation);
   let fileListHtml = "";
   try {
     const list = (await listObjects(selectedAllocation, "/")) || [];
     files = list;
-    console.log("file list", list);
+    log("file list", list);
     if (list && list.length > 0) {
       fileListHtml += `
     <div>
@@ -160,12 +161,12 @@ const listFilesClick = async () => {
 </div>`;
     });
   } catch (error) {
-    console.log("error:", error);
+    log("error:", error);
   }
 
   try {
     const destList = (await listObjects(selectedAllocation, "/test")) || [];
-    console.log("file destList", destList);
+    log("file destList", destList);
     if (destList && destList.length > 0) {
       fileListHtml += `
     <div>
@@ -190,7 +191,7 @@ const listFilesClick = async () => {
 </div>`;
     });
   } catch (error) {
-    console.log("error:", error);
+    log("error:", error);
   }
 
   setHtml("listFiles", fileListHtml);
@@ -204,7 +205,7 @@ const getSelectedAllocation = () => {
     'input[name="selectedAllocation"]:checked'
   );
   const selectedAllocation = selectedAllocationElement?.value;
-  console.log("selected allocation", selectedAllocation);
+  log("selected allocation", selectedAllocation);
   return selectedAllocation;
 };
 
@@ -213,7 +214,7 @@ const selectAllocation = () => {
 };
 
 const handleUploadFiles = async (event) => {
-  console.log("handleUploadFiles", event.currentTarget.files);
+  log("handleUploadFiles", event.currentTarget.files);
   //setFilesForUpload(event.currentTarget.files);
 };
 
@@ -222,7 +223,7 @@ const getSelectedFile = () => {
     'input[name="selectedFile"]:checked'
   );
   const selectedFile = selectedFileElement?.value;
-  console.log("selected file", selectedFile);
+  log("selected file", selectedFile);
   return selectedFile;
 };
 
@@ -231,7 +232,7 @@ const selectFile = () => {
 };
 
 const handleUpdateMnemonic = async (event) => {
-  console.log("handleUpdateMnemonic", event.currentTarget.value);
+  log("handleUpdateMnemonic", event.currentTarget.value);
   setValue("mnemonic", event.currentTarget.value);
 };
 
@@ -264,23 +265,23 @@ const getBlobberListForAllocation = async () => {
     minWritePrice,
     maxWritePrice
   );
-  console.log("blobberList", blobberList);
+  log("blobberList", blobberList);
   return blobberList;
 };
 
 let files = [];
 
 const bindEvents = () => {
-  console.log("bindEvents");
+  log("bindEvents");
 
   onClick("btnGreet", async () => {
-    console.log("calling Greet");
-    console.log("greetMessage", greetMessage);
+    log("calling Greet");
+    log("greetMessage", greetMessage);
     setHtml("message", greetMessage);
   });
 
   onClick("btnInit", async () => {
-    console.log("calling init");
+    log("calling init");
     //Initialize SDK
     await init(config);
   });
@@ -295,7 +296,7 @@ const bindEvents = () => {
   });
 
   onClick("btnSendTransaction", async () => {
-    console.log("calling sendTransaction");
+    log("calling sendTransaction");
     const { clientID, privateKey, publicKey } = getWallet();
     const fromWallet = {
       id: clientID,
@@ -320,9 +321,9 @@ const bindEvents = () => {
   });
 
   onClick("btnCreateWallet", async () => {
-    console.log("calling createWallet");
+    log("calling createWallet");
     const wallet = await createWallet();
-    console.log("Wallet", wallet);
+    log("Wallet", wallet);
     txtOutput.innerHTML = JSON.stringify(wallet, null, 2);
     setValue("clientId", wallet.keys.walletId);
     setValue("publicKey", wallet.keys.publicKey);
@@ -330,10 +331,10 @@ const bindEvents = () => {
   });
 
   onClick("btnRecoverWallet", async () => {
-    console.log("calling recoverWallet");
+    log("calling recoverWallet");
     const mnemonic = get("mnemonic").value;
     const wallet = await recoverWallet(mnemonic);
-    console.log("Wallet", wallet);
+    log("Wallet", wallet);
     txtOutput.innerHTML = JSON.stringify(wallet, null, 2);
     setValue("clientId", wallet.keys.walletId);
     setValue("publicKey", wallet.keys.publicKey);
@@ -343,7 +344,7 @@ const bindEvents = () => {
   onClick("btnListAllocations", listAllocationsClick);
 
   onClick("btnCreateAllocation", async () => {
-    console.log("calling createAllocation");
+    log("calling createAllocation");
     const expiry = new Date();
     expiry.setDate(expiry.getDate() + 30);
 
@@ -372,7 +373,7 @@ const bindEvents = () => {
       return;
     }
     const allocation = await getAllocation(selectedAllocation);
-    console.log("allocation", allocation);
+    log("allocation", allocation);
     let allocationDetailHtml = `
     <div>
       Allocation: ${allocation.id}, Size: ${allocation.size}, Start Time: ${allocation.start_time}, Expiration Date: ${allocation.expiration_date}
@@ -389,7 +390,7 @@ const bindEvents = () => {
       return;
     }
     const allocation = await reloadAllocation(selectedAllocation);
-    console.log("allocation", allocation);
+    log("allocation", allocation);
     let allocationDetailHtml = `
     <div>
       Allocation: ${allocation.id}, Name: ${allocation.name}, Size: ${allocation.size}, Start Time: ${allocation.start_time}, Expiration Date: ${allocation.expiration_date}
@@ -423,7 +424,7 @@ const bindEvents = () => {
       alert("Please select allocation for update");
       return;
     }
-    console.log("updating allocation", selectedAllocation);
+    log("updating allocation", selectedAllocation);
 
     const allocationSize = get("allocationSize").value;
 
@@ -459,12 +460,12 @@ const bindEvents = () => {
       return;
     }
     const filesForUpload = get("uploadFile").files;
-    console.log("filesForUpload", filesForUpload);
+    log("filesForUpload", filesForUpload);
     if (!(filesForUpload && filesForUpload.length > 0)) {
       alert("Please select the files for upload");
       return;
     }
-    console.log("uploading to allocation", selectedAllocation, filesForUpload);
+    log("uploading to allocation", selectedAllocation, filesForUpload);
     if (filesForUpload && filesForUpload.length > 0) {
       const objects = [];
       const allocationId = selectedAllocation;
@@ -480,7 +481,7 @@ const bindEvents = () => {
           isRepair: false,
           numBlocks: 100,
           callback: function (totalBytes, completedBytes, error) {
-            console.log(
+            log(
               file.name +
                 " " +
                 completedBytes +
@@ -495,7 +496,7 @@ const bindEvents = () => {
 
       const results = await bulkUpload(objects);
 
-      console.log("upload results", JSON.stringify(results));
+      log("upload results", JSON.stringify(results));
     }
   });
 
@@ -508,7 +509,7 @@ const bindEvents = () => {
     const path = getSelectedFile();
     if (path) {
       const allocationId = selectedAllocation;
-      console.log("downloading ", path, " from ", allocationId);
+      log("downloading ", path, " from ", allocationId);
 
       //allocationID, remotePath, authTicket, lookupHash string, downloadThumbnailOnly bool, numBlocks int, callback
       const file = await download(
@@ -520,7 +521,7 @@ const bindEvents = () => {
         10,
         "downloadCallback"
       );
-      console.log("downloaded file", file);
+      log("downloaded file", file);
 
       const a = document.createElement("a");
       document.body.appendChild(a);
@@ -543,11 +544,11 @@ const bindEvents = () => {
     const path = getSelectedFile();
     if (path) {
       const allocationId = selectedAllocation;
-      console.log("sharing ", path, " from ", allocationId);
+      log("sharing ", path, " from ", allocationId);
 
       //allocationId, filePath, clientId, encryptionPublicKey string, expireAt int, revoke bool,availableAfter string
       const authTicket = await share(allocationId, path, "", "", 0, false, 0);
-      console.log("authTicket", authTicket);
+      log("authTicket", authTicket);
       setValue("authTicket", authTicket);
     }
   });
@@ -555,11 +556,11 @@ const bindEvents = () => {
   onClick("btnDownloadShared", async () => {
     const authTicket = get("authTicket").value;
     if (authTicket) {
-      console.log("downloading using authTicket", authTicket);
+      log("downloading using authTicket", authTicket);
 
       //allocationID, remotePath, authTicket, lookupHash string, downloadThumbnailOnly bool, numBlocks int
       const file = await download("", "", authTicket, "", false, 10);
-      console.log("downloaded file", file);
+      log("downloaded file", file);
 
       const a = document.createElement("a");
       document.body.appendChild(a);
@@ -586,10 +587,10 @@ const bindEvents = () => {
       alert("Please select the file for copy");
       return;
     }
-    console.log("copy file", selectedAllocation, path);
+    log("copy file", selectedAllocation, path);
     //allocationId, path, destination
     await copyObject(selectedAllocation, path, "/test");
-    console.log("copy completed");
+    log("copy completed");
   });
 
   onClick("btnMove", async () => {
@@ -603,10 +604,10 @@ const bindEvents = () => {
       alert("Please select the file for move");
       return;
     }
-    console.log("move file", selectedAllocation, path);
+    log("move file", selectedAllocation, path);
     //allocationId, path, destination
     await moveObject(selectedAllocation, path, "/test");
-    console.log("move completed");
+    log("move completed");
   });
 
   onClick("btnDelete", async () => {
@@ -620,10 +621,10 @@ const bindEvents = () => {
       alert("Please select the file for delete");
       return;
     }
-    console.log("delete file", selectedAllocation, path);
+    log("delete file", selectedAllocation, path);
     //allocationId, path
     await deleteObject(selectedAllocation, path);
-    console.log("delete completed");
+    log("delete completed");
   });
 
   onClick("btnRename", async () => {
@@ -637,14 +638,14 @@ const bindEvents = () => {
       alert("Please select the file for rename");
       return;
     }
-    console.log("rename file", selectedAllocation, path);
+    log("rename file", selectedAllocation, path);
     //allocationId, path, newName
     await renameObject(
       selectedAllocation,
       path,
       getAppendedFileName(path, "_new")
     );
-    console.log("rename completed");
+    log("rename completed");
   });
 
   const player = get("player");
@@ -657,7 +658,7 @@ const bindEvents = () => {
       }
     } else {
       const file = files.find((it) => it.path == getSelectedFile());
-      console.log("playing file", file);
+      log("playing file", file);
       const isLive = file.type == "d";
 
       if (file) {
@@ -720,10 +721,10 @@ const bindEvents = () => {
       return;
     }
     const dirName = get("dirName").value;
-    console.log("Create Dir", selectedAllocation, dirName);
+    log("Create Dir", selectedAllocation, dirName);
     //allocationId, path
     await createDir(selectedAllocation, "/" + dirName);
-    console.log("create Dir completed");
+    log("create Dir completed");
   });
 
   onClick("btnGetFileStats", async () => {
@@ -737,9 +738,9 @@ const bindEvents = () => {
       alert("Please select the file for stats");
       return;
     }
-    console.log("getting file stats", selectedAllocation, path);
+    log("getting file stats", selectedAllocation, path);
     const fileStats = await getFileStats(selectedAllocation, path);
-    console.log("file stats completed", fileStats);
+    log("file stats completed", fileStats);
   });
 
   onClick("btnDownloadBlocks", async () => {
@@ -753,7 +754,7 @@ const bindEvents = () => {
       alert("Please select the file for download blocks");
       return;
     }
-    console.log("download blocks", selectedAllocation, path);
+    log("download blocks", selectedAllocation, path);
     //allocationID, remotePath, authTicket, lookupHash string, numBlocks int, startBlockNumber, endBlockNumber int64, callbackFuncName string
     const output = await downloadBlocks(
       selectedAllocation,
@@ -764,7 +765,7 @@ const bindEvents = () => {
       0,
       10
     );
-    console.log("downloaded blocks", output);
+    log("downloaded blocks", output);
   });
 
   onClick("btnGetLookupHash", async () => {
@@ -778,17 +779,17 @@ const bindEvents = () => {
       alert("Please select the file for getLookupHash");
       return;
     }
-    console.log("getLookupHash file", selectedAllocation, path);
+    log("getLookupHash file", selectedAllocation, path);
     //allocationId, path
     const hash = await getLookupHash(selectedAllocation, path);
-    console.log("getLookupHash completed", hash);
+    log("getLookupHash completed", hash);
   });
 
   onClick("btnGetPublicEncryptKey", async () => {
     const mnemonic = get("mnemonic").value;
-    console.log("getPublicEncryptionKey", mnemonic);
+    log("getPublicEncryptionKey", mnemonic);
     const key = await getPublicEncryptionKey(mnemonic);
-    console.log("getPublicEncryptionKey completed", key);
+    log("getPublicEncryptionKey completed", key);
     setHtml("encryptKey", key);
   });
 
@@ -796,30 +797,30 @@ const bindEvents = () => {
 
   onClick("btnGetPublicEncryptKey", async () => {
     const mnemonic = get("mnemonic").value;
-    console.log("getPublicEncryptionKey", mnemonic);
+    log("getPublicEncryptionKey", mnemonic);
     const key = await getPublicEncryptionKey(mnemonic);
-    console.log("getPublicEncryptionKey completed", key);
+    log("getPublicEncryptionKey completed", key);
     setHtml("encryptKey", key);
   });
 
   onClick("btnGetUSDRate", async () => {
-    console.log("getUSDRate");
+    log("getUSDRate");
     const rate = await getUSDRate("zcn");
-    console.log("getUSDRate completed", rate);
+    log("getUSDRate completed", rate);
     setHtml("utilsOutput", rate);
   });
 
   onClick("btnIsWalletID", async () => {
     const clientId = get("clientId").value;
-    console.log("isWalletID", clientId);
+    log("isWalletID", clientId);
     const output = await isWalletID(clientId);
     // const output = await isWalletID("test");
-    console.log("isWalletID completed", output);
+    log("isWalletID completed", output);
     setHtml("utilsOutput", output);
   });
 
   onClick("btnCreateAllocationWithBlobbers", async () => {
-    console.log("CreateAllocationWithBlobbers");
+    log("CreateAllocationWithBlobbers");
     const preferredBlobbers = getBlobberListForAllocation();
     const expiry = new Date();
     expiry.setDate(expiry.getDate() + 30);
@@ -844,12 +845,12 @@ const bindEvents = () => {
   });
 
   onClick("btnGetAllocationBlobbers", async () => {
-    console.log("GetAllocationBlobbers");
+    log("GetAllocationBlobbers");
     await getBlobberListForAllocation();
   });
 
   onClick("btnGetBlobberIds", async () => {
-    console.log("GetBlobberIds");
+    log("GetBlobberIds");
     //https://dev1.zus.network/sharder01/v1/screst/6dba10422e368813802877a85039d3985d96760ed844092319743fb3a76712d7/getblobbers
     //const blobberUrls = [];
     const blobberUrls = [
@@ -858,49 +859,49 @@ const bindEvents = () => {
     ];
     //Call getBlobberIds method
     const blobberIds = await getBlobberIds(blobberUrls);
-    console.log("blobberIds", blobberIds);
+    log("blobberIds", blobberIds);
   });
 
   onClick("btnCreateReadPool", async () => {
-    console.log("CreateReadPool");
+    log("CreateReadPool");
     //Call createReadPool method
     const result = await createReadPool();
-    console.log("result", result);
+    log("result", result);
   });
 
   onClick("btnGetAllocFromAuthTicket", async () => {
     const authTicket = get("authTicket").value;
-    console.log("GetAllocFromAuthTicket", authTicket);
+    log("GetAllocFromAuthTicket", authTicket);
     const allocation = await getAllocationFromAuthTicket(authTicket);
-    console.log("allocation", allocation);
+    log("allocation", allocation);
   });
 
   onClick("btnGetReadPoolInfo", async () => {
     const clientId = get("clientId").value;
-    console.log("GetReadPoolInfo", clientId);
+    log("GetReadPoolInfo", clientId);
     const result = await getReadPoolInfo(clientId);
-    console.log("result", result);
+    log("result", result);
   });
 
   onClick("btnLockWritePool", async () => {
     const allocationId = getSelectedAllocation();
-    console.log("LockWritePool", allocationId);
+    log("LockWritePool", allocationId);
     //allocationId string, tokens string, fee string
     const result = await lockWritePool(allocationId, 1000, 10);
-    console.log("result", result);
+    log("result", result);
   });
 
   onClick("btnGetBlobbers", async () => {
-    console.log("GetBlobbers");
+    log("GetBlobbers");
     const result = await getBlobbers();
-    console.log("result", result);
+    log("result", result);
   });
 
   onClick("btnDecodeAuthTicket", async () => {
     const authTicket = get("authTicket").value;
-    console.log("DecodeAuthTicket", authTicket);
+    log("DecodeAuthTicket", authTicket);
     const result = await decodeAuthTicket(authTicket);
-    console.log("result", result);
+    log("result", result);
   });
 
   onClick("btnInitBridge", async () => {
@@ -913,7 +914,7 @@ const bindEvents = () => {
       gasLimit = 300000,
       value = 0,
       consensusThreshold = 75.0;
-    console.log(
+    log(
       "initBridgeClick",
       ethereumAddress,
       bridgeAddress,
@@ -939,7 +940,7 @@ const bindEvents = () => {
 
   onClick("btnBurnZCN", async () => {
     const amount = 1000;
-    console.log("burnZCNClick", amount);
+    log("burnZCNClick", amount);
     const hash = await burnZCN(amount);
     setValue("txHash", hash);
     return hash;
@@ -947,7 +948,7 @@ const bindEvents = () => {
 
   onClick("btnGetMintWZCNPayload", async () => {
     const burnTrxHash = get("txHash").value;
-    console.log("getMintWZCNPayloadClick", burnTrxHash);
+    log("getMintWZCNPayloadClick", burnTrxHash);
     const result = await getMintWZCNPayload(burnTrxHash);
     return result;
   });
@@ -955,7 +956,7 @@ const bindEvents = () => {
   onClick("btnMintZCN", async () => {
     const burnTrxHash = get("txHash").value;
     const timeout = 100;
-    console.log("mintZCNClick", burnTrxHash, timeout);
+    log("mintZCNClick", burnTrxHash, timeout);
     const hash = await mintZCN(burnTrxHash, timeout);
     return hash;
   });
