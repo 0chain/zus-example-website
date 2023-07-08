@@ -43,9 +43,9 @@ export const startPlay = async ({
 
   // const mimeCodecs = `${mimeType};
   // codecs="${muxjs.mp4.probe.tracks(buf).map(t => t.codec).join(",")}"`;
-  console.log(
-    `playlist: isFragmented:${isFragmented} mimeCodecs:${mimeCodecs}`
-  );
+  // console.log(
+  //   `playlist: isFragmented:${isFragmented} mimeCodecs:${mimeCodecs}`
+  // );
 
   if (isFragmented && MediaSource.isTypeSupported(mimeCodecs)) {
     return playChunks({ videoElement, buf, mimeCodecs });
