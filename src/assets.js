@@ -96,8 +96,8 @@ window.onFileDownload = async (totalBytes, completedBytes, objName, objURL, err)
     // Create bactches of size 20 to download files using multiDownload in batches
     while (files.length > 0) {
         let batch = [];
-        if (files.length >= 10) {
-            batch = files.splice(0, 10);
+        if (files.length >= 5) {
+            batch = files.splice(0, 5);
         } else {
             batch = files.splice(0, files.length);
         }
