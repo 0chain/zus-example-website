@@ -70,6 +70,9 @@ const fetchApi = async (url, headers)=> {
     return data.json()
 }
 
+let blobber
+let data
+
 const getBlobberDetails = async (allocationId) => {
     const allocationUrl = 'https://demo1.zus.network/sharder01/v1/screst/6dba10422e368813802877a85039d3985d96760ed844092319743fb3a76712d7/allocation?allocation='
 
@@ -77,19 +80,21 @@ const getBlobberDetails = async (allocationId) => {
 
     const randomIndex = Math.floor(Math.random() * allocation?.blobbers?.length);
 
-    return allocation?.blobbers[randomIndex];
+    blobber = allocation?.blobbers[randomIndex];
 }
 
 const getListSharedFiles = async (blobberUrl, allocationId, lookupHash, clientId)=> {
     const url = `${blobberUrl}v1/file/list/${allocationId}?path_hash=${lookupHash}`
 
-    return fetchApi(url, {"X-App-Client-ID": clientId })
+    data = await fetchApi(url, {"X-App-Client-ID": clientId })
 }
 
 
 (async function () {
     // try populating everything from cache before doing any calls
     await tryPopulatingFromCache();
+
+
 
     // authTicket of the directory containing zus assets
     const authTicket = "eyJjbGllbnRfaWQiOiIiLCJvd25lcl9pZCI6IjhjZjYxNDk1MmE2NTc5MDEwZjg3OWM4OTQ3MGVmY2U4M2NjODM0MmRjYTlhYTBjMTk4ODU0MGU4M2IzYmM0MTQiLCJhbGxvY2F0aW9uX2lkIjoiMjIwMDRlMWUwYmVkMGZiYTNjYTllOGUwZmEzNDU5NGJmMDFkYmU4NTRjZjM4OGEyODhiMGZlMTRkNTMwMzMwMSIsImZpbGVfcGF0aF9oYXNoIjoiNWI5OWMyNjY0N2RhOGI4ZTYwNjNhYmIxOTMyYTFhZTI5NjVhNWVmYjIyNmQ2OTIzZTFmMDc2Zjc0YzAyYjIxNSIsImFjdHVhbF9maWxlX2hhc2giOiIiLCJmaWxlX25hbWUiOiJleGFtcGxlLXdlYnNpdGUtYXNzZXRzIiwicmVmZXJlbmNlX3R5cGUiOiJkIiwiZXhwaXJhdGlvbiI6MCwidGltZXN0YW1wIjoxNjg5Nzg2NjkwLCJlbmNyeXB0ZWQiOmZhbHNlLCJzaWduYXR1cmUiOiI4ZDVlN2FmMzAzMjQ1MDYxZjdhODIyZjc3MWY1MGJjYTQyYTlhZTFiMjQwYjNkZWMwZmY2OTMxMjliMGFmNDE4In0=";
@@ -100,10 +105,13 @@ const getListSharedFiles = async (blobberUrl, allocationId, lookupHash, clientId
     const lookupHash  = authData.file_path_hash
     const clientId = authData.owner_id
 
-    const blobber = await getBlobberDetails(allocationId)
+    await Promise.all([await getBlobberDetails(allocationId), await getListSharedFiles(blobber.url, allocationId, lookupHash, clientId), await initializeWasm()])
 
-    // list files in the directory
-    const data = await getListSharedFiles(blobber.url, allocationId, lookupHash, clientId)
+
+    // blobber = await getBlobberDetails(allocationId)
+    //
+    // // list files in the directory
+    // data = await getListSharedFiles(blobber.url, allocationId, lookupHash, clientId)
 
     // console.log(data)
 
