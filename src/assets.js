@@ -35,7 +35,7 @@ async function initializeWasm() {
         configJson.confirmationChainLength,
         configJson.zboxHost,
         configJson.zboxAppType,
-        3
+        1
     ];
 
     await init(config);
