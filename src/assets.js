@@ -131,7 +131,7 @@ const getListSharedFiles = async (blobberUrl, allocationId, lookupHash, clientId
     const batchSize = 10
 
     // remove poster image from files
-    files = files.shift()
+    files.shift()
 
     // Create bactches of size 20 to download files using multiDownload in batches
     while (files.length > 0) {
