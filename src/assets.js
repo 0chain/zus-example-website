@@ -112,7 +112,7 @@ const getListSharedFiles = async (blobberUrl, allocationId, lookupHash, clientId
 
     // rearrage the file list so we can download in the order assets are displayed on website
     const filesList = reArrangeArray(data?.list);
-    const files = []
+    let files = []
     // create a list of files to be downloaded
     filesList.forEach(file => {
         if (!assetsPopulatedFromCache[file?.name]) {
@@ -130,13 +130,16 @@ const getListSharedFiles = async (blobberUrl, allocationId, lookupHash, clientId
 
     const batchSize = 10
 
+    // remove poster image from files
+    files = files.shift()
+
     // Create bactches of size 20 to download files using multiDownload in batches
     while (files.length > 0) {
         let batch = [];
         if (files.length >= batchSize) {
-            batch = files.splice(1, batchSize);
+            batch = files.splice(0, batchSize);
         } else {
-            batch = files.splice(1, files.length);
+            batch = files.splice(0, files.length);
         }
         await multiDownload(allocationId, JSON.stringify(batch), authTicket, 'onFileDownload');
     }
