@@ -63,30 +63,24 @@ window.onFileDownload = async (totalBytes, completedBytes, objName, objURL, err)
         }
     }
 }
-// https://dev2.zus.network/sharder01/v1/screst/6dba10422e368813802877a85039d3985d96760ed844092319743fb3a76712d7/allocation?allocation=5dd2efa60e862f36263b893f7862dca96106aa7413ea25f5d7c657792fbf5c15
 
-const fetchApi = async (url, headers)=> {
+const fetchApi = async (url, headers = {})=> {
     const data = await fetch(url, {headers});
     return data.json()
 }
 
-let blobber
-let data
-
 const getBlobberDetails = async (allocationId) => {
     const allocationUrl = 'https://demo1.zus.network/sharder01/v1/screst/6dba10422e368813802877a85039d3985d96760ed844092319743fb3a76712d7/allocation?allocation='
-
     const allocation = await fetchApi(allocationUrl  +  allocationId)
-
     const randomIndex = Math.floor(Math.random() * allocation?.blobbers?.length);
 
-    blobber = allocation?.blobbers[randomIndex];
+    return allocation?.blobbers[randomIndex];
 }
 
 const getListSharedFiles = async (blobberUrl, allocationId, lookupHash, clientId)=> {
     const url = `${blobberUrl}v1/file/list/${allocationId}?path_hash=${lookupHash}`
 
-    data = await fetchApi(url, {"X-App-Client-ID": clientId })
+    return fetchApi(url, {"X-App-Client-ID": clientId })
 }
 
 
@@ -94,26 +88,21 @@ const getListSharedFiles = async (blobberUrl, allocationId, lookupHash, clientId
     // try populating everything from cache before doing any calls
     await tryPopulatingFromCache();
 
-
-
     // authTicket of the directory containing zus assets
     const authTicket = "eyJjbGllbnRfaWQiOiIiLCJvd25lcl9pZCI6IjhjZjYxNDk1MmE2NTc5MDEwZjg3OWM4OTQ3MGVmY2U4M2NjODM0MmRjYTlhYTBjMTk4ODU0MGU4M2IzYmM0MTQiLCJhbGxvY2F0aW9uX2lkIjoiMjIwMDRlMWUwYmVkMGZiYTNjYTllOGUwZmEzNDU5NGJmMDFkYmU4NTRjZjM4OGEyODhiMGZlMTRkNTMwMzMwMSIsImZpbGVfcGF0aF9oYXNoIjoiNWI5OWMyNjY0N2RhOGI4ZTYwNjNhYmIxOTMyYTFhZTI5NjVhNWVmYjIyNmQ2OTIzZTFmMDc2Zjc0YzAyYjIxNSIsImFjdHVhbF9maWxlX2hhc2giOiIiLCJmaWxlX25hbWUiOiJleGFtcGxlLXdlYnNpdGUtYXNzZXRzIiwicmVmZXJlbmNlX3R5cGUiOiJkIiwiZXhwaXJhdGlvbiI6MCwidGltZXN0YW1wIjoxNjg5Nzg2NjkwLCJlbmNyeXB0ZWQiOmZhbHNlLCJzaWduYXR1cmUiOiI4ZDVlN2FmMzAzMjQ1MDYxZjdhODIyZjc3MWY1MGJjYTQyYTlhZTFiMjQwYjNkZWMwZmY2OTMxMjliMGFmNDE4In0=";
 
+    // decode auth ticket
     const authData =  JSON.parse(atob(authTicket));
 
-    const allocationId  = authData.allocation_id
-    const lookupHash  = authData.file_path_hash
-    const clientId = authData.owner_id
+    const allocationId  = authData?.allocation_id
+    const lookupHash  = authData?.file_path_hash
+    const clientId = authData?.owner_id
 
-    await Promise.all([await getBlobberDetails(allocationId), await getListSharedFiles(blobber.url, allocationId, lookupHash, clientId), await initializeWasm()])
+    // resolve blobber url
+    const blobber = await getBlobberDetails(allocationId)
 
-
-    // blobber = await getBlobberDetails(allocationId)
-    //
-    // // list files in the directory
-    // data = await getListSharedFiles(blobber.url, allocationId, lookupHash, clientId)
-
-    // console.log(data)
+    // list files in the directory
+    const data = await getListSharedFiles(blobber.url, allocationId, lookupHash, clientId)
 
     // initialiaze and configure wasm
     await initializeWasm();
@@ -139,19 +128,13 @@ const getListSharedFiles = async (blobberUrl, allocationId, lookupHash, clientId
         }
     })
 
-
-    const deleteCount = 10
-
-    // console.log('Check: ', deleteCount)
-
-    // download the poster first
-    await multiDownload(allocationId, JSON.stringify(files.splice(0, 1)), authTicket, 'onFileDownload');
+    const batchSize = 10
 
     // Create bactches of size 20 to download files using multiDownload in batches
     while (files.length > 0) {
         let batch = [];
-        if (files.length >= deleteCount) {
-            batch = files.splice(1, deleteCount);
+        if (files.length >= batchSize) {
+            batch = files.splice(1, batchSize);
         } else {
             batch = files.splice(1, files.length);
         }
