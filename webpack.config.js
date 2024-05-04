@@ -22,20 +22,26 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.css$/,
-        use: [MiniCssExtractPlugin.loader, "css-loader"],
+        test: /\.css$/i,
+        use: ["style-loader", "css-loader"],
+      },
+      {
+        test: /\.(png|svg|jpg|jpeg|gif)$/i,
+        type: "asset/resource",
+      },
+      {
+        test: /\.(woff|woff2|eot|ttf|otf)$/i,
+        type: "asset/resource",
       },
     ],
   },
-  plugins: [
-    new MiniCssExtractPlugin({
-      filename: "[name].css",
-    }),
-  ],
+  // plugins: [
+  //   new MiniCssExtractPlugin({
+  //     filename: "[name].css",
+  //   }),
+  // ],
   devServer: {
-    static: {
-      directory: path.join(__dirname, "dist"), // Serve content from the 'dist' directory
-    },
+    static: path.join(__dirname, "dist"), // Serve content from the 'dist' directory
     port: 9000,
     open: true,
   },
