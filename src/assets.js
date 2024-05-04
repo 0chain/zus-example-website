@@ -35,7 +35,7 @@ async function initializeWasm() {
         configJson.confirmationChainLength,
         configJson.zboxHost,
         configJson.zboxAppType,
-        1
+        3
     ];
 
     await init(config);
@@ -78,7 +78,7 @@ const getBlobberDetails = async (allocationId) => {
 }
 
 const getListSharedFiles = async (blobberUrl, allocationId, lookupHash, clientId)=> {
-    const url = `${blobberUrl}v1/file/list/${allocationId}?path_hash=${lookupHash}`
+    const url = `${blobberUrl}v1/file/list/${allocationId}?path_hash=${lookupHash}&list=true&limit=-1&offset=0`
 
     return fetchApi(url, {"X-App-Client-ID": clientId })
 }
@@ -89,7 +89,7 @@ const getListSharedFiles = async (blobberUrl, allocationId, lookupHash, clientId
     await tryPopulatingFromCache();
 
     // authTicket of the directory containing zus assets
-    const authTicket = "eyJjbGllbnRfaWQiOiIiLCJvd25lcl9pZCI6IjhjZjYxNDk1MmE2NTc5MDEwZjg3OWM4OTQ3MGVmY2U4M2NjODM0MmRjYTlhYTBjMTk4ODU0MGU4M2IzYmM0MTQiLCJhbGxvY2F0aW9uX2lkIjoiMjIwMDRlMWUwYmVkMGZiYTNjYTllOGUwZmEzNDU5NGJmMDFkYmU4NTRjZjM4OGEyODhiMGZlMTRkNTMwMzMwMSIsImZpbGVfcGF0aF9oYXNoIjoiNWI5OWMyNjY0N2RhOGI4ZTYwNjNhYmIxOTMyYTFhZTI5NjVhNWVmYjIyNmQ2OTIzZTFmMDc2Zjc0YzAyYjIxNSIsImFjdHVhbF9maWxlX2hhc2giOiIiLCJmaWxlX25hbWUiOiJleGFtcGxlLXdlYnNpdGUtYXNzZXRzIiwicmVmZXJlbmNlX3R5cGUiOiJkIiwiZXhwaXJhdGlvbiI6MCwidGltZXN0YW1wIjoxNjg5Nzg2NjkwLCJlbmNyeXB0ZWQiOmZhbHNlLCJzaWduYXR1cmUiOiI4ZDVlN2FmMzAzMjQ1MDYxZjdhODIyZjc3MWY1MGJjYTQyYTlhZTFiMjQwYjNkZWMwZmY2OTMxMjliMGFmNDE4In0=";
+    const authTicket = "eyJjbGllbnRfaWQiOiIiLCJvd25lcl9pZCI6IjJlMGFjY2IyZjhiMjY3MDA2YmVkYzZlMThiZGUxMGIwMjY2MzVjYTc3NTQ1NGJkMjBkN2YwOTMwYjQ5MjU0NzgiLCJhbGxvY2F0aW9uX2lkIjoiMzhlZDFjM2E1MWRlZTExYTZiNWM4ZjBlMzg4ZjliZDIyMzkwMDQ2MDU3ZTg0YzE0ZjU4M2UxZmNkMTk1ZjE3OSIsImZpbGVfcGF0aF9oYXNoIjoiMTk1M2ViZmVmNWUyNzc5OTIxZDc1NTg0OWQzMjcxZTcyYjJiZGYzZWE2YjI3NDExYzRkNWU4NjM0MTEzZmI4ZiIsImFjdHVhbF9maWxlX2hhc2giOiIiLCJmaWxlX25hbWUiOiJpbWciLCJyZWZlcmVuY2VfdHlwZSI6ImQiLCJleHBpcmF0aW9uIjowLCJ0aW1lc3RhbXAiOjE3MTQ4NDM3MTMsImVuY3J5cHRlZCI6ZmFsc2UsInNpZ25hdHVyZSI6ImVhYTZiN2Q3OTMyYTgxNDdiNWM2YjBlNDEwODQ1NjljYjgxOWZmNmFjMzE1NDRhMTk0NGI1MzlmMTg4Mjc0ODUifQ==";
 
     // decode auth ticket
     const authData =  JSON.parse(atob(authTicket));
@@ -101,8 +101,10 @@ const getListSharedFiles = async (blobberUrl, allocationId, lookupHash, clientId
     // resolve blobber url
     const blobber = await getBlobberDetails(allocationId)
 
+
     // list files in the directory
     const data = await getListSharedFiles(blobber.url, allocationId, lookupHash, clientId)
+
 
     // initialiaze and configure wasm
     await initializeWasm();
