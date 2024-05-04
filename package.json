@@ -2,20 +2,24 @@
   "name": "zus-sdk-test",
   "version": "1.0.0",
   "description": "",
-  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "sass src/scss:dist/css && webpack",
-    "sass": "sass src/scss:dist/css"
+    "sass": "sass src/scss:dist/css",
+    "dev:sass": "sass --watch src/scss:dist/css",
+    "dev:serve": "webpack serve --mode development --open",
+    "dev": "concurrently \"yarn dev:sass\" \"yarn dev:serve\""
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "concurrently": "^8.2.2",
     "css-minimizer-webpack-plugin": "^5.0.1",
     "sass": "^1.60.0",
     "webpack": "^5.75.0",
-    "webpack-cli": "^5.0.1"
+    "webpack-cli": "^5.0.1",
+    "webpack-dev-server": "^5.0.4"
   },
   "dependencies": {
     "babel-loader": "^9.1.2",

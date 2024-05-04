@@ -12,13 +12,13 @@ module.exports = {
     filename: "[name].js",
     path: path.resolve(__dirname, "dist"),
   },
-  mode: "production",
-  optimization: {
-    minimizer: [
-      new TerserPlugin(), // Minify JavaScript
-      new OptimizeCSSAssetsPlugin(), // Minify CSS
-    ],
-  },
+  mode: "development",
+  // optimization: {
+  //   minimizer: [
+  //     new TerserPlugin(), // Minify JavaScript
+  //     new OptimizeCSSAssetsPlugin(), // Minify CSS
+  //   ],
+  // },
   module: {
     rules: [
       {
@@ -32,4 +32,11 @@ module.exports = {
       filename: "[name].css",
     }),
   ],
+  devServer: {
+    static: {
+      directory: path.join(__dirname, "dist"), // Serve content from the 'dist' directory
+    },
+    port: 9000,
+    open: true,
+  },
 };
