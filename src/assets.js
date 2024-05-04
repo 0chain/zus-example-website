@@ -7,6 +7,7 @@ import {
   decodeAuthTicket,
   listSharedFiles,
 } from "@zerochain/zus-sdk";
+import { AUTH_TICKET } from "./constant";
 
 const configJson = {
   chainId: "0afc093ffb509f059c55478bc1a60351cef7b4e9c008a53a6cc8241ca8617dfe",
@@ -14,8 +15,8 @@ const configJson = {
   minConfirmation: 50,
   minSubmit: 50,
   confirmationChainLength: 3,
-  blockWorker: "https://demo.zus.network/dns",
-  zboxHost: "https://0box.demo.zus.network",
+  blockWorker: `https://${NETWORK}.zus.network/dns`,
+  zboxHost: `https://0box.${NETWORK}.zus.network`,
 };
 
 // This will keep track of assets already populated from cache, it's a map so checking it would be done in constant time
@@ -78,10 +79,13 @@ const fetchApi = async (url, headers = {}) => {
 const getBlobberDetails = async (allocationId) => {
   const allocationUrl =
     "https://demo1.zus.network/sharder01/v1/screst/6dba10422e368813802877a85039d3985d96760ed844092319743fb3a76712d7/allocation?allocation=";
-  const allocation = await fetchApi(allocationUrl + allocationId);
-  const randomIndex = Math.floor(Math.random() * allocation?.blobbers?.length);
 
-  return allocation?.blobbers[randomIndex];
+  const response = await fetchApi(allocationUrl + allocationId);
+  if (response.error) throw new Error(response.error);
+
+  const randomIndex = Math.floor(Math.random() * response?.blobbers?.length);
+
+  return response?.blobbers[randomIndex];
 };
 
 const getListSharedFiles = async (
@@ -99,9 +103,8 @@ const getListSharedFiles = async (
   // try populating everything from cache before doing any calls
   await tryPopulatingFromCache();
 
-  // authTicket of the directory containing zus assets
-  const authTicket =
-    "eyJjbGllbnRfaWQiOiIiLCJvd25lcl9pZCI6IjhjZjYxNDk1MmE2NTc5MDEwZjg3OWM4OTQ3MGVmY2U4M2NjODM0MmRjYTlhYTBjMTk4ODU0MGU4M2IzYmM0MTQiLCJhbGxvY2F0aW9uX2lkIjoiMjIwMDRlMWUwYmVkMGZiYTNjYTllOGUwZmEzNDU5NGJmMDFkYmU4NTRjZjM4OGEyODhiMGZlMTRkNTMwMzMwMSIsImZpbGVfcGF0aF9oYXNoIjoiNWI5OWMyNjY0N2RhOGI4ZTYwNjNhYmIxOTMyYTFhZTI5NjVhNWVmYjIyNmQ2OTIzZTFmMDc2Zjc0YzAyYjIxNSIsImFjdHVhbF9maWxlX2hhc2giOiIiLCJmaWxlX25hbWUiOiJleGFtcGxlLXdlYnNpdGUtYXNzZXRzIiwicmVmZXJlbmNlX3R5cGUiOiJkIiwiZXhwaXJhdGlvbiI6MCwidGltZXN0YW1wIjoxNjg5Nzg2NjkwLCJlbmNyeXB0ZWQiOmZhbHNlLCJzaWduYXR1cmUiOiI4ZDVlN2FmMzAzMjQ1MDYxZjdhODIyZjc3MWY1MGJjYTQyYTlhZTFiMjQwYjNkZWMwZmY2OTMxMjliMGFmNDE4In0=";
+  /* authTicket of the directory containing zus assets */
+  const authTicket = AUTH_TICKET;
 
   // decode auth ticket
   const authData = JSON.parse(atob(authTicket));

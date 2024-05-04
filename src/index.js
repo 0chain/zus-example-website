@@ -48,6 +48,7 @@ import {
 
 import { get, onClick, onClickGroup, setHtml, onChange, setValue } from "./dom";
 import { startPlay, stopPlay } from "./player";
+import { NETWORK } from "./constant";
 
 const shouldShowLogs = process.env.NODE_ENV === "development";
 const log = (...args) => shouldShowLogs && console.log(...args);
@@ -72,8 +73,8 @@ const configJson = {
   minConfirmation: 50,
   minSubmit: 50,
   confirmationChainLength: 3,
-  blockWorker: "https://dev.zus.network/dns",
-  zboxHost: "https://0box.dev.zus.network",
+  blockWorker: `https://${NETWORK}.zus.network/dns`,
+  zboxHost: `https://0box.${NETWORK}.zus.network`,
   zboxAppType: "vult",
 };
 const config = [
@@ -241,8 +242,8 @@ const getBlobberListForAllocation = async () => {
   expiryDate.setDate(expiryDate.getDate() + 30);
 
   const referredBlobberURLs = [
-      "https://dev2.zus.network/blobber02",
-      "https://dev1.zus.network/blobber02",
+      `https://${NETWORK}2.zus.network/blobber02`,
+      `https://${NETWORK}1.zus.network/blobber02`,
     ],
     dataShards = 2,
     parityShards = 2,
@@ -851,11 +852,11 @@ const bindEvents = () => {
 
   onClick("btnGetBlobberIds", async () => {
     log("GetBlobberIds");
-    //https://dev1.zus.network/sharder01/v1/screst/6dba10422e368813802877a85039d3985d96760ed844092319743fb3a76712d7/getblobbers
+    //https://demo1.zus.network/sharder01/v1/screst/6dba10422e368813802877a85039d3985d96760ed844092319743fb3a76712d7/getblobbers
     //const blobberUrls = [];
     const blobberUrls = [
-      "https://dev2.zus.network/blobber02",
-      "https://dev1.zus.network/blobber02",
+      `https://${NETWORK}2.zus.network/blobber02`,
+      `https://${NETWORK}1.zus.network/blobber02`,
     ];
     //Call getBlobberIds method
     const blobberIds = await getBlobberIds(blobberUrls);
