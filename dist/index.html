@@ -90,7 +90,11 @@
     <main class="main" id="main">
       <div class="overlay"></div>
       <!-- <video data-imageName="newZusVideo" id="video" poster="poster" playsinline loop muted autoplay></video> -->
-      <img data-imageName="poster.png" id="poster" src="./images/websitedata/poster.png"/>
+      <img
+        data-imageName="poster.png"
+        id="poster"
+        src="./images/websitedata/poster.png"
+      />
       <h1 class="mainHeading" id="title">
         High Performance Hybrid & Multi Cloud
       </h1>
@@ -110,9 +114,9 @@
           type="email"
           class="emailInput"
           id="email"
-          placeholder="Enter your email" -->
-        <!-- /> -->
-        <!-- <button id="signupButton" class="signupBtn signup-btn">
+          placeholder="Enter your email"
+        />
+        <button id="signupButton" class="signupBtn signup-btn">
           Sign up for the SDK
         </button> -->
       </div>
@@ -1498,7 +1502,10 @@
           const element = document.getElementById(key);
 
           if (key === "emailPlaceholder") {
-            document.getElementById("email").placeholder = data[key];
+            const el = document.getElementById("email");
+            if (!el) {
+              console.error("email element not found");
+            } else el.placeholder = data[key];
           }
 
           if (element) {
@@ -1573,7 +1580,9 @@
       const appName = "sdk";
 
       const emailInput = document.querySelector("#email");
+      if (!emailInput) console.error("email input not found");
       const signupBtn = document.querySelector(".signup-btn");
+      if (!signupBtn) console.error("signup btn not found");
       const error = document.querySelector(".error");
       const emailModale = document.querySelector(".email-modale");
 
@@ -1594,12 +1603,12 @@
         setSignupBtn("Sign up for the SDK");
       };
 
-      emailInput.addEventListener("input", function () {
+      emailInput?.addEventListener("input", function () {
         setError("");
       });
 
       //Function to register new user
-      signupBtn.addEventListener("click", async (event) => {
+      signupBtn?.addEventListener("click", async (event) => {
         event.preventDefault();
 
         setError("");
