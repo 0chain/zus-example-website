@@ -2,6 +2,7 @@ const path = require("path");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
+const WatchFilesPlugin = require("webpack-watch-files-plugin").default;
 
 module.exports = {
   entry: {
@@ -35,11 +36,14 @@ module.exports = {
       },
     ],
   },
-  // plugins: [
-  //   new MiniCssExtractPlugin({
-  //     filename: "[name].css",
-  //   }),
-  // ],
+  plugins: [
+    // new MiniCssExtractPlugin({
+    //   filename: "[name].css",
+    // }),
+    new WatchFilesPlugin({
+      files: ["../../lib/js-sdk/dist/*"],
+    }),
+  ],
   devServer: {
     static: path.join(__dirname, "dist"), // Serve content from the 'dist' directory
     port: 9000,
