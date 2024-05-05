@@ -7,13 +7,13 @@ import {
   decodeAuthTicket,
   listSharedFiles,
 } from "@zerochain/zus-sdk";
-import { AUTH_TICKET } from "./constant";
+import { NETWORK, AUTH_TICKET, RESET_CACHE_ON_RELOAD } from "./constant";
 
 const configJson = {
   chainId: "0afc093ffb509f059c55478bc1a60351cef7b4e9c008a53a6cc8241ca8617dfe",
   signatureScheme: "bls0chain",
-  minConfirmation: 50,
-  minSubmit: 50,
+  minConfirmation: 10,
+  minSubmit: 20,
   confirmationChainLength: 3,
   blockWorker: `https://${NETWORK}.zus.network/dns`,
   zboxHost: `https://0box.${NETWORK}.zus.network`,
@@ -36,7 +36,7 @@ async function initializeWasm() {
     configJson.confirmationChainLength,
     configJson.zboxHost,
     configJson.zboxAppType,
-    1,
+    3,
   ];
 
   await init(config);
@@ -77,8 +77,7 @@ const fetchApi = async (url, headers = {}) => {
 };
 
 const getBlobberDetails = async (allocationId) => {
-  const allocationUrl =
-    "https://demo1.zus.network/sharder01/v1/screst/6dba10422e368813802877a85039d3985d96760ed844092319743fb3a76712d7/allocation?allocation=";
+  const allocationUrl = `https://${NETWORK}1.zus.network/sharder01/v1/screst/6dba10422e368813802877a85039d3985d96760ed844092319743fb3a76712d7/allocation?allocation=`;
 
   const response = await fetchApi(allocationUrl + allocationId);
   if (response.error) throw new Error(response.error);
@@ -94,12 +93,14 @@ const getListSharedFiles = async (
   lookupHash,
   clientId
 ) => {
-  const url = `${blobberUrl}v1/file/list/${allocationId}?path_hash=${lookupHash}`;
+  const url = `${blobberUrl}v1/file/list/${allocationId}?path_hash=${lookupHash}&list=true&limit=-1&offset=0`;
 
   return fetchApi(url, { "X-App-Client-ID": clientId });
 };
 
 (async function () {
+  if (RESET_CACHE_ON_RELOAD) clearStore();
+
   // try populating everything from cache before doing any calls
   await tryPopulatingFromCache();
 
@@ -300,6 +301,33 @@ function setValue(key, value, customStore = getDefaultStore()) {
     return promisifyRequest(store.transaction);
   });
 }
+
+async function clearStore(
+  dbName = "zus-assets-store",
+  storeName = "zus-assets"
+) {
+  return new Promise((resolve, reject) => {
+    const request = indexedDB.open(dbName);
+
+    request.onerror = (event) => {
+      reject(new Error("Failed to open database"));
+    };
+
+    request.onsuccess = (event) => {
+      const db = event.target.result;
+      const transaction = db.transaction(storeName, "readwrite");
+      const objectStore = transaction.objectStore(storeName);
+      const clearRequest = objectStore.clear();
+      clearRequest.onerror = (event) => {
+        reject(new Error("Failed to clear store"));
+      };
+      clearRequest.onsuccess = (event) => {
+        resolve();
+      };
+    };
+  });
+}
+window.clearStore = clearStore;
 
 // get zus db from indexed db if already exits, else create new db and store
 function getDefaultStore() {
