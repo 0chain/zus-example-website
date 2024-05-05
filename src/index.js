@@ -86,7 +86,7 @@ const config = [
   configJson.confirmationChainLength,
   configJson.zboxHost,
   configJson.zboxAppType,
-  3
+  3,
 ];
 
 window.downloadCallback = function (totalBytes, completedBytes, error) {
