@@ -106,6 +106,7 @@ const getListSharedFiles = async (
 
   /* authTicket of the directory containing zus assets */
   const authTicket = AUTH_TICKET;
+  console.log('authTicket: ', authTicket)
 
   // decode auth ticket
   const authData = JSON.parse(atob(authTicket));
