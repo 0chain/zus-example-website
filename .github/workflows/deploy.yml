@@ -27,20 +27,21 @@ jobs:
       - name: Add and commit changes
         uses: EndBug/add-and-commit@v9
         with:
-          add: '.' # Add all changes
+          add: "." # Add all changes
           author_name: "Deploy BOT"
           author_email: "deploy.bot@zus.network"
           committer_name: "Deploy BOT"
           committer_email: "deploy.bot@zus.network"
-          cwd: '.'
+          cwd: "."
           default_author: github_actor
           fetch: false
           message: "Deploy changes"
           new_branch: deploy # Branch name to commit changes
           push: true # Push changes to the remote repository
-  
+
   deploy:
-    needs: build # Add a dependency to the build job
+    if: ${{ always() && contains(join(needs.*.result, ','), 'success') }}
+    needs: [build] # Add a dependency to the build job
 
     permissions:
       pages: write
