@@ -13,11 +13,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Create deploy branch
-        run: |
-          git checkout -b deploy 
-          git checkout deploy
-
       - name: Build
         run: |
           yarn install
