@@ -14,7 +14,9 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Create deploy branch
-        run: git checkout -b deploy
+        run: |
+          git checkout -b deploy 
+          git checkout deploy
 
       - name: Build
         run: |
