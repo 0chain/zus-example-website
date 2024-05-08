@@ -1,7 +1,5 @@
 const path = require("path");
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const TerserPlugin = require("terser-webpack-plugin");
-const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
+const WatchFilesPlugin = require("webpack-watch-files-plugin").default;
 
 module.exports = {
   entry: {
@@ -12,24 +10,31 @@ module.exports = {
     filename: "[name].js",
     path: path.resolve(__dirname, "dist"),
   },
-  mode: "production",
-  optimization: {
-    minimizer: [
-      new TerserPlugin(), // Minify JavaScript
-      new OptimizeCSSAssetsPlugin(), // Minify CSS
-    ],
-  },
+  mode: "development",
   module: {
     rules: [
       {
-        test: /\.css$/,
-        use: [MiniCssExtractPlugin.loader, "css-loader"],
+        test: /\.css$/i,
+        use: ["style-loader", "css-loader"],
+      },
+      {
+        test: /\.(png|svg|jpg|jpeg|gif)$/i,
+        type: "asset/resource",
+      },
+      {
+        test: /\.(woff|woff2|eot|ttf|otf)$/i,
+        type: "asset/resource",
       },
     ],
   },
   plugins: [
-    new MiniCssExtractPlugin({
-      filename: "[name].css",
+    new WatchFilesPlugin({
+      files: ["../../lib/js-sdk/dist/*"], // Watch for changes in the 'js-sdk' lib
     }),
   ],
+  devServer: {
+    static: path.join(__dirname, "dist"),
+    port: 9000,
+    open: true,
+  },
 };
