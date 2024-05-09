@@ -157,8 +157,7 @@ const getListSharedFiles = async (
     }
   });
 
-  const batchSize = 1; // took 24-30 secs
-  // const batchSize = 60; // 26 secs
+  const batchSize = 10; // Ref https://0chain.slack.com/archives/C026YA5EYH3/p1715250017781459
 
   // remove poster image from files
   files.shift();
@@ -176,7 +175,9 @@ const getListSharedFiles = async (
 
     const start2 = performance.now();
     notyf.success(
-      `Batch #${++batchNum}. ${Math.ceil(files.length / batchSize)} batches remaining...`
+      `Batch #${++batchNum}. ${Math.ceil(
+        files.length / batchSize
+      )} batches remaining...`
     );
     await multiDownload(
       allocationId,
