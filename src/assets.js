@@ -7,7 +7,12 @@ import {
   decodeAuthTicket,
   listSharedFiles,
 } from "@zerochain/zus-sdk";
-import { NETWORK, AUTH_TICKET, RESET_CACHE_ON_RELOAD } from "./constant";
+import {
+  NETWORK,
+  AUTH_TICKET,
+  RESET_CACHE_ON_RELOAD,
+  BATCH_SIZE,
+} from "./constant";
 import { Notyf } from "notyf";
 
 const configJson = {
@@ -157,7 +162,7 @@ const getListSharedFiles = async (
     }
   });
 
-  const batchSize = 10; // Ref https://0chain.slack.com/archives/C026YA5EYH3/p1715250017781459
+  const batchSize = BATCH_SIZE;
 
   // remove poster image from files
   files.shift();
@@ -175,7 +180,7 @@ const getListSharedFiles = async (
 
     const start2 = performance.now();
     notyf.success(
-      `Batch #${++batchNum}. ${Math.ceil(
+      `Batch#${++batchNum}. ${Math.ceil(
         files.length / batchSize
       )} batches remaining...`
     );
