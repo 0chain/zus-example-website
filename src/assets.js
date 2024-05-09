@@ -134,15 +134,22 @@ const getListSharedFiles = async (
   const notyf = new Notyf({ position: { x: "left", y: "bottom" } });
   const longNotyf = new Notyf({ duration: 7000 });
 
-  notyf.success("Initializing WASM...");
-  const start = performance.now();
   // initialiaze and configure wasm
+  const dlStart = performance.now();
+  notyf.success("Downloading WASM...");
   await initializeWasm();
+  const dlTime = performance.now() - dlStart;
+  longNotyf.success(`WASM downloaded in ${dlTime / 1000} s`);
+
+  const wasmInitStart = performance.now();
+  notyf.success("Initializing WASM...");
   const { keys, mnemonic } = await createWallet();
   const { walletId, privateKey, publicKey } = keys;
   await setWallet(walletId, privateKey, publicKey, mnemonic);
-  const totalTime = performance.now() - start;
-  longNotyf.success(`WASM loaded in ${totalTime / 1000} s`);
+  const totalInitTime = performance.now() - wasmInitStart;
+  longNotyf.success(`WASM initialized in ${totalInitTime / 1000} s`);
+  const totalWasmLoadTime = totalInitTime + dlTime;
+  longNotyf.success(`WASM ready. Time taken ${totalWasmLoadTime / 1000} s`);
 
   // rearrage the file list so we can download in the order assets are displayed on website
   const filesList = reArrangeArray(data?.list);
