@@ -8,6 +8,7 @@ import {
   listSharedFiles,
 } from "@zerochain/zus-sdk";
 import { NETWORK, AUTH_TICKET, RESET_CACHE_ON_RELOAD } from "./constant";
+import { Notyf } from "notyf";
 
 const configJson = {
   chainId: "0afc093ffb509f059c55478bc1a60351cef7b4e9c008a53a6cc8241ca8617dfe",
@@ -125,11 +126,18 @@ const getListSharedFiles = async (
     clientId
   );
 
+  const notyf = new Notyf({ position: { x: "left", y: "bottom" } });
+  const longNotyf = new Notyf({ duration: 7000 });
+
+  notyf.success("Initializing WASM...");
+  const start = performance.now();
   // initialiaze and configure wasm
   await initializeWasm();
   const { keys, mnemonic } = await createWallet();
   const { walletId, privateKey, publicKey } = keys;
   await setWallet(walletId, privateKey, publicKey, mnemonic);
+  const totalTime = performance.now() - start;
+  longNotyf.success(`WASM loaded in ${totalTime / 1000} s`);
 
   // rearrage the file list so we can download in the order assets are displayed on website
   const filesList = reArrangeArray(data?.list);
@@ -149,12 +157,14 @@ const getListSharedFiles = async (
     }
   });
 
-  const batchSize = 10;
+  const batchSize = 10; // Ref https://0chain.slack.com/archives/C026YA5EYH3/p1715250017781459
 
   // remove poster image from files
   files.shift();
+  let batchNum = 0;
+  notyf.success(`Starting download with batch size of ${batchSize} files...`);
+  const start1 = performance.now();
 
-  // Create bactches of size 20 to download files using multiDownload in batches
   while (files.length > 0) {
     let batch = [];
     if (files.length >= batchSize) {
@@ -162,13 +172,25 @@ const getListSharedFiles = async (
     } else {
       batch = files.splice(0, files.length);
     }
+
+    const start2 = performance.now();
+    notyf.success(
+      `Batch #${++batchNum}. ${Math.ceil(
+        files.length / batchSize
+      )} batches remaining...`
+    );
     await multiDownload(
       allocationId,
       JSON.stringify(batch),
       authTicket,
       "onFileDownload"
     );
+    const end2 = performance.now() - start2;
+    longNotyf.success(`Batch ${batchNum} completed in ${end2 / 1000} s`);
   }
+  const end1 = performance.now() - start1;
+  longNotyf.success(`Download complete in ${end1 / 1000} s`);
+  logTotalSizeDownloadedWithTimeout();
 })();
 
 // using map to fetch priority in constant time
@@ -348,3 +370,57 @@ function promisifyRequest(request) {
     request.onabort = request.onerror = () => reject(request.error);
   });
 }
+
+function getTotalBlobSizeInMB() {
+  return new Promise((resolve, reject) => {
+    const dbRequest = indexedDB.open("zus-assets-store");
+
+    dbRequest.onsuccess = function (event) {
+      const db = event.target.result;
+      const transaction = db.transaction(["zus-assets"], "readonly");
+      const objectStore = transaction.objectStore("zus-assets");
+      let totalSize = 0;
+
+      objectStore.openCursor().onsuccess = function (event) {
+        const cursor = event.target.result;
+        if (cursor) {
+          totalSize += cursor.value.size; // Assuming 'size' is the property storing the blob size
+          cursor.continue();
+        } else {
+          const totalSizeInMB = totalSize / (1024 * 1024);
+          resolve(totalSizeInMB);
+        }
+      };
+
+      transaction.oncomplete = function () {
+        db.close();
+      };
+
+      transaction.onerror = function (event) {
+        reject(event.target.error);
+      };
+    };
+
+    dbRequest.onerror = function (event) {
+      reject(event.target.error);
+    };
+  });
+}
+
+const logTotalSizeDownloadedWithTimeout = (timeout = 3000) => {
+  const notyf = new Notyf({
+    duration: 3000,
+    position: { x: "right", y: "top" },
+  });
+  setTimeout(() => {
+    getTotalBlobSizeInMB()
+      .then((totalSizeInMB) => {
+        notyf.success(
+          `Total size of stored blobs: ${totalSizeInMB.toFixed(2)} MB`
+        );
+      })
+      .catch((error) => {
+        notyf.error(`Error retrieving total blob size: ${error}`);
+      });
+  }, timeout);
+};
