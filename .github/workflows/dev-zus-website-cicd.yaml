@@ -1,7 +1,9 @@
-# https://dev-zus-website.zus.network/
 name: 'DEV WEB-APPS CICD'
 
 on:
+  push:
+    branches:
+      - main
   workflow_dispatch:
     # inputs:
     #   zusapp:
@@ -42,7 +44,7 @@ jobs:
       #     username: ${{ secrets.DOCKERHUB_USERNAME }}
       #     password: ${{ secrets.DOCKERHUB_PASSWORD }}
 
-      - name: Build & deploy dev-zus-website.zus.network.
+      - name: Build & deploy to dev-zus-website.zus.network
         run: |
           cd docker.local
           docker-compose -f docker-compose-dev.yaml up -d --build
