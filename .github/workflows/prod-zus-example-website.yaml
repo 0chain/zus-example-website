@@ -1,6 +1,9 @@
 name: 'PROD ZUS-EXAMPLE-WEBSITE CICD'
 
 on:
+  push:
+    branches:
+      - main
   workflow_dispatch:
     # inputs:
     #   zusapp:
@@ -41,7 +44,8 @@ jobs:
       #     username: ${{ secrets.DOCKERHUB_USERNAME }}
       #     password: ${{ secrets.DOCKERHUB_PASSWORD }}
 
-      - name: Build & deploy zus.network/hackathon/sample-website.
+      - name: Build & deploy to website.example.zus.network
+
         run: |
           cd docker.local
           docker-compose -f docker-compose-dev.yaml up -d --build
