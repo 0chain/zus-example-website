@@ -1,9 +1,9 @@
-name: 'DEV WEB-APPS CICD'
+name: "DEV WEB-APPS CICD"
 
 on:
-  push:
-    branches:
-      - main
+  # push:
+  #   branches:
+  #     - main
   workflow_dispatch:
     # inputs:
     #   zusapp:
@@ -26,7 +26,7 @@ jobs:
           docker rm zus_example_website || true
 
       - uses: actions/checkout@v3
-      
+
       # - name: Set Docker Image Tags.
       #   id: get_info
       #   run: |
@@ -58,12 +58,12 @@ jobs:
 
       #     docker tag ${{ secrets.BOLT_REGISTRY }}:latest ${{ secrets.BOLT_REGISTRY }}:$TAG-$SHORT_SHA
       #     docker push ${{ secrets.BOLT_REGISTRY }}:$TAG-$SHORT_SHA
-      
+
       # - name: Push latest
       #   if: ${{ github.event.inputs.branch }} == 'master'
       #   run: |
       #     docker push ${{ secrets.BOLT_REGISTRY }}:latest
-            
+
       # - name: Clean Up The Workspace.
       #   if: ${{ always() }}
       #   run: |
