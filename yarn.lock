@@ -566,9 +566,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@zerochain/zus-sdk@npm:^0.5.11":
-  version: 0.5.11
-  resolution: "@zerochain/zus-sdk@npm:0.5.11"
+"@zerochain/zus-sdk@npm:^0.5.12":
+  version: 0.5.12
+  resolution: "@zerochain/zus-sdk@npm:0.5.12"
   dependencies:
     axios: "npm:^1.2.0"
     bip39: "npm:^3.1.0"
@@ -577,7 +577,7 @@ __metadata:
     js-sha3: "npm:^0.8.0"
     json-bigint: "npm:^1.0.0"
     moment: "npm:^2.29.4"
-  checksum: 10/bbd768ed2853b63a59be16b4cb6f8c4c95748ac69d9efcb50169136ae8a3ffc02aa5f309a18011d357df583098a74f5eb682a48f8c7ed5045256783b1d454314
+  checksum: 10/d50312e33d406869be47bf92b3751fd6648dc5da1db92248475b07cf98990e6da8e236e83f177598ebdae2ddb1ede6c697edde31822ffc92566b5495e05400b4
   languageName: node
   linkType: hard
 
@@ -4063,7 +4063,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "website@workspace:."
   dependencies:
-    "@zerochain/zus-sdk": "npm:^0.5.11"
+    "@zerochain/zus-sdk": "npm:^0.5.12"
     babel-loader: "npm:^9.1.2"
     concurrently: "npm:^8.2.2"
     include-media: "npm:^2.0.0"
