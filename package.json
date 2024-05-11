@@ -1,5 +1,5 @@
 {
-  "name": "zus-sdk-test",
+  "name": "website",
   "version": "1.0.0",
   "description": "",
   "private": true,
@@ -25,6 +25,7 @@
   "dependencies": {
     "babel-loader": "^9.1.2",
     "include-media": "^2.0.0",
-    "mime": "^3.0.0"
+    "mime": "^3.0.0",
+    "notyf": "^3.10.0"
   }
 }
